@@ -8,7 +8,7 @@ class ListaDipendenti():
         super(ListaDipendenti, self).__init__()
         self.lista_dipendenti = []
 
-    def aggiungi_dipendente_(self, dipendente):
+    def aggiungi_dipendente(self, dipendente):
         self.lista_dipendenti.append(dipendente)
 
     def rimuovi_dipendente_by_index(self, id):
