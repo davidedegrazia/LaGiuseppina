@@ -11,9 +11,9 @@ class ListaDipendenti():
     def aggiungi_dipendente(self, dipendente):
         self.lista_dipendenti.append(dipendente)
 
-    def rimuovi_dipendente_by_index(self, id):
+    def rimuovi_dipendente_by_index(self, index):
         for dipendente in self.lista_dipendenti:
-            if dipendente.id == id:
+            if dipendente.index == index:
                 self.lista_dipendenti.remove(dipendente)
 
 
