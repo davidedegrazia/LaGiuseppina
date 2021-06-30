@@ -1,6 +1,6 @@
 class Dipendente():
 
-    def __init__(self, nome, ore, stipendio, contratto, email, telefono, id) :
+    def __init__(self, nome, ore, stipendio, contratto, email, telefono, id):
 
         self.nome = nome
         self.ore = ore
