@@ -1,7 +1,3 @@
-
-
-
-
 class ListaDipendenti():
 
     def __init__(self):
@@ -23,5 +19,3 @@ class ListaDipendenti():
 
     def get_lista_dipendenti(self):
         return self.lista_dipendenti
-
-
