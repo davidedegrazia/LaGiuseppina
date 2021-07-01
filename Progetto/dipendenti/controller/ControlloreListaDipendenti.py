@@ -1,13 +1,12 @@
 path_data = 'Progetto/data/dipendenti.pickle'
 import pickle
 class ControlloreListaDipendenti:
-    def __init__(self, dipendente):
-        self.model = dipendente
-        self.lista = []
+    def __init__(self, lista):
+        self.model = lista
 
     # aggiunge un elemento alla lista
     def aggiungi_elemento(self, elemento):
-        self.lista.append(elemento)
+        self.model.aggiungi_dipendente(elemento)
 
     # ritorna la lista
     def get_lista(self):
@@ -24,7 +23,7 @@ class ControlloreListaDipendenti:
     # salva i dati su un file
     def save_data(self):
         with open(path_data, 'wb') as handle:
-            pickle.dump(self.lista_clienti, handle, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(self.model, handle, pickle.HIGHEST_PROTOCOL)
 
     #restituisce il totale da aggiungere al bilancio
     def get_totale(self):

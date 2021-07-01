@@ -1,16 +1,14 @@
-# This is a sample Python script.
+import pickle
 
-# Press Maiusc+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
 
+DATI_DIPENDENTI = 'Progetto/data/dipendenti.pickle'
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def load_data(controllore_lista_dipendenti):
+    with open(DATI_DIPENDENTI, 'wb') as file:
+            lista = pickle.load(file)
+            controllore_lista_dipendenti = ControlloreListaDipendenti(lista)
 
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    controllore_lista_dipendenti = None
+    load_data(controllore_lista_dipendenti)
