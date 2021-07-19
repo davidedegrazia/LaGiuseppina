@@ -3,7 +3,7 @@ import uuid
 
 class Dipendente():
 
-    def __init__(self, nome, a_chiamata, ore, compenso_fisso, compenso_a_ore, email, telefono):
+    def __init__(self, nome, a_chiamata, ore, compenso_fisso, compenso_a_ore, email, telefono, aggiungere_a_bilancio):
 
         self.nome = nome
         self.a_chiamata = a_chiamata
@@ -17,6 +17,7 @@ class Dipendente():
             self.ore = ore
         self.email = email
         self.telefono = telefono
+        self.da_aggiungere = aggiungere_a_bilancio
         self.id = uuid.uuid4()
 
     def calcola_stipendio(self):

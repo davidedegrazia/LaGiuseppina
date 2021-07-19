@@ -3,8 +3,6 @@ class ControlloreDipendente:
         self.model = dipendente
         self.da_aggiungere = da_aggiungere_a_bilancio
 
-    def aggiungi_ore(self, ore):
-        self.model.ore += ore
 
     def modifica(self, nome, a_chiamata, compenso_fisso, compenso_a_ore, email, telefono, id, aggiungere_a_bilancio):
         self.model.nome = nome
@@ -18,10 +16,7 @@ class ControlloreDipendente:
         self.model.email = email
         self.model.telefono = telefono
         self.model.id = id
-        self.da_aggiungere = aggiungere_a_bilancio
-
-    def aggiungi_a_bilancio(self):
-        pass  # TODO
+        self.model.da_aggiungere = aggiungere_a_bilancio
 
     def get_totale(self):
         return self.model.calcola_stipendio()
