@@ -2,7 +2,7 @@ import datetime
 
 import self as self
 from PyQt5 import QtCore, QtWidgets
-from pyqt5_plugins.examplebuttonplugin import QtGui
+
 
 
 class Ui_MainWindow(object):

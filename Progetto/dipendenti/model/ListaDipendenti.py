@@ -1,4 +1,4 @@
-class ListaDipendenti:
+class ListaDipendenti():
 
     def __init__(self):
         super(ListaDipendenti, self).__init__()
