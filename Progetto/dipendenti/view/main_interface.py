@@ -1,16 +1,25 @@
 import datetime
 
-import self as self
+# import self as self
+import json
+
+import self
 from PyQt5 import QtCore, QtWidgets
-from pyqt5_plugins.examplebuttonplugin import QtGui
+# from pyqt5_plugins.examplebuttonplugin import QtGui
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from PyQt5.QtWidgets import QListView, QMessageBox, QListWidget
+
+from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
+from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
+from Progetto.dipendenti.model.Dipendente import Dipendente
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, dipendente):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1203, 727)
+        MainWindow.resize(1203, 627)
         MainWindow.setStyleSheet("border: none\n"
-                                 "rgb(255, 255, 255)\n"
+                                 "rgb(0, 0, 0)\n"
                                  "\n"
                                  "")
         MainWindow.setStyleSheet("background-color: white")
@@ -156,7 +165,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setSpacing(0)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.stackedWidget = QtWidgets.QStackedWidget(self.main_frame)
-        self.stackedWidget.setStyleSheet("border-radius: 18px;\n"
+        self.stackedWidget.setStyleSheet("color: rgb(0, 0, 0);"
+                                         "border-radius: 18px;"
                                          "background-color: rgb(235, 235, 235);")
         self.stackedWidget.setObjectName("stackedWidget")
 
@@ -214,20 +224,26 @@ class Ui_MainWindow(object):
         self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_13.setObjectName("frame_13")
-        self.listWidget_dipendenti = QtWidgets.QListWidget(self.frame_13)
+        self.listWidget_dipendenti = QListView(self.frame_13)
         self.listWidget_dipendenti.setGeometry(QtCore.QRect(10, 10, 771, 411))
         self.listWidget_dipendenti.setMaximumSize(QtCore.QSize(831, 411))
         self.listWidget_dipendenti.setStyleSheet("background-color: rgb(255, 255, 255);\n"
                                                  "border-radius:0px;")
         self.listWidget_dipendenti.setObjectName("listWidget_dipendenti")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_dipendenti.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_dipendenti.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_dipendenti.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_dipendenti.addItem(item)
+
+        # def show_selected_info(self):
+        # selected = self.listWidget_dipendenti.selectedIndexes().row()
+        # dipendente_selezionato = self.controller.get_dipendente_by_index(selected)
+        # self.label_scrittvisualizzadipendente.setText(self.dipendente_selezionato.get_nome())
+        # self.label_visualizza_nome.setText("ID:  " + str(self.dipendente_selezionato.get_id())[:5])
+        # self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(self.dipendente_selezionato.get_ore()))
+        # self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(self.dipendente_selezionato.get_compenso_a_ore()))
+        # self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + self.dipendente_selezionato.get_tipo_contratto())
+        # self.label_visualizza_email_.setText("E-mail:  " + self.dipendente_selezionato.get_email())
+        # self.label_telefono_2.setText("Telefono:  " + self.dipendente_selezionato.get_telefono())
+
+        # self.push_visualizza.clicked(self.show_selected_info())
+
         self.verticalLayout_8.addWidget(self.frame_13)
         self.horizontalLayout_4.addWidget(self.frame_list)
         self.frame_15 = QtWidgets.QFrame(self.frame_list_and_buttons)
@@ -1168,12 +1184,403 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.central_frame)
         MainWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
+        #pagina StackedWidget2 per modificare il dipendente
+        self.page_modifica_dipendente = QtWidgets.QWidget()
+        self.page_modifica_dipendente.setObjectName("page_modifica_dipendente")
+        self.verticalLayout_102 = QtWidgets.QVBoxLayout(self.page_modifica_dipendente)
+        self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_102.setSpacing(0)
+        self.verticalLayout_102.setObjectName("verticalLayout_10")
+        self.frame_scritta2 = QtWidgets.QFrame(self.page_modifica_dipendente)
+        self.frame_scritta2.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.frame_scritta2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_scritta2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_scritta2.setObjectName("frame_scritta2")
+        self.verticalLayout_112 = QtWidgets.QVBoxLayout(self.frame_scritta2)
+        self.verticalLayout_112.setObjectName("verticalLayout_11")
+        self.label_scritta2 = QtWidgets.QLabel(self.frame_scritta2)
+        self.label_scritta2.setMaximumSize(QtCore.QSize(16777215, 45))
+        self.label_scritta2.setStyleSheet("font: 800 22pt \"Apple SD Gothic Neo\";")
+        self.label_scritta2.setObjectName("label_scritta2")
+        self.verticalLayout_112.addWidget(self.label_scritta2)
+        self.verticalLayout_102.addWidget(self.frame_scritta2)
+        self.frame_white2 = QtWidgets.QFrame(self.page_modifica_dipendente)
+        self.frame_white2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+                                        "border-radius: 16px;\n"
+                                        "")
+        self.frame_white2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_white2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_white2.setObjectName("frame_white2")
+        self.verticalLayout_122 = QtWidgets.QVBoxLayout(self.frame_white2)
+        self.verticalLayout_122.setSpacing(0)
+        self.verticalLayout_122.setObjectName("verticalLayout_122")
+        self.frame_nome2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_nome2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_nome2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_nome2.setObjectName("frame_nome2")
+        self.horizontalLayout_62 = QtWidgets.QHBoxLayout(self.frame_nome2)
+        self.horizontalLayout_62.setContentsMargins(-1, 0, 200, 0)
+        self.horizontalLayout_62.setObjectName("horizontalLayout_62")
+        self.label_nome2 = QtWidgets.QLabel(self.frame_nome2)
+        self.label_nome2.setStyleSheet("\n"
+                                       "font: 400 17pt \"SF Pro\";")
+        self.label_nome2.setObjectName("label_nome2")
+        self.horizontalLayout_62.addWidget(self.label_nome2)
+        self.lineEdit_nome2 = QtWidgets.QLineEdit(self.frame_nome2)
+        self.lineEdit_nome2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_nome2.setStyleSheet("border-radius: 10px;\n"
+                                          "background-color: rgb(235, 235, 235);")
+        self.lineEdit_nome2.setObjectName("lineEdit_nome2")
+        self.horizontalLayout_62.addWidget(self.lineEdit_nome2)
+        self.verticalLayout_122.addWidget(self.frame_nome2)
+        self.frame_ore_settimanali2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_ore_settimanali2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_ore_settimanali2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_ore_settimanali2.setObjectName("frame_ore_settimanali2")
+        self.horizontalLayout_102 = QtWidgets.QHBoxLayout(self.frame_ore_settimanali2)
+        self.horizontalLayout_102.setContentsMargins(-1, -1, 472, -1)
+        self.horizontalLayout_102.setSpacing(10)
+        self.horizontalLayout_102.setObjectName("horizontalLayout_102")
+        self.label_oresettimanali2 = QtWidgets.QLabel(self.frame_ore_settimanali2)
+        self.label_oresettimanali2.setStyleSheet("\n"
+                                                 "font: 400 17pt \"SF Pro\";")
+        self.label_oresettimanali2.setObjectName("label_oresettimanali2")
+        self.horizontalLayout_102.addWidget(self.label_oresettimanali2)
+        self.spinBox_oresettimanali2 = QtWidgets.QSpinBox(self.frame_ore_settimanali2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.spinBox_oresettimanali2.sizePolicy().hasHeightForWidth())
+        self.spinBox_oresettimanali2.setSizePolicy(sizePolicy)
+        self.spinBox_oresettimanali2.setMinimumSize(QtCore.QSize(60, 30))
+        self.spinBox_oresettimanali2.setStyleSheet("border-radius: 10px;\n"
+                                                   "background-color: rgb(235, 235, 235);")
+        self.spinBox_oresettimanali2.setObjectName("spinBox_oresettimanali2")
+        self.horizontalLayout_102.addWidget(self.spinBox_oresettimanali2)
+        self.verticalLayout_122.addWidget(self.frame_ore_settimanali2)
+        self.frame_paga_ad_ora2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_paga_ad_ora2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_paga_ad_ora2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_paga_ad_ora2.setObjectName("frame_paga_ad_ora2")
+        self.horizontalLayout_92 = QtWidgets.QHBoxLayout(self.frame_paga_ad_ora2)
+        self.horizontalLayout_92.setContentsMargins(-1, -1, 472, -1)
+        self.horizontalLayout_92.setSpacing(10)
+        self.horizontalLayout_92.setObjectName("horizontalLayout_92")
+        self.label_pagaadora2 = QtWidgets.QLabel(self.frame_paga_ad_ora2)
+        self.label_pagaadora2.setStyleSheet("\n"
+                                            "font: 400 17pt \"SF Pro\";")
+        self.label_pagaadora2.setObjectName("label_pagaadora2")
+        self.horizontalLayout_92.addWidget(self.label_pagaadora2)
+        self.spinBox_pagaadora2 = QtWidgets.QSpinBox(self.frame_paga_ad_ora2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.spinBox_pagaadora2.sizePolicy().hasHeightForWidth())
+        self.spinBox_pagaadora2.setSizePolicy(sizePolicy)
+        self.spinBox_pagaadora2.setMinimumSize(QtCore.QSize(60, 30))
+        self.spinBox_pagaadora2.setStyleSheet("border-radius: 10px;\n"
+                                              "background-color: rgb(235, 235, 235);")
+        self.spinBox_pagaadora2.setObjectName("spinBox_pagaadora2")
+        self.horizontalLayout_92.addWidget(self.spinBox_pagaadora2)
+        self.verticalLayout_122.addWidget(self.frame_paga_ad_ora2)
+        self.frame_tipodicontratto2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_tipodicontratto2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_tipodicontratto2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_tipodicontratto2.setObjectName("frame_tipodicontratto2")
+        self.horizontalLayout_82 = QtWidgets.QHBoxLayout(self.frame_tipodicontratto2)
+        self.horizontalLayout_82.setContentsMargins(-1, -1, 200, -1)
+        self.horizontalLayout_82.setObjectName("horizontalLayout_8")
+        self.label_tipodicontratto2 = QtWidgets.QLabel(self.frame_tipodicontratto2)
+        self.label_tipodicontratto2.setStyleSheet("\n"
+                                                  "font: 400 17pt \"SF Pro\";")
+        self.label_tipodicontratto2.setObjectName("label_tipodicontratto2")
+        self.horizontalLayout_82.addWidget(self.label_tipodicontratto2)
+        self.lineEdit_tipodicontratto2 = QtWidgets.QLineEdit(self.frame_tipodicontratto2)
+        self.lineEdit_tipodicontratto2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_tipodicontratto2.setStyleSheet("border-radius: 10px;\n"
+                                                     "background-color: rgb(235, 235, 235);")
+        self.lineEdit_tipodicontratto2.setObjectName("lineEdit_tipodicontratto2")
+        self.horizontalLayout_82.addWidget(self.lineEdit_tipodicontratto2)
+        self.verticalLayout_122.addWidget(self.frame_tipodicontratto2)
+        self.frame_email2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_email2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_email2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_email2.setObjectName("frame_email2")
+        self.horizontalLayout_72 = QtWidgets.QHBoxLayout(self.frame_email2)
+        self.horizontalLayout_72.setContentsMargins(-1, -1, 200, -1)
+        self.horizontalLayout_72.setObjectName("horizontalLayout_7")
+        self.label_email2 = QtWidgets.QLabel(self.frame_email2)
+        self.label_email2.setStyleSheet("\n"
+                                        "font: 400 17pt \"SF Pro\";")
+        self.label_email2.setObjectName("label_email2")
+        self.horizontalLayout_72.addWidget(self.label_email2)
+        self.lineEdit_email2 = QtWidgets.QLineEdit(self.frame_email2)
+        self.lineEdit_email2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_email2.setStyleSheet("border-radius: 10px;\n"
+                                           "background-color: rgb(235, 235, 235);")
+        self.lineEdit_email2.setObjectName("lineEdit_email2")
+        self.horizontalLayout_72.addWidget(self.lineEdit_email2)
+        self.verticalLayout_122.addWidget(self.frame_email2)
+        self.frame_telefono2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_telefono2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_telefono2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_telefono2.setObjectName("frame_telefono2")
+        self.horizontalLayout_112 = QtWidgets.QHBoxLayout(self.frame_telefono2)
+        self.horizontalLayout_112.setContentsMargins(-1, -1, 200, -1)
+        self.horizontalLayout_112.setObjectName("horizontalLayout_11")
+        self.label_telefono2 = QtWidgets.QLabel(self.frame_telefono2)
+        self.label_telefono2.setStyleSheet("\n"
+                                           "font: 400 17pt \"SF Pro\";")
+        self.label_telefono2.setObjectName("label_telefono2")
+        self.horizontalLayout_112.addWidget(self.label_telefono2)
+        self.lineEdit_telefono2 = QtWidgets.QLineEdit(self.frame_telefono2)
+        self.lineEdit_telefono2.setMinimumSize(QtCore.QSize(0, 30))
+        self.lineEdit_telefono2.setStyleSheet("border-radius: 10px;\n"
+                                              "background-color: rgb(235, 235, 235);")
+        self.lineEdit_telefono2.setObjectName("lineEdit_telefono2")
+        self.horizontalLayout_112.addWidget(self.lineEdit_telefono2)
+        self.verticalLayout_122.addWidget(self.frame_telefono2)
+        self.frame_salva_dipendenti2 = QtWidgets.QFrame(self.frame_white2)
+        self.frame_salva_dipendenti2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_salva_dipendenti2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_salva_dipendenti2.setObjectName("frame_salva_dipendenti2")
+        self.horizontalLayout_122 = QtWidgets.QHBoxLayout(self.frame_salva_dipendenti2)
+        self.horizontalLayout_122.setContentsMargins(9, -1, -1, -1)
+        self.horizontalLayout_122.setObjectName("horizontalLayout_122")
+        self.pushButton_salva_dipendenti2 = QtWidgets.QPushButton(self.frame_salva_dipendenti2)
+        self.pushButton_salva_dipendenti2.setEnabled(False)
+        self.pushButton_salva_dipendenti2.setMinimumSize(QtCore.QSize(0, 36))
+        self.pushButton_salva_dipendenti2.setMaximumSize(QtCore.QSize(130, 16777215))
+        self.pushButton_salva_dipendenti2.setStyleSheet("font: 700 14pt \"Apple SD Gothic Neo\";\n"
+                                                        "background-color: rgb(255, 255, 255);\n"
+                                                        "border-radius: 11px;\n"
+                                                        "background-color: rgba(0, 122, 255, 204);\n"
+                                                        "color: rgb(255, 255, 255);")
+        self.pushButton_salva_dipendenti2.setObjectName("pushButton_salva_dipendenti2")
+        self.horizontalLayout_122.addWidget(self.pushButton_salva_dipendenti2)
+        self.verticalLayout_122.addWidget(self.frame_salva_dipendenti2)
+        self.verticalLayout_102.addWidget(self.frame_white2)
+        self.stackedWidget_2.addWidget(self.page_modifica_dipendente)
+
+
+        self.label_nome2.setText("Nome")
+        self.label_oresettimanali2.setText("Ore settimanali")
+        self.label_pagaadora2.setText( "Paga ad ora (€)")
+        self.label_tipodicontratto2.setText( "Tipo di contratto")
+        self.label_email2.setText( "E-mail")
+        self.label_telefono2.setText( "Telefono")
+        self.pushButton_salva_dipendenti2.setText( "Salva dipendente")
+
+
+        #parte con il main frame vuoto
         self.stackedWidget.setCurrentIndex(1)
         self.stackedWidget_2.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def retranslateUi(self, MainWindow):
+        # prende il file .json e popola la lista dipendenti
+        self.controller = ControlloreListaDipendenti()
+
+        self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
+
+        for dipendente in self.controller.get_lista():
+            item = QStandardItem()
+            item.setText(dipendente.nome)
+            item.setEditable(False)
+            self.listview_model.appendRow(item)
+        self.listWidget_dipendenti.setModel(self.listview_model)
+
+        #visalizza a schermo le info di un dipendente
+        self.controller2 = ControlloreDipendente(dipendente)
+        def get_info_dipendente_selezionato():
+            try:
+                 selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+
+                 with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
+                  data = json.load(file)
+                 dip = data[selected]
+
+                 self.label_scrittvisualizzadipendente.setText(dip['nome'])
+                 self.label_visualizza_nome.setText("Nome:  " + dip['nome'])
+                 self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(dip['ore']))
+                 self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(dip['compenso_a_ore']))
+                 self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + dip['tipo_contratto'])
+                 self.label_visualizza_email_.setText("E-mail:  " + dip['email'])
+                 self.label_telefono_2.setText("Telefono:  " + dip['telefono'])
+            except Exception:
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
+                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+
+
+        self.push_visualizza.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
+        self.push_visualizza.clicked.connect(lambda: get_info_dipendente_selezionato())
+
+        #elimina un dipendente dalla lista
+        def box_question_eliminare_dipendente():
+            try:
+              selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+              with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
+                data = json.load(file)
+              dip = data[selected]
+
+              QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+              q = QMessageBox.question(MainWindow,'', "Sei sicuro di voler eliminare " + dip['nome'] + " dalla lista dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
+              if q == QMessageBox.Yes:
+                del data[selected]
+                with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
+                   json.dump(data, f)
+
+                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.about(MainWindow, "", dip['nome'] + " è stato eliminato dalla lista dipendenti")
+
+                self.controller = ControlloreListaDipendenti()
+                self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
+                for dipendente in self.controller.get_lista():
+                   item = QStandardItem()
+                   item.setText(dipendente.nome)
+                   item.setEditable(False)
+                   self.listview_model.appendRow(item)
+                self.listWidget_dipendenti.setModel(self.listview_model)
+
+              else:
+                pass
+
+            except Exception:
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
+                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+
+        self.push_elimina.clicked.connect(lambda: box_question_eliminare_dipendente())
+
+        # modifica i dati di un dipendente
+        def update_info_dipendente():
+            try:
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+
+                with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
+                    data = json.load(file)
+                dip = data[selected]
+                self.label_scritta2.setText(dip['nome'])
+
+                self.lineEdit_nome2.setText(dip['nome'])
+                self.spinBox_oresettimanali2.setValue(dip['ore'])
+                self.spinBox_pagaadora2.setValue(dip['compenso_a_ore'])
+                self.lineEdit_tipodicontratto2.setText(dip['tipo_contratto'])
+                self.lineEdit_email2.setText(dip['email'])
+                self.lineEdit_telefono2.setText(dip['telefono'])
+
+
+                def salva_dipendente_modificato():
+                    #with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
+                    #  data = json.load(file)
+                    #  dip = data[selected]
+
+                    #dip['nome'] == self.lineEdit_nome.text()
+                    #dip['ore'] == self.spinBox_oresettimanali.value()
+                    #dip['compenso_a_ore'] == self.spinBox_pagaadora.value()
+                    #dip['tipo_contratto'] == self.lineEdit_tipodicontratto.text()
+                    #dip['email'] == self.lineEdit_email.text()
+                    #dip['telefono'] == self.lineEdit_telefono.text()
+                    #print(dip['nome'])
+                    dipendente_creato = {"nome": self.lineEdit_nome.text(),
+                                         "ore": str(self.spinBox_oresettimanali.value()),
+                                         "compenso_a_ore": str(self.spinBox_pagaadora.value()),
+                                         "tipo_contratto": str(self.lineEdit_tipodicontratto.text()),
+                                         "email": str(self.lineEdit_email.text()),
+                                         "telefono": str(self.lineEdit_telefono.text())
+                                         }
+
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
+                        del data[selected]
+                        json.dump(data, f)
+
+                    self.controller = ControlloreListaDipendenti()
+                    self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
+                    for dipendente in self.controller.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model)
+
+                    #self.stackedWidget_2.setCurrentWidget(self.page_empty)
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.about(MainWindow, " ", "I dati del dipendente sono stati aggiornati!")
+
+                self.pushButton_salva_dipendenti2.clicked.connect(lambda: salva_dipendente_modificato())
+            except Exception:
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
+                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+
+
+        self.push_modifica.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_modifica_dipendente))
+        self.push_modifica.clicked.connect(lambda: update_info_dipendente())
+
+
+        # prende il testo dei lineEdit in CreaNuovoDipendente e fa l'append al file .json
+        def new_employee():
+          self.stackedWidget_2.setCurrentWidget(self.page_crea_nuovo_dipendente)
+          self.label_scritta.setText("Crea un nuovo dipendente!")
+          self.lineEdit_nome.clear()
+          self.spinBox_oresettimanali.clear()
+          self.spinBox_pagaadora.clear()
+          self.lineEdit_tipodicontratto.clear()
+          self.lineEdit_email.clear()
+          self.lineEdit_telefono.clear()
+
+          def get_line_edits():
+            nome = self.lineEdit_nome.text()
+            ore = self.spinBox_oresettimanali.value()
+            pagaadora = self.spinBox_pagaadora.value()
+            tipodicontratto = self.lineEdit_tipodicontratto.text()
+            email = self.lineEdit_email.text()
+            telefono = self.lineEdit_telefono.text()
+
+            if nome == "" or ore == "" or pagaadora == "" or tipodicontratto == "" or email == "" or telefono == "":
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok, QMessageBox.Ok)
+
+            else:
+
+                dipendente_creato = {"nome": str(nome),
+                                     "ore": ore,
+                                     "compenso_a_ore": pagaadora,
+                                     "tipo_contratto": str(tipodicontratto),
+                                     "email": str(email),
+                                     "telefono": str(telefono)
+                                     }
+
+                with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
+                    data = json.load(file)
+                    data.append(dipendente_creato)
+                    file.seek(0)
+                    json.dump(data, file)
+
+                self.lineEdit_nome.clear()
+                self.spinBox_oresettimanali.clear()
+                self.spinBox_pagaadora.clear()
+                self.lineEdit_tipodicontratto.clear()
+                self.lineEdit_email.clear()
+                self.lineEdit_telefono.clear()
+
+                self.contr = ControlloreListaDipendenti()
+                self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
+
+                for dipendente in self.contr.get_lista():
+                    item = QStandardItem()
+                    item.setText(dipendente.nome)
+                    item.setEditable(False)
+                    self.listview_model2.appendRow(item)
+                self.listWidget_dipendenti.setModel(self.listview_model2)
+
+          self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
+        self.push_creanuovodipendente.clicked.connect(lambda: new_employee())
+        self.retranslateUi(MainWindow, dipendente)
+
+    def retranslateUi(self, MainWindow, dipendente):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.home.setText(_translate("MainWindow", "HOME"))
@@ -1207,23 +1614,14 @@ class Ui_MainWindow(object):
                "Novembre",
                "Dicembre"]
 
-        muaj = mua[tday.month-1]
-
+        muaj = mua[tday.month - 1]
 
         self.mese.setText(_translate("MainWindow", muaj))
         self.anno.setText(_translate("MainWindow", str(tday.year)))
         self.frame_listadeidipendenti_2.setText(_translate("MainWindow", "LISTA DEI DIPENDENTI"))
-        __sortingEnabled = self.listWidget_dipendenti.isSortingEnabled()
-        self.listWidget_dipendenti.setSortingEnabled(False)
-        item = self.listWidget_dipendenti.item(0)
-        item.setText(_translate("MainWindow", "New Item 1"))
-        item = self.listWidget_dipendenti.item(1)
-        item.setText(_translate("MainWindow", "New Item 2"))
-        item = self.listWidget_dipendenti.item(2)
-        item.setText(_translate("MainWindow", "New Item 3"))
-        item = self.listWidget_dipendenti.item(3)
-        item.setText(_translate("MainWindow", "New Item 4"))
-        self.listWidget_dipendenti.setSortingEnabled(__sortingEnabled)
+        # __sortingEnabled = self.listWidget_dipendenti.isSortingEnabled()
+        # self.listWidget_dipendenti.setSortingEnabled(False)
+        # self.listWidget_dipendenti.setSortingEnabled(__sortingEnabled)
         self.push_visualizza.setText(_translate("MainWindow", "Visualizza"))
         self.push_modifica.setText(_translate("MainWindow", "Modifica"))
         self.push_elimina.setText(_translate("MainWindow", "Elimina"))
@@ -1237,13 +1635,19 @@ class Ui_MainWindow(object):
         self.label_email.setText(_translate("MainWindow", "E-mail"))
         self.label_telefono.setText(_translate("MainWindow", "Telefono"))
         self.pushButton_salva_dipendenti.setText(_translate("MainWindow", "Salva dipendente"))
-        self.label_scrittvisualizzadipendente.setText(_translate("MainWindow", "New Item 1"))
-        self.label_visualizza_nome.setText(_translate("MainWindow", "Nome: New Item 1"))
-        self.label_visualizza_oresettimanali.setText(_translate("MainWindow", "Ore settimanali: 7"))
-        self.label__visualizza_pagaadora.setText(_translate("MainWindow", "Paga ad ora (€): 10"))
-        self.label_visualizza_tipodicontratto.setText(_translate("MainWindow", "Tipo di contratto: part-time"))
-        self.label_visualizza_email_.setText(_translate("MainWindow", "E-mail: newitem@gmail.com"))
-        self.label_telefono_2.setText(_translate("MainWindow", "Telefono: 3883425178"))
+
+
+        #self.controller2 = ControlloreDipendente(dipendente)
+
+        #self.push_visualizza.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
+        #self.label_scrittvisualizzadipendente.setText(self.controller2.get_nome())
+        #self.label_visualizza_nome.setText("ID:  " + str(self.controller2.get_id())[:5])
+        #self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(self.controller2.get_ore()))
+        #self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(self.controller2.get_compenso_a_ore()))
+        #self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + self.controller2.get_tipo_contratto())
+        #self.label_visualizza_email_.setText("E-mail:  " + self.controller2.get_email())
+        #self.label_telefono_2.setText("Telefono:  " + self.controller2.get_telefono())
+
         self.label_14.setText(_translate("MainWindow", "PIANO DI LAVORO"))
         self.label_oggi.setText(_translate("MainWindow", "Oggi"))
         __sortingEnabled = self.listWidget_2.isSortingEnabled()
@@ -1285,8 +1689,8 @@ class Ui_MainWindow(object):
         dita5 = tday + t5
         dita6 = tday + t6
 
-
-        self.label_17.setText(_translate("MainWindow", str(dit[dita2.isoweekday()]) + " " + str(dita2.day) + " " + str(mua[dita2.month -1]) ))
+        self.label_17.setText(_translate("MainWindow", str(dit[dita2.isoweekday()]) + " " + str(dita2.day) + " " + str(
+            mua[dita2.month - 1])))
         __sortingEnabled = self.listWidget_4.isSortingEnabled()
         self.listWidget_4.setSortingEnabled(False)
         item = self.listWidget_4.item(0)
@@ -1298,13 +1702,15 @@ class Ui_MainWindow(object):
         item = self.listWidget_4.item(3)
         item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_4.setSortingEnabled(__sortingEnabled)
-        self.label_18.setText(_translate("MainWindow", str(dit[dita3.isoweekday()]) + " " + str(dita3.day) + " " + str(mua[dita3.month -1]) ))
+        self.label_18.setText(_translate("MainWindow", str(dit[dita3.isoweekday()]) + " " + str(dita3.day) + " " + str(
+            mua[dita3.month - 1])))
         __sortingEnabled = self.listWidget_5.isSortingEnabled()
         self.listWidget_5.setSortingEnabled(False)
         item = self.listWidget_5.item(0)
         item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_5.setSortingEnabled(__sortingEnabled)
-        self.label_19.setText(_translate("MainWindow", str(dit[dita4.isoweekday()]) + " " + str(dita4.day) + " " + str(mua[dita4.month -1]) ))
+        self.label_19.setText(_translate("MainWindow", str(dit[dita4.isoweekday()]) + " " + str(dita4.day) + " " + str(
+            mua[dita4.month - 1])))
         __sortingEnabled = self.listWidget_6.isSortingEnabled()
         self.listWidget_6.setSortingEnabled(False)
         item = self.listWidget_6.item(0)
@@ -1318,7 +1724,8 @@ class Ui_MainWindow(object):
         item = self.listWidget_6.item(4)
         item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_6.setSortingEnabled(__sortingEnabled)
-        self.label_20.setText(_translate("MainWindow", str(dit[dita5.isoweekday()]) + " " + str(dita5.day) + " " + str(mua[dita5.month -1]) ))
+        self.label_20.setText(_translate("MainWindow", str(dit[dita5.isoweekday()]) + " " + str(dita5.day) + " " + str(
+            mua[dita5.month - 1])))
         __sortingEnabled = self.listWidget_7.isSortingEnabled()
         self.listWidget_7.setSortingEnabled(False)
         item = self.listWidget_7.item(0)
@@ -1328,7 +1735,8 @@ class Ui_MainWindow(object):
         item = self.listWidget_7.item(2)
         item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_7.setSortingEnabled(__sortingEnabled)
-        self.label_21.setText(_translate("MainWindow", str(dit[dita6.isoweekday()]) + " " + str(dita6.day) + " " + str(mua[dita6.month - 1]) ))
+        self.label_21.setText(_translate("MainWindow", str(dit[dita6.isoweekday()]) + " " + str(dita6.day) + " " + str(
+            mua[dita6.month - 1])))
         __sortingEnabled = self.listWidget_8.isSortingEnabled()
         self.listWidget_8.setSortingEnabled(False)
         item = self.listWidget_8.item(0)
