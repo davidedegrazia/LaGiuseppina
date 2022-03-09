@@ -142,7 +142,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.giorno, 0, QtCore.Qt.AlignHCenter)
         self.mese = QtWidgets.QLabel(self.frame_celeste)
         self.mese.setStyleSheet("COLOR: rgb(255, 255, 255);\n"
-                                "font: 600 22pt \"SF Pro\";")
+                                "font: 600 30pt \"SF Pro\";")
         self.mese.setObjectName("mese")
         self.verticalLayout_4.addWidget(self.mese, 0, QtCore.Qt.AlignHCenter)
         self.anno = QtWidgets.QLabel(self.frame_celeste)
@@ -230,19 +230,6 @@ class Ui_MainWindow(object):
         self.listWidget_dipendenti.setStyleSheet("background-color: rgb(255, 255, 255);\n"
                                                  "border-radius:0px;")
         self.listWidget_dipendenti.setObjectName("listWidget_dipendenti")
-
-        # def show_selected_info(self):
-        # selected = self.listWidget_dipendenti.selectedIndexes().row()
-        # dipendente_selezionato = self.controller.get_dipendente_by_index(selected)
-        # self.label_scrittvisualizzadipendente.setText(self.dipendente_selezionato.get_nome())
-        # self.label_visualizza_nome.setText("ID:  " + str(self.dipendente_selezionato.get_id())[:5])
-        # self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(self.dipendente_selezionato.get_ore()))
-        # self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(self.dipendente_selezionato.get_compenso_a_ore()))
-        # self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + self.dipendente_selezionato.get_tipo_contratto())
-        # self.label_visualizza_email_.setText("E-mail:  " + self.dipendente_selezionato.get_email())
-        # self.label_telefono_2.setText("Telefono:  " + self.dipendente_selezionato.get_telefono())
-
-        # self.push_visualizza.clicked(self.show_selected_info())
 
         self.verticalLayout_8.addWidget(self.frame_13)
         self.horizontalLayout_4.addWidget(self.frame_list)
@@ -502,7 +489,7 @@ class Ui_MainWindow(object):
         self.frame_visualizza_nuovo_dipendente.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_visualizza_nuovo_dipendente.setObjectName("frame_visualizza_nuovo_dipendente")
         self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.frame_visualizza_nuovo_dipendente)
-        self.verticalLayout_30.setContentsMargins(0, 0, 13, 6)
+        self.verticalLayout_30.setContentsMargins(0, 0, 13,6)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
         self.frame_scritta_dipendente = QtWidgets.QFrame(self.frame_visualizza_nuovo_dipendente)
         self.frame_scritta_dipendente.setMaximumSize(QtCore.QSize(16777215, 46))
@@ -1188,7 +1175,7 @@ class Ui_MainWindow(object):
         self.page_modifica_dipendente = QtWidgets.QWidget()
         self.page_modifica_dipendente.setObjectName("page_modifica_dipendente")
         self.verticalLayout_102 = QtWidgets.QVBoxLayout(self.page_modifica_dipendente)
-        self.verticalLayout_102.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_102.setContentsMargins(7, 2, 20, 16)
         self.verticalLayout_102.setSpacing(0)
         self.verticalLayout_102.setObjectName("verticalLayout_10")
         self.frame_scritta2 = QtWidgets.QFrame(self.page_modifica_dipendente)
@@ -1348,9 +1335,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_122.setContentsMargins(9, -1, -1, -1)
         self.horizontalLayout_122.setObjectName("horizontalLayout_122")
         self.pushButton_salva_dipendenti2 = QtWidgets.QPushButton(self.frame_salva_dipendenti2)
-        self.pushButton_salva_dipendenti2.setEnabled(False)
+        #self.pushButton_salva_dipendenti2.setEnabled(False)
         self.pushButton_salva_dipendenti2.setMinimumSize(QtCore.QSize(0, 36))
-        self.pushButton_salva_dipendenti2.setMaximumSize(QtCore.QSize(130, 16777215))
+        self.pushButton_salva_dipendenti2.setMaximumSize(QtCore.QSize(145, 16777215))
         self.pushButton_salva_dipendenti2.setStyleSheet("font: 700 14pt \"Apple SD Gothic Neo\";\n"
                                                         "background-color: rgb(255, 255, 255);\n"
                                                         "border-radius: 11px;\n"
@@ -1369,7 +1356,7 @@ class Ui_MainWindow(object):
         self.label_tipodicontratto2.setText( "Tipo di contratto")
         self.label_email2.setText( "E-mail")
         self.label_telefono2.setText( "Telefono")
-        self.pushButton_salva_dipendenti2.setText( "Salva dipendente")
+        self.pushButton_salva_dipendenti2.setText( "Modifica dipendente")
 
 
         #parte con il main frame vuoto
@@ -1454,71 +1441,6 @@ class Ui_MainWindow(object):
 
         self.push_elimina.clicked.connect(lambda: box_question_eliminare_dipendente())
 
-        # modifica i dati di un dipendente
-        def update_info_dipendente():
-            try:
-                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
-
-                with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
-                    data = json.load(file)
-                dip = data[selected]
-                self.label_scritta2.setText(dip['nome'])
-
-                self.lineEdit_nome2.setText(dip['nome'])
-                self.spinBox_oresettimanali2.setValue(dip['ore'])
-                self.spinBox_pagaadora2.setValue(dip['compenso_a_ore'])
-                self.lineEdit_tipodicontratto2.setText(dip['tipo_contratto'])
-                self.lineEdit_email2.setText(dip['email'])
-                self.lineEdit_telefono2.setText(dip['telefono'])
-
-
-                def salva_dipendente_modificato():
-                    #with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
-                    #  data = json.load(file)
-                    #  dip = data[selected]
-
-                    #dip['nome'] == self.lineEdit_nome.text()
-                    #dip['ore'] == self.spinBox_oresettimanali.value()
-                    #dip['compenso_a_ore'] == self.spinBox_pagaadora.value()
-                    #dip['tipo_contratto'] == self.lineEdit_tipodicontratto.text()
-                    #dip['email'] == self.lineEdit_email.text()
-                    #dip['telefono'] == self.lineEdit_telefono.text()
-                    #print(dip['nome'])
-                    dipendente_creato = {"nome": self.lineEdit_nome.text(),
-                                         "ore": str(self.spinBox_oresettimanali.value()),
-                                         "compenso_a_ore": str(self.spinBox_pagaadora.value()),
-                                         "tipo_contratto": str(self.lineEdit_tipodicontratto.text()),
-                                         "email": str(self.lineEdit_email.text()),
-                                         "telefono": str(self.lineEdit_telefono.text())
-                                         }
-
-                    with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
-                        del data[selected]
-                        json.dump(data, f)
-
-                    self.controller = ControlloreListaDipendenti()
-                    self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
-                    for dipendente in self.controller.get_lista():
-                        item = QStandardItem()
-                        item.setText(dipendente.nome)
-                        item.setEditable(False)
-                        self.listview_model.appendRow(item)
-                    self.listWidget_dipendenti.setModel(self.listview_model)
-
-                    #self.stackedWidget_2.setCurrentWidget(self.page_empty)
-                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                    QMessageBox.about(MainWindow, " ", "I dati del dipendente sono stati aggiornati!")
-
-                self.pushButton_salva_dipendenti2.clicked.connect(lambda: salva_dipendente_modificato())
-            except Exception:
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
-                self.stackedWidget_2.setCurrentWidget(self.page_empty)
-
-
-        self.push_modifica.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_modifica_dipendente))
-        self.push_modifica.clicked.connect(lambda: update_info_dipendente())
-
 
         # prende il testo dei lineEdit in CreaNuovoDipendente e fa l'append al file .json
         def new_employee():
@@ -1579,6 +1501,69 @@ class Ui_MainWindow(object):
           self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
         self.push_creanuovodipendente.clicked.connect(lambda: new_employee())
         self.retranslateUi(MainWindow, dipendente)
+
+        # modifica i dati di un dipendente
+
+        def update_info_dipendente():
+            try:
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+
+                with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
+                    data = json.load(file)
+                dip = data[selected]
+                self.label_scritta2.setText(dip['nome'])
+
+                self.lineEdit_nome2.setText(dip['nome'])
+                self.spinBox_oresettimanali2.setValue(dip['ore'])
+                self.spinBox_pagaadora2.setValue(dip['compenso_a_ore'])
+                self.lineEdit_tipodicontratto2.setText(dip['tipo_contratto'])
+                self.lineEdit_email2.setText(dip['email'])
+                self.lineEdit_telefono2.setText(dip['telefono'])
+
+
+
+                def salva_dipendente_modificato():
+                    nome = self.lineEdit_nome2.text()
+                    ore = self.spinBox_oresettimanali2.value()
+                    pagaadora = self.spinBox_pagaadora2.value()
+                    tipodicontratto = self.lineEdit_tipodicontratto2.text()
+                    email = self.lineEdit_email2.text()
+                    telefono = self.lineEdit_telefono2.text()
+
+                    dipendente_modificato = {"nome": nome,
+                                             "ore": ore,
+                                             "compenso_a_ore": pagaadora,
+                                             "tipo_contratto": tipodicontratto,
+                                             "email": email,
+                                             "telefono": telefono
+                                             }
+
+                    self.label_scritta2.setText(nome)
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
+                        data = json.load(file)
+                        del data[selected]
+                        data.append(dipendente_modificato)
+                        file.seek(0)
+                        json.dump(data, file)
+
+                    self.contr = ControlloreListaDipendenti()
+                    self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
+
+                    for dipendente in self.contr.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model2.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model2)
+
+                self.pushButton_salva_dipendenti2.clicked.connect(lambda: salva_dipendente_modificato())
+            except Exception:
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
+                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+
+        self.push_modifica.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_modifica_dipendente))
+        self.push_modifica.clicked.connect(lambda: update_info_dipendente())
 
     def retranslateUi(self, MainWindow, dipendente):
         _translate = QtCore.QCoreApplication.translate
