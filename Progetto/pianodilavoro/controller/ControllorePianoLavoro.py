@@ -15,6 +15,12 @@ class ControllorePianoLavoro:
     def get_lista_task(self):
         return self.model.get_lista_task()
 
+    def rimuovi_task_by_index(self, index):
+        self.model.rimuovi_task_by_index(index)
+
+    def get_task_by_index(self, index):
+        return self.model.get_task_by_index(index)
+
     # ritorna la lista delle task completate
     def get_task_completate(self):
         return self.model.get_lista_task_completate()

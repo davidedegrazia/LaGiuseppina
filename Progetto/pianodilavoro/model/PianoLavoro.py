@@ -7,10 +7,10 @@ from Progetto.pianodilavoro.model.Task import Task
 
 class PianoLavoro:
 
-    def __init__(self, margine_scadenza):
+    def __init__(self):
         super(PianoLavoro, self).__init__()
         self.piano_lavoro = []
-        self.margine_scadenza = margine_scadenza
+        #self.margine_scadenza
         if os.path.isfile('pianodilavoro/data/lista_task.pickle'):
             with open('pianodilavoro/data/lista_task.pickle', 'rb') as f:
                 self.piano_lavoro = pickle.load(f)
@@ -28,6 +28,14 @@ class PianoLavoro:
     def get_lista_task(self):
         return self.piano_lavoro
 
+    def rimuovi_task_by_index(self, index):
+        for task in self.piano_lavoro:
+            if task.index == index:
+                self.piano_lavoro.remove(task)
+
+    def get_task_by_index(self, index):
+        return self.piano_lavoro[index]
+
     def get_lista_task_completate(self):
         completate = []
         for task in self.piano_lavoro:
@@ -35,10 +43,10 @@ class PianoLavoro:
                 self.completate.append(task)
         return completate
 
-    def get_lista_task_in_scadenza(self):
+    def get_lista_task_in_scadenza(self, margine_scadenza):
         in_scadenza = []
         for task in self.piano_lavoro:
-            if task.giorni_alla_scadenza <= self.margine_scadenza:
+            if task.giorni_alla_scadenza <= margine_scadenza:
                 self.in_scadenza.append(task)
         return in_scadenza
 

@@ -2,6 +2,7 @@ class ControlloreTask():
     def __init__(self, task):
         self.model = task
 
+
     def get_descrizione(self):
         return self.model.descrizione
 

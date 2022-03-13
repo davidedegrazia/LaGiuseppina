@@ -12,9 +12,18 @@ from PyQt5.QtWidgets import QListView, QMessageBox, QListWidget
 from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
 from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
 from Progetto.dipendenti.model.Dipendente import Dipendente
+from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
+from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 
 
-class Ui_MainWindow(object):
+class main_interface(object):
+    def __init__(self):
+        self.vista_pianolavoro = VistaPianoLavoro()
+    def nuovapagina(self):
+        self.window = QtWidgets.QMainWindow()
+        self.vista_pianolavoro.setupUi(self.window)
+        self.window.show()
+
     def setupUi(self, MainWindow, dipendente):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1203, 627)
@@ -604,12 +613,7 @@ class Ui_MainWindow(object):
         self.listWidget_2.setStyleSheet("border-radius: 14px;\n"
                                         "background-color: rgb(255, 255, 255);")
         self.listWidget_2.setObjectName("listWidget_2")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_2.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_2.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_2.addItem(item)
+
         self.horizontalLayout_14.addWidget(self.listWidget_2)
         self.verticalLayout_14.addWidget(self.frame_33)
         self.frame_29 = QtWidgets.QFrame(self.frame_sx)
@@ -635,10 +639,7 @@ class Ui_MainWindow(object):
         self.listWidget_3 = QtWidgets.QListWidget(self.frame_32)
         self.listWidget_3.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_3.setObjectName("listWidget_3")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_3.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_3.addItem(item)
+
         self.verticalLayout_17.addWidget(self.listWidget_3)
         self.verticalLayout_14.addWidget(self.frame_32)
         self.frame_30 = QtWidgets.QFrame(self.frame_sx)
@@ -665,14 +666,7 @@ class Ui_MainWindow(object):
         self.listWidget_4 = QtWidgets.QListWidget(self.frame_34)
         self.listWidget_4.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_4.setObjectName("listWidget_4")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_4.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_4.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_4.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_4.addItem(item)
+
         self.verticalLayout_19.addWidget(self.listWidget_4)
         self.verticalLayout_14.addWidget(self.frame_34)
         self.frame_31 = QtWidgets.QFrame(self.frame_sx)
@@ -698,8 +692,7 @@ class Ui_MainWindow(object):
         self.listWidget_5.setMaximumSize(QtCore.QSize(16777215, 167))
         self.listWidget_5.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_5.setObjectName("listWidget_5")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_5.addItem(item)
+
         self.horizontalLayout_15.addWidget(self.listWidget_5)
         self.verticalLayout_14.addWidget(self.frame_28)
         self.horizontalLayout_13.addWidget(self.frame_sx)
@@ -739,16 +732,7 @@ class Ui_MainWindow(object):
         self.listWidget_6 = QtWidgets.QListWidget(self.frame_38)
         self.listWidget_6.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_6.setObjectName("listWidget_6")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_6.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_6.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_6.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_6.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_6.addItem(item)
+
         self.verticalLayout_23.addWidget(self.listWidget_6)
         self.verticalLayout_21.addWidget(self.frame_38)
         self.frame_36 = QtWidgets.QFrame(self.frame_26)
@@ -774,12 +758,7 @@ class Ui_MainWindow(object):
         self.listWidget_7 = QtWidgets.QListWidget(self.frame_39)
         self.listWidget_7.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_7.setObjectName("listWidget_7")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_7.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_7.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_7.addItem(item)
+
         self.verticalLayout_25.addWidget(self.listWidget_7)
         self.verticalLayout_21.addWidget(self.frame_39)
         self.frame_40 = QtWidgets.QFrame(self.frame_26)
@@ -804,10 +783,7 @@ class Ui_MainWindow(object):
         self.listWidget_8 = QtWidgets.QListWidget(self.frame_37)
         self.listWidget_8.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.listWidget_8.setObjectName("listWidget_8")
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_8.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.listWidget_8.addItem(item)
+
         self.verticalLayout_27.addWidget(self.listWidget_8)
         self.verticalLayout_21.addWidget(self.frame_37)
         self.horizontalLayout_13.addWidget(self.frame_26)
@@ -1500,7 +1476,7 @@ class Ui_MainWindow(object):
 
           self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
         self.push_creanuovodipendente.clicked.connect(lambda: new_employee())
-        self.retranslateUi(MainWindow, dipendente)
+        self.retranslateUi(MainWindow)
 
         # modifica i dati di un dipendente
 
@@ -1565,7 +1541,31 @@ class Ui_MainWindow(object):
         self.push_modifica.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_modifica_dipendente))
         self.push_modifica.clicked.connect(lambda: update_info_dipendente())
 
-    def retranslateUi(self, MainWindow, dipendente):
+
+        # sezione Piano di Lavoro
+        self.push_listadelleattivita.clicked.connect(self.nuovapagina)
+
+        #popolo le listWidget di PianoLavoro
+        with open('pianodilavoro/data/lista_task.json') as f:
+            tasks = json.load(f)
+            for task in tasks:
+                if task['giorni_rimanenti_alla_scadenza'] == 0:
+                    self.listWidget_2.addItem("Evvivaaa")
+                elif task['giorni_rimanenti_alla_scadenza'] == 1:
+                    self.listWidget_3.addItem(task['nome_task'])
+                elif task['giorni_rimanenti_alla_scadenza'] == 2:
+                    self.listWidget_4.addItem(task['nome_task'])
+                elif task['giorni_rimanenti_alla_scadenza'] == 3:
+                    self.listWidget_5.addItem(task['nome_task'])
+                elif task['giorni_rimanenti_alla_scadenza'] == 4:
+                    self.listWidget_6.addItem(task['nome_task'])
+                elif task['giorni_rimanenti_alla_scadenza'] == 5:
+                    self.listWidget_7.addItem(task['nome_task'])
+                elif task['giorni_rimanenti_alla_scadenza'] == 6:
+                    self.listWidget_8.addItem(task['nome_task'])
+                else: pass
+
+    def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.home.setText(_translate("MainWindow", "HOME"))
@@ -1620,37 +1620,14 @@ class Ui_MainWindow(object):
         self.label_email.setText(_translate("MainWindow", "E-mail"))
         self.label_telefono.setText(_translate("MainWindow", "Telefono"))
         self.pushButton_salva_dipendenti.setText(_translate("MainWindow", "Salva dipendente"))
-
-
-        #self.controller2 = ControlloreDipendente(dipendente)
-
-        #self.push_visualizza.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
-        #self.label_scrittvisualizzadipendente.setText(self.controller2.get_nome())
-        #self.label_visualizza_nome.setText("ID:  " + str(self.controller2.get_id())[:5])
-        #self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(self.controller2.get_ore()))
-        #self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(self.controller2.get_compenso_a_ore()))
-        #self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + self.controller2.get_tipo_contratto())
-        #self.label_visualizza_email_.setText("E-mail:  " + self.controller2.get_email())
-        #self.label_telefono_2.setText("Telefono:  " + self.controller2.get_telefono())
-
         self.label_14.setText(_translate("MainWindow", "PIANO DI LAVORO"))
         self.label_oggi.setText(_translate("MainWindow", "Oggi"))
         __sortingEnabled = self.listWidget_2.isSortingEnabled()
         self.listWidget_2.setSortingEnabled(False)
-        item = self.listWidget_2.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_2.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_2.item(2)
-        item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_2.setSortingEnabled(__sortingEnabled)
         self.label_16.setText(_translate("MainWindow", "Domani"))
         __sortingEnabled = self.listWidget_3.isSortingEnabled()
         self.listWidget_3.setSortingEnabled(False)
-        item = self.listWidget_3.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_3.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
         self.listWidget_3.setSortingEnabled(__sortingEnabled)
 
         dit = ["Domenica",
@@ -1678,56 +1655,31 @@ class Ui_MainWindow(object):
             mua[dita2.month - 1])))
         __sortingEnabled = self.listWidget_4.isSortingEnabled()
         self.listWidget_4.setSortingEnabled(False)
-        item = self.listWidget_4.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_4.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_4.item(2)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_4.item(3)
-        item.setText(_translate("MainWindow", "New Item"))
+
         self.listWidget_4.setSortingEnabled(__sortingEnabled)
         self.label_18.setText(_translate("MainWindow", str(dit[dita3.isoweekday()]) + " " + str(dita3.day) + " " + str(
             mua[dita3.month - 1])))
         __sortingEnabled = self.listWidget_5.isSortingEnabled()
         self.listWidget_5.setSortingEnabled(False)
-        item = self.listWidget_5.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
+
         self.listWidget_5.setSortingEnabled(__sortingEnabled)
         self.label_19.setText(_translate("MainWindow", str(dit[dita4.isoweekday()]) + " " + str(dita4.day) + " " + str(
             mua[dita4.month - 1])))
         __sortingEnabled = self.listWidget_6.isSortingEnabled()
         self.listWidget_6.setSortingEnabled(False)
-        item = self.listWidget_6.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_6.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_6.item(2)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_6.item(3)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_6.item(4)
-        item.setText(_translate("MainWindow", "New Item"))
+
         self.listWidget_6.setSortingEnabled(__sortingEnabled)
         self.label_20.setText(_translate("MainWindow", str(dit[dita5.isoweekday()]) + " " + str(dita5.day) + " " + str(
             mua[dita5.month - 1])))
         __sortingEnabled = self.listWidget_7.isSortingEnabled()
         self.listWidget_7.setSortingEnabled(False)
-        item = self.listWidget_7.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_7.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_7.item(2)
-        item.setText(_translate("MainWindow", "New Item"))
+
         self.listWidget_7.setSortingEnabled(__sortingEnabled)
         self.label_21.setText(_translate("MainWindow", str(dit[dita6.isoweekday()]) + " " + str(dita6.day) + " " + str(
             mua[dita6.month - 1])))
         __sortingEnabled = self.listWidget_8.isSortingEnabled()
         self.listWidget_8.setSortingEnabled(False)
-        item = self.listWidget_8.item(0)
-        item.setText(_translate("MainWindow", "New Item"))
-        item = self.listWidget_8.item(1)
-        item.setText(_translate("MainWindow", "New Item"))
+
         self.listWidget_8.setSortingEnabled(__sortingEnabled)
         self.push_listadelleattivita.setText(_translate("MainWindow", "LISTA DELLE ATTIVITA\'"))
         self.push_eliminapianodilavoro.setText(_translate("MainWindow", "ELIMINA PIANO DI LAVORO"))
@@ -1823,3 +1775,4 @@ class Ui_MainWindow(object):
         item = self.tableWidget_6.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Costo"))
         self.label_23.setText(_translate("MainWindow", "Utile: "))
+

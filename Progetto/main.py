@@ -1,12 +1,12 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from Progetto.dipendenti.view.main_interface import Ui_MainWindow
+from Progetto.home.view.main_interface import main_interface
 
 
 class MainWindow(QMainWindow):
     def __init__(self, dipendente):
         QMainWindow.__init__(self)
-        self.ui = Ui_MainWindow()
+        self.ui = main_interface()
         self.ui.setupUi(self, dipendente)
         self.show()
 
@@ -19,6 +19,8 @@ class MainWindow(QMainWindow):
 
 
         self.ui.push_pianodilavoro.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.pianodilavoro))
+
+
 
         self.ui.push_magazzino.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.magazzino))
 

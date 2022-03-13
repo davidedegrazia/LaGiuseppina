@@ -1,3 +1,4 @@
+
 class ControlloreVoceDiBilancio:
     def __init__(self, vocedibilancio, elimina_elemento_selezionato):
 
