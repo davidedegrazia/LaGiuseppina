@@ -19,6 +19,7 @@ from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 class main_interface(object):
     def __init__(self):
         self.vista_pianolavoro = VistaPianoLavoro()
+
     def nuovapagina(self):
         self.window = QtWidgets.QMainWindow()
         self.vista_pianolavoro.setupUi(self.window)
@@ -1391,7 +1392,7 @@ class main_interface(object):
               if q == QMessageBox.Yes:
                 del data[selected]
                 with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
-                   json.dump(data, f)
+                   json.dump(data, f, indent=4)
 
                 self.stackedWidget_2.setCurrentWidget(self.page_empty)
 
@@ -1455,7 +1456,7 @@ class main_interface(object):
                     data = json.load(file)
                     data.append(dipendente_creato)
                     file.seek(0)
-                    json.dump(data, file)
+                    json.dump(data, file, indent=4)
 
                 self.lineEdit_nome.clear()
                 self.spinBox_oresettimanali.clear()
@@ -1499,28 +1500,16 @@ class main_interface(object):
 
 
                 def salva_dipendente_modificato():
-                    nome = self.lineEdit_nome2.text()
-                    ore = self.spinBox_oresettimanali2.value()
-                    pagaadora = self.spinBox_pagaadora2.value()
-                    tipodicontratto = self.lineEdit_tipodicontratto2.text()
-                    email = self.lineEdit_email2.text()
-                    telefono = self.lineEdit_telefono2.text()
+                    dip['nome'] = self.lineEdit_nome2.text()
+                    dip['ore'] = self.spinBox_oresettimanali2.value()
+                    dip['compenso_a_ore'] = self.spinBox_pagaadora2.value()
+                    dip['tipo_contratto'] = self.lineEdit_tipodicontratto2.text()
+                    dip['email'] = self.lineEdit_email2.text()
+                    dip['telefono'] = self.lineEdit_telefono2.text()
+                    self.label_scritta2.setText(self.lineEdit_nome2.text())
 
-                    dipendente_modificato = {"nome": nome,
-                                             "ore": ore,
-                                             "compenso_a_ore": pagaadora,
-                                             "tipo_contratto": tipodicontratto,
-                                             "email": email,
-                                             "telefono": telefono
-                                             }
-
-                    self.label_scritta2.setText(nome)
-                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
-                        data = json.load(file)
-                        del data[selected]
-                        data.append(dipendente_modificato)
-                        file.seek(0)
-                        json.dump(data, file)
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "w") as file:
+                        json.dump(data, file, indent=4)
 
                     self.contr = ControlloreListaDipendenti()
                     self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
@@ -1546,7 +1535,8 @@ class main_interface(object):
         self.push_listadelleattivita.clicked.connect(self.nuovapagina)
 
         #popolo le listWidget di PianoLavoro
-        with open('pianodilavoro/data/lista_task.json') as f:
+        def fill_task_calendar():
+          with open('pianodilavoro/data/lista_task.json') as f:
             tasks = json.load(f)
             for task in tasks:
                 if task['giorni_rimanenti_alla_scadenza'] == 0:
@@ -1564,6 +1554,28 @@ class main_interface(object):
                 elif task['giorni_rimanenti_alla_scadenza'] == 6:
                     self.listWidget_8.addItem(task['nome_task'])
                 else: pass
+        fill_task_calendar()
+
+
+
+        def elimina_lista_attivita():
+            QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
+                                                  "background-color: rgb(235, 235, 235);"
+                                                  "border: none")
+            q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare tutta la lista delle attività? ", QMessageBox.Yes | QMessageBox.No)
+            if q == QMessageBox.Yes:
+                tasks = []
+                with open("pianodilavoro/data/lista_task.json", 'w') as file:
+                     json.dump(tasks, file)
+                self.listWidget_2.clear()
+                self.listWidget_3.clear()
+                self.listWidget_4.clear()
+                self.listWidget_5.clear()
+                self.listWidget_6.clear()
+                self.listWidget_7.clear()
+                self.listWidget_8.clear()
+
+        self.push_eliminapianodilavoro.clicked.connect(lambda: elimina_lista_attivita())
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

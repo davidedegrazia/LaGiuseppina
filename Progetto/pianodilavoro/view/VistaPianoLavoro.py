@@ -1,24 +1,26 @@
-
 import json
 from datetime import datetime, timedelta
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtGui import QStandardItem
+from PyQt5.QtWidgets import QMessageBox, QListWidgetItem
 
+from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
+from Progetto.home.view import main_interface
 from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 
 
 class VistaPianoLavoro(object):
-   def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(692, 646)
-        MainWindow.setMinimumSize(QtCore.QSize(0, 625))
-        MainWindow.setMaximumSize(QtCore.QSize(692, 646))
+        MainWindow.setMinimumSize(QtCore.QSize(0, 715))
+        MainWindow.setMaximumSize(QtCore.QSize(692, 830))
         MainWindow.setStyleSheet("border: none;"
                                  "background-color: rgb(235,235,235); ")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setMinimumSize(QtCore.QSize(692, 625))
-        self.centralwidget.setMaximumSize(QtCore.QSize(692, 589))
+        self.centralwidget.setMinimumSize(QtCore.QSize(600, 500))
+        self.centralwidget.setMaximumSize(QtCore.QSize(692, 850))
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(-1, -1, -1, 0)
@@ -258,13 +260,16 @@ class VistaPianoLavoro(object):
                                     "color: rgb(0,0,0);")
         self.label_10.setObjectName("label_10")
         self.horizontalLayout_4.addWidget(self.label_10)
-        self.lineEdit_assegnatari = QtWidgets.QLineEdit(self.frame_10)
-        self.lineEdit_assegnatari.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_assegnatari.setStyleSheet("border-radius: 10px;\n"
-                                                "background-color: rgb(235, 235, 235);"
-                                                "color: rgb(0,0,0);")
-        self.lineEdit_assegnatari.setObjectName("lineEdit_assegnatari")
-        self.horizontalLayout_4.addWidget(self.lineEdit_assegnatari)
+
+        self.listWidget_assegnatari = QtWidgets.QListWidget(self.frame_10)
+        self.listWidget_assegnatari.setStyleSheet("background-color: rgb(235,235,235);"
+                                                  "color: rgb(0,0,0);"
+                                                  "border-radius: 8px;")
+        self.listWidget_assegnatari.setObjectName("listWidget_assegnatari")
+
+        self.horizontalLayout_4.addWidget(self.listWidget_assegnatari)
+        self.horizontalLayout_4.setContentsMargins(12, 12, 300, 12)
+        self.horizontalLayout_4.addWidget(self.listWidget_assegnatari)
         self.verticalLayout_7.addWidget(self.frame_10)
         self.frame_7 = QtWidgets.QFrame(self.frame_biannco_2)
         self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -386,13 +391,16 @@ class VistaPianoLavoro(object):
                                     "color: rgb(0,0,0);")
         self.label_14.setObjectName("label_14")
         self.horizontalLayout_9.addWidget(self.label_14)
-        self.lineEdit_modifica_assegnatari = QtWidgets.QLineEdit(self.frame_14)
-        self.lineEdit_modifica_assegnatari.setMinimumSize(QtCore.QSize(0, 25))
-        self.lineEdit_modifica_assegnatari.setStyleSheet("border-radius: 10px;\n"
-                                                         "background-color: rgb(235, 235, 235);"
-                                                         "color: rgb(0,0,0);")
-        self.lineEdit_modifica_assegnatari.setObjectName("lineEdit_modifica_assegnatari")
-        self.horizontalLayout_9.addWidget(self.lineEdit_modifica_assegnatari)
+
+        self.listWidget_modifica_assegnatari = QtWidgets.QListWidget(self.frame_14)
+        self.listWidget_modifica_assegnatari.setStyleSheet("background-color: rgb(235,235,235);"
+                                                           "color: rgb(0,0,0);"
+                                                           "border-radius: 8px;")
+        self.listWidget_modifica_assegnatari.setObjectName("listWidget_modifica_assegnatri")
+
+        self.horizontalLayout_9.addWidget(self.listWidget_modifica_assegnatari)
+        self.horizontalLayout_9.setContentsMargins(12, 12, 300, 12)
+
         self.verticalLayout_8.addWidget(self.frame_14)
         self.frame_15 = QtWidgets.QFrame(self.frame_bianco_3)
         self.frame_15.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -467,7 +475,7 @@ class VistaPianoLavoro(object):
         # popolo la lista widget delle task
         self.controllore = ControllorePianoLavoro()
         for task in self.controllore.get_lista_task():
-                self.listWidget.addItem(task.nome_task)
+            self.listWidget.addItem(task.nome_task)
 
         # mette in lista solo le task completate
         def task_completate():
@@ -478,7 +486,8 @@ class VistaPianoLavoro(object):
                 tasks = json.load(f)
             for task in tasks:
                 if task['completata'] == "True":
-                   self.listWidget.addItem(task['nome_task'])
+                    self.listWidget.addItem(task['nome_task'])
+
         self.pushButton_att_compl.clicked.connect(lambda: task_completate())
 
         # mette in lista solo le task non completate
@@ -490,18 +499,20 @@ class VistaPianoLavoro(object):
                 tasks = json.load(f)
             for task in tasks:
                 if task['completata'] == "False":
-                   self.listWidget.addItem(task['nome_task'])
+                    self.listWidget.addItem(task['nome_task'])
+
         self.pushButton_att_non_compl.clicked.connect(lambda: task_non_completate())
 
         # mette in lista tutte le task
         def task_tutte():
             self.listWidget.setStyleSheet("color: rgb(0, 0, 0);"
-                                              "background-color: rgb(255,255,255);")
+                                          "background-color: rgb(255,255,255);")
             self.listWidget.clear()
             with open('pianodilavoro/data/lista_task.json') as f:
                 tasks = json.load(f)
             for task in tasks:
-                   self.listWidget.addItem(task['nome_task'])
+                self.listWidget.addItem(task['nome_task'])
+
         self.pushButton_9.clicked.connect(lambda: task_tutte())
 
         # visualizza le info di una task
@@ -512,211 +523,285 @@ class VistaPianoLavoro(object):
                 nomeselezionato = self.listWidget.currentItem().text()
 
                 with open('pianodilavoro/data/lista_task.json') as f:
-                        tasks = json.load(f)
-                        selected = []
-                        for task in tasks:
-                            if task['nome_task'] == nomeselezionato:
-                                task_richiesta = {
-                                   "nome_task": task['nome_task'],
-                                   "descrizione": task['descrizione'],
-                                   "assegnatari": task['assegnatari'],
-                                   "giorni_rimanenti_alla_scadenza": str(task['giorni_rimanenti_alla_scadenza']),
-                                   "completata": str(task['completata'])
-                                 }
-                                selected.append(task_richiesta)
+                    tasks = json.load(f)
+                    selected = []
+                    for task in tasks:
+                        if task['nome_task'] == nomeselezionato:
+                            ass = ""
+                            i = 0
+                            while i < len(task['assegnatari']):
+                                if i == 0:
+                                    ass = ass + task['assegnatari'][i]
+                                else:
+                                    ass = ass + ", " + task['assegnatari'][i]
+                                i += 1
+                            task_richiesta = {
+                                "nome_task": task['nome_task'],
+                                "descrizione": task['descrizione'],
+                                "assegnatari": ass,
+                                "giorni_rimanenti_alla_scadenza": str(task['giorni_rimanenti_alla_scadenza']),
+                                "completata": str(task['completata'])
+                            }
+                            selected.append(task_richiesta)
 
                 self.label_nome_titolo.setText(selected[0]['nome_task'])
-                self.label_nome_attivita.setText("Nome attività: " + str(selected[0]['nome_task']))
-                self.label_descrizione.setText("Descrizione: " + str(selected[0]['descrizione']))
-                self.label_assegnatari.setText("Assegnatari: " + str(selected[0]['assegnatari']))
-                self.label_giorniallascad.setText("Data scadenza: " + str(selected[0]['giorni_rimanenti_alla_scadenza']))
+                self.label_nome_attivita.setText("Nome attività:  " + str(selected[0]['nome_task']))
+                self.label_descrizione.setText("Descrizione:  " + str(selected[0]['descrizione']))
+                self.label_assegnatari.setText("Assegnatari:  " + str(selected[0]['assegnatari']))
+                self.label_giorniallascad.setText(
+                    "Giorni rimanenti alla scadenza:  " + str(selected[0]['giorni_rimanenti_alla_scadenza']))
 
                 if selected[0]['completata'] == "False":
-                        completata = "No"
+                    completata = "No"
                 else:
-                        completata = "Si"
-                self.label_completata.setText("Completata: " + completata)
+                    completata = "Si"
+                self.label_completata.setText("Completata:  " + completata)
             except Exception:
-                QMessageBox.setStyleSheet(MainWindow,"color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!", QMessageBox.Ok, QMessageBox.Ok)
+                QMessageBox.setStyleSheet(MainWindow,
+                                          "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
+                                     QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton.clicked.connect(lambda: visualizza_task())
 
+        # riempie la lista di assegnatari per creare una task con i dipendenti e relative check box
+        self.controllore_dipendenti = ControlloreListaDipendenti()
+
+        for dipendente in self.controllore_dipendenti.get_lista():
+            item = QtWidgets.QListWidgetItem()
+            item.setText(dipendente.nome)
+            item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
+            item.setCheckState(QtCore.Qt.Unchecked)
+            item2 = item
+            self.listWidget_assegnatari.addItem(item)
+
         # aggiunge in lista e salva una nuova task
         def aggiungi_nuova_task():
-                self.stackedWidget.setCurrentWidget(self.page_crea_attivita)
-                self.dateEdit_new.setMinimumDate(QtCore.QDate(2022, datetime.today().date().day, datetime.today().date().month))
-                tday = datetime.today().date()
-                self.dateEdit_new.setDate(QtCore.QDate(2022, 11, 5))
+            self.stackedWidget.setCurrentWidget(self.page_crea_attivita)
+            self.dateEdit_new.setMinimumDate(
+                QtCore.QDate(2022, datetime.today().date().day, datetime.today().date().month))
+            tday = datetime.today().date()
+            self.dateEdit_new.setDate(QtCore.QDate(2022, datetime.today().date().day, datetime.today().date().month))
 
+            nometask = self.lineEdit_nome_task.text()
+            descrizione = self.lineEdit_descrizione.text()
 
-                nometask = self.lineEdit_nome_task.text()
-                descrizione = self.lineEdit_descrizione.text()
-                assegnatari = self.lineEdit_assegnatari.text()
-
-                input_date = self.dateEdit_new.date().toPyDate()
-                days_to_expiry = input_date - tday
-                completata = False
-
-                if nometask == "" or descrizione == "" or assegnatari == "" or days_to_expiry.days == 0:
-                        QMessageBox.setStyleSheet(MainWindow,
-                                                  "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none")
-                        QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok,
-                                             QMessageBox.Ok)
-
+            # vettore di dipendenti checkati
+            assegnatari = []
+            for i in range(self.listWidget_assegnatari.count()):
+                if self.listWidget_assegnatari.item(i).checkState() == 0:
+                    pass
                 else:
+                    assegnatari.append(self.listWidget_assegnatari.item(i).text())
 
-                        task_creata = {
-                                "nome_task": nometask,
-                                "descrizione": descrizione,
-                                "assegnatari": [assegnatari],
-                                "giorni_rimanenti_alla_scadenza": days_to_expiry.days,
-                                "completata": str(completata)
-                        }
+            input_date = self.dateEdit_new.date().toPyDate()
+            days_to_expiry = input_date - tday
+            completata = False
 
-                        with open("pianodilavoro/data/lista_task.json", "r+") as file:
-                                data = json.load(file)
-                                data.append(task_creata)
-                                file.seek(0)
-                                json.dump(data, file)
-                        self.listWidget.addItem(nometask)
+            if nometask == "" or descrizione == "":
+                QMessageBox.setStyleSheet(MainWindow,
+                                          "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none")
+                QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok,
+                                     QMessageBox.Ok)
 
-                        self.lineEdit_nome_task.clear()
-                        self.lineEdit_descrizione.clear()
-                        self.lineEdit_assegnatari.clear()
-                        self.dateEdit_new.setDate(tday)
+            else:
 
-                        QMessageBox.about(MainWindow, "", "La nuova attività è stata salvata con successo!")
-                        QMessageBox.setStyleSheet(MainWindow, "color: rgb(0,0,0);"
-                                                              "background-color: rgb(235, 235, 235);"
-                                                              "border: none;")
+                task_creata = {
+                    "nome_task": nometask,
+                    "descrizione": descrizione,
+                    "assegnatari": assegnatari,
+                    "giorni_rimanenti_alla_scadenza": days_to_expiry.days,
+                    "completata": str(completata)
+                }
+
+                with open("pianodilavoro/data/lista_task.json", "r+") as file:
+                    data = json.load(file)
+                    data.append(task_creata)
+                    file.seek(0)
+                    json.dump(data, file, indent=4)
+                self.listWidget.addItem(nometask)
+
+                self.lineEdit_nome_task.clear()
+                self.lineEdit_descrizione.clear()
+                for i in range(self.listWidget_assegnatari.count()):
+                    self.listWidget_assegnatari.item(i).setCheckState(0)
+                self.dateEdit_new.setDate(tday)
+
+
+
+                QMessageBox.about(MainWindow, "", "La nuova attività è stata salvata con successo!")
+                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0,0,0);"
+                                                      "background-color: rgb(235, 235, 235);"
+                                                      "border: none;")
 
         self.pushButton_4.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_crea_attivita))
+
         def set_today_date():
             self.dateEdit_new.setDate(QtCore.QDate(2022, datetime.today().date().month, datetime.today().date().day))
         self.pushButton_4.clicked.connect(lambda: set_today_date())
+
         self.pushButton_salva_task.clicked.connect(lambda: aggiungi_nuova_task())
 
         # elimina una task selezionata dall'utente
         def elimina_task():
-          try:
-            indice_eccezioni = self.listWidget.selectedIndexes()[0].row()
-            nomeselezionato = self.listWidget.currentItem().text()
-            with open('pianodilavoro/data/lista_task.json') as f:
-                tasks = json.load(f)
-                i = 0
-                for task in tasks:
-                    if task['nome_task'] == nomeselezionato:
-                       break
-                    else: i = i+1
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
-                                                      "background-color: rgb(235, 235, 235);"
-                                                      "border: none")
-                q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + "'"+ tasks[i]['nome_task'] + "'" + " dalla lista delle attività?", QMessageBox.Yes | QMessageBox.No)
-                nome_da_eliminare = tasks[i]['nome_task']
-                if q == QMessageBox.Yes:
-                   del tasks[i]
-                   with open("pianodilavoro/data/lista_task.json", 'w') as f:
-                       json.dump(tasks, f)
-                   with open('pianodilavoro/data/lista_task.json') as f:
-                        lista_aggiornata = json.load(f)
-                        self.listWidget.clear()
-                        for task_aggiornata in lista_aggiornata:
-                          self.listWidget.addItem(task_aggiornata['nome_task'])
-                   self.stackedWidget.setCurrentWidget(self.page_vuota)
-                   QMessageBox.about(MainWindow, "", "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista!" )
-                   QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
-                                                      "background-color: rgb(235, 235, 235);"
-                                                      "border: none;")
+            try:
+                indice_eccezioni = self.listWidget.selectedIndexes()[0].row()
+                nomeselezionato = self.listWidget.currentItem().text()
+                with open('pianodilavoro/data/lista_task.json') as f:
+                    tasks = json.load(f)
+                    i = 0
+                    for task in tasks:
+                        if task['nome_task'] == nomeselezionato:
+                            break
+                        else:
+                            i = i + 1
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
+                                                          "background-color: rgb(235, 235, 235);"
+                                                          "border: none")
+                    q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + "'" + tasks[i][
+                        'nome_task'] + "'" + " dalla lista delle attività?", QMessageBox.Yes | QMessageBox.No)
+                    nome_da_eliminare = tasks[i]['nome_task']
+                    if q == QMessageBox.Yes:
+                        del tasks[i]
+                        with open("pianodilavoro/data/lista_task.json", 'w') as f:
+                            json.dump(tasks, f)
+                        with open('pianodilavoro/data/lista_task.json') as f:
+                            lista_aggiornata = json.load(f)
+                            self.listWidget.clear()
+                            for task_aggiornata in lista_aggiornata:
+                                self.listWidget.addItem(task_aggiornata['nome_task'])
+                        self.stackedWidget.setCurrentWidget(self.page_vuota)
+                        QMessageBox.about(MainWindow, "",
+                                          "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista!")
+                        QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
+                                                              "background-color: rgb(235, 235, 235);"
+                                                              "border: none;")
 
-                else: pass
+                    else:
+                        pass
 
-          except Exception:
-              QMessageBox.setStyleSheet(MainWindow,
-                                        "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-              QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!", QMessageBox.Ok,QMessageBox.Ok)
-
+            except Exception:
+                QMessageBox.setStyleSheet(MainWindow,
+                                          "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
+                                     QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton_3.clicked.connect(lambda: elimina_task())
 
+        # riempie la lista di assegnatari per modificare una task con i dipendenti e relative check box
+        for dipendente in self.controllore_dipendenti.get_lista():
+            item = QtWidgets.QListWidgetItem()
+            item.setText(dipendente.nome)
+            item.setFlags(item.flags() | QtCore.Qt.ItemIsUserCheckable)
+            item.setCheckState(QtCore.Qt.Unchecked)
+            self.listWidget_modifica_assegnatari.addItem(item)
+
         # modifica una task selezionata dall'utente
         def modifica_task():
-            self.stackedWidget.setCurrentWidget(self.page_modifica_task)
-            nomeselezionato = self.listWidget.currentItem().text()
-            with open('pianodilavoro/data/lista_task.json') as f:
-                tasks = json.load(f)
-                i = 0
-                for task in tasks:
-                    if task['nome_task'] == nomeselezionato:
-                        break
-                    else:
-                        i = i + 1
-            self.lineEdit_modifica_nome.setText(tasks[i]['nome_task'])
-            self.lineEdit_modifca_descrizione.setText(tasks[i]['descrizione'])
-            self.lineEdit_modifica_assegnatari.setText(str(tasks[i]['assegnatari']))
-            tday = datetime.today().date()
-            difference_days = timedelta(days= tasks[i]['giorni_rimanenti_alla_scadenza'])
-            day_expiry = tday + difference_days
-            self.dateEdit_mod.setDate(QtCore.QDate(2022, day_expiry.month, day_expiry.day))
-            """
-            def update_task():
+            try:
+                self.stackedWidget.setCurrentWidget(self.page_modifica_task)
+                nomeselezionato = self.listWidget.currentItem().text()
+                with open('pianodilavoro/data/lista_task.json') as f:
+                    tasks = json.load(f)
+                    i = 0
+                    for task in tasks:
+                        if task['nome_task'] == nomeselezionato:
+                            break
+                        else:
+                            i = i + 1
+                self.label_titolo_modifica.setText(tasks[i]['nome_task'])
+                self.lineEdit_modifica_nome.setText(tasks[i]['nome_task'])
+                self.lineEdit_modifca_descrizione.setText(tasks[i]['descrizione'])
 
-                tasks[i]['nome_task'] = self.lineEdit_modifica_nome.text()
-                tasks[i]['descrizione'] = self.lineEdit_modifca_descrizione.text()
-                tasks[i]['assegnatari'] = self.lineEdit_assegnatari.text
+                for dip in range(self.listWidget_modifica_assegnatari.count()):
+                    self.listWidget_modifica_assegnatari.item(dip).setCheckState(0)
+                    for ass in tasks[i]['assegnatari']:
+                        if self.listWidget_modifica_assegnatari.item(dip).text() == ass:
+                            self.listWidget_modifica_assegnatari.item(dip).setCheckState(2)
 
                 tday = datetime.today().date()
-                expiry_date = self.dateEdit_mod.date().toPyDate()
-                days_to_expiry = expiry_date - tday
-                tasks[i]['giorni_rimanenti_alla_scadenza'] = days_to_expiry.days
+                difference_days = timedelta(days=tasks[i]['giorni_rimanenti_alla_scadenza'])
+                day_expiry = tday + difference_days
+                self.dateEdit_mod.setDate(QtCore.QDate(2022, day_expiry.month, day_expiry.day))
 
-                if self.checkBox_completata.isChecked():
-                   tasks[i]['completata'] = "True"
-                else: tasks[i]['completata'] = "False"
-                with open('pianodilavoro/data/lista_task.json', 'w') as f:
-                    json.dump(tasks, f)
+                if tasks[i]['completata'] == "False":
+                    pass
+                else:
+                    self.checkBox_completata.setCheckState(2)
 
-                print(tasks[i])
-            self.pushButton_modifica_attivita.clicked.connect(lambda: update_task())
-            """
+                def update_task():
+
+                    tasks[i]['nome_task'] = self.lineEdit_modifica_nome.text()
+                    tasks[i]['descrizione'] = self.lineEdit_modifca_descrizione.text()
+
+                    assegnatari = []
+                    for ass in range(self.listWidget_modifica_assegnatari.count()):
+                        if self.listWidget_modifica_assegnatari.item(ass).checkState() == 2:
+                            assegnatari.append(self.listWidget_modifica_assegnatari.item(ass).text())
+
+                    tasks[i]['assegnatari'] = assegnatari
+
+                    tday = datetime.today().date()
+                    expiry_date = self.dateEdit_mod.date().toPyDate()
+                    days_to_expiry = expiry_date - tday
+                    tasks[i]['giorni_rimanenti_alla_scadenza'] = days_to_expiry.days
+
+                    if self.checkBox_completata.isChecked():
+                        tasks[i]['completata'] = "True"
+                    else:
+                        tasks[i]['completata'] = "False"
+                    with open('pianodilavoro/data/lista_task.json', 'w') as f:
+                        json.dump(tasks, f, indent=4)
+
+                    QMessageBox.about(MainWindow, "", "L'attività è stata modificata!")
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0,0,0);"
+                                                          "background-color: rgb(235, 235, 235);"
+                                                          "border: none;")
+
+                self.pushButton_modifica_attivita.clicked.connect(lambda: update_task())
+            except Exception:
+                QMessageBox.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
+                                     QMessageBox.Ok, QMessageBox.Ok)
+
         self.pushButton_2.clicked.connect(lambda: modifica_task())
 
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        __sortingEnabled = self.listWidget.isSortingEnabled()
+        self.listWidget.setSortingEnabled(False)
 
+        self.listWidget.setSortingEnabled(__sortingEnabled)
+        self.pushButton_att_compl.setText(_translate("MainWindow", "Mostra attività \n"
+                                                                   " completate"))
+        self.pushButton_att_non_compl.setText(_translate("MainWindow", "Mostra attività \n"
+                                                                       " non completate"))
+        self.pushButton_9.setText(_translate("MainWindow", "Mostra tutte \n"
+                                                           " le attività "))
+        self.pushButton.setText(_translate("MainWindow", "Visualizza"))
+        self.pushButton_2.setText(_translate("MainWindow", "Modifica"))
+        self.pushButton_3.setText(_translate("MainWindow", "Elimina"))
+        self.pushButton_4.setText(_translate("MainWindow", "Crea una \n"
+                                                           " nuova attività"))
+        self.label_nome_titolo.setText(_translate("MainWindow", "New Item 1"))
+        self.label_nome_attivita.setText(_translate("MainWindow", "Nome attività: "))
+        self.label_descrizione.setText(_translate("MainWindow", "Descrizione:"))
+        self.label_assegnatari.setText(_translate("MainWindow", "Assegnatari:"))
+        self.label_giorniallascad.setText("Giorni rimanenti alla scadenza: ")
+        self.label_completata.setText(_translate("MainWindow", "Completata: "))
+        self.label_7.setText(_translate("MainWindow", "Crea una nuova attività!"))
+        self.label_8.setText(_translate("MainWindow", "Nome attività: "))
+        self.label_9.setText(_translate("MainWindow", "Descrizione:"))
+        self.label_10.setText(_translate("MainWindow", "Assegnatari:"))
+        __sortingEnabled = self.listWidget_assegnatari.isSortingEnabled()
+        self.listWidget_assegnatari.setSortingEnabled(False)
 
-   def retranslateUi(self, MainWindow):
-     _translate = QtCore.QCoreApplication.translate
-     MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-     __sortingEnabled = self.listWidget.isSortingEnabled()
-     self.listWidget.setSortingEnabled(False)
-
-     self.listWidget.setSortingEnabled(__sortingEnabled)
-     self.pushButton_att_compl.setText(_translate("MainWindow", "Mostra attività \n"
-                                                                " completate"))
-     self.pushButton_att_non_compl.setText(_translate("MainWindow", "Mostra attività \n"
-                                                                    " non completate"))
-     self.pushButton_9.setText(_translate("MainWindow", "Mostra tutte \n"
-                                                        " le attività "))
-     self.pushButton.setText(_translate("MainWindow", "Visualizza"))
-     self.pushButton_2.setText(_translate("MainWindow", "Modifica"))
-     self.pushButton_3.setText(_translate("MainWindow", "Elimina"))
-     self.pushButton_4.setText(_translate("MainWindow", "Crea una \n"
-                                                        " nuova attività"))
-     self.label_nome_titolo.setText(_translate("MainWindow", "New Item 1"))
-     self.label_nome_attivita.setText(_translate("MainWindow", "Nome attività: "))
-     self.label_descrizione.setText(_translate("MainWindow", "Descrizione:"))
-     self.label_assegnatari.setText(_translate("MainWindow", "Assegnatari:"))
-     self.label_giorniallascad.setText(_translate("MainWindow", "Giorni rimanenti alla scadenza: "))
-     self.label_completata.setText(_translate("MainWindow", "Completata: "))
-     self.label_7.setText(_translate("MainWindow", "Crea una nuova attività!"))
-     self.label_8.setText(_translate("MainWindow", "Nome attività: "))
-     self.label_9.setText(_translate("MainWindow", "Descrizione:"))
-     self.label_10.setText(_translate("MainWindow", "Assegnatari:"))
-     self.label_11.setText(_translate("MainWindow", "Data scadenza:"))
-     self.pushButton_salva_task.setText(_translate("MainWindow", "Salva attività"))
-     self.label_titolo_modifica.setText(_translate("MainWindow", "New Item 1"))
-     self.label_12.setText(_translate("MainWindow", "Nome attività: "))
-     self.label_13.setText(_translate("MainWindow", "Descrizione:"))
-     self.label_14.setText(_translate("MainWindow", "Assegnatari:"))
-     self.label_15.setText(_translate("MainWindow", "Data scadenza:"))
-     self.checkBox_completata.setText(_translate("MainWindow", "Completata"))
-     self.pushButton_modifica_attivita.setText(_translate("MainWindow", "Modifica attività"))
+        self.label_11.setText(_translate("MainWindow", "Data scadenza:"))
+        self.pushButton_salva_task.setText(_translate("MainWindow", "Salva attività"))
+        self.label_12.setText(_translate("MainWindow", "Nome attività: "))
+        self.label_13.setText(_translate("MainWindow", "Descrizione:"))
+        self.label_14.setText(_translate("MainWindow", "Assegnatari:"))
+        self.label_15.setText(_translate("MainWindow", "Data scadenza:"))
+        self.checkBox_completata.setText(_translate("MainWindow", "Completata"))
+        self.pushButton_modifica_attivita.setText(_translate("MainWindow", "Modifica attività"))
