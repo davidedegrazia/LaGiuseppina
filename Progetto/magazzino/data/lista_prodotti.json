@@ -1,0 +1,45 @@
+{
+        "frutta": [
+          {
+             "nome_prodotto" : "mele",
+             "tipo_unità": "al chilo",
+             "quantità": 15
+             "prezzo_per_unità" : 1.50
+          },
+          {
+             "nome_prodotto" : "pere",
+             "tipo_unità": "al chilo",
+             "quantità": 30
+             "prezzo_per_unità" : 2.50
+          },
+          {
+             "nome_prodotto" : "uva",
+             "tipo_unità": "al chilo",
+             "quantità": 8
+             "prezzo_per_unità" : 4.50
+          }
+        ]
+        "verdura": [
+          {
+             "nome_prodotto" : "insalata",
+             "tipo_unità": "al chilo",
+             "quantità": 40
+             "prezzo_per_unità" : 0.50
+          }
+        ]
+        "erbe aromatiche":  [
+          {
+             "nome_prodotto" : "prezzemolo",
+             "tipo_unità": "al chilo",
+             "quantità": 10
+             "prezzo_per_unità" : 1.20
+          },
+          {
+             "nome_prodotto" : "basilico",
+             "tipo_unità": "al chilo",
+             "quantità": 30
+             "prezzo_per_unità" : 1.50
+          }
+        ]
+        "altro": []
+}
