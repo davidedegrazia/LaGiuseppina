@@ -1,18 +1,14 @@
 import datetime
-
 # import self as self
 import json
 
-import self
 from PyQt5 import QtCore, QtWidgets
 # from pyqt5_plugins.examplebuttonplugin import QtGui
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QListView, QMessageBox, QListWidget
+from PyQt5.QtWidgets import QListView, QMessageBox
 
 from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
 from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
-from Progetto.dipendenti.model.Dipendente import Dipendente
-from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 
 
@@ -499,7 +495,7 @@ class main_interface(object):
         self.frame_visualizza_nuovo_dipendente.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_visualizza_nuovo_dipendente.setObjectName("frame_visualizza_nuovo_dipendente")
         self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.frame_visualizza_nuovo_dipendente)
-        self.verticalLayout_30.setContentsMargins(0, 0, 13,6)
+        self.verticalLayout_30.setContentsMargins(0, 0, 13, 6)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
         self.frame_scritta_dipendente = QtWidgets.QFrame(self.frame_visualizza_nuovo_dipendente)
         self.frame_scritta_dipendente.setMaximumSize(QtCore.QSize(16777215, 46))
@@ -873,34 +869,34 @@ class main_interface(object):
         self.frame_54.setObjectName("frame_54")
         self.horizontalLayout_25 = QtWidgets.QHBoxLayout(self.frame_54)
         self.horizontalLayout_25.setObjectName("horizontalLayout_25")
-        self.tableWidget_2 = QtWidgets.QTableWidget(self.frame_54)
-        self.tableWidget_2.setObjectName("tableWidget_2")
-        self.tableWidget_2.setColumnCount(1)
-        self.tableWidget_2.setRowCount(4)
+        self.table_widget_frutta = QtWidgets.QTableWidget(self.frame_54)
+        self.table_widget_frutta.setObjectName("table_widget_frutta")
+        self.table_widget_frutta.setColumnCount(2)
+        self.table_widget_frutta.setRowCount(4)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(0, item)
+        self.table_widget_frutta.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(1, item)
+        self.table_widget_frutta.setVerticalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(2, item)
+        self.table_widget_frutta.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_2.setVerticalHeaderItem(3, item)
+        self.table_widget_frutta.setVerticalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(0, item)
-        self.horizontalLayout_25.addWidget(self.tableWidget_2)
-        self.tableWidget = QtWidgets.QTableWidget(self.frame_54)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(1)
-        self.tableWidget.setRowCount(3)
+        self.table_widget_frutta.setHorizontalHeaderItem(0, item)
+        self.horizontalLayout_25.addWidget(self.table_widget_frutta)
+        self.table_widget_erbe = QtWidgets.QTableWidget(self.frame_54)
+        self.table_widget_erbe.setObjectName("table_widget_erbe")
+        self.table_widget_erbe.setColumnCount(1)
+        self.table_widget_erbe.setRowCount(3)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(0, item)
+        self.table_widget_erbe.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(1, item)
+        self.table_widget_erbe.setVerticalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setVerticalHeaderItem(2, item)
+        self.table_widget_erbe.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        self.horizontalLayout_25.addWidget(self.tableWidget)
+        self.table_widget_erbe.setHorizontalHeaderItem(0, item)
+        self.horizontalLayout_25.addWidget(self.table_widget_erbe)
         self.verticalLayout_33.addWidget(self.frame_54)
         self.frame_55 = QtWidgets.QFrame(self.magazzino)
         self.frame_55.setMaximumSize(QtCore.QSize(16777215, 38))
@@ -927,34 +923,34 @@ class main_interface(object):
         self.frame_56.setObjectName("frame_56")
         self.horizontalLayout_27 = QtWidgets.QHBoxLayout(self.frame_56)
         self.horizontalLayout_27.setObjectName("horizontalLayout_27")
-        self.tableWidget_3 = QtWidgets.QTableWidget(self.frame_56)
-        self.tableWidget_3.setObjectName("tableWidget_3")
-        self.tableWidget_3.setColumnCount(1)
-        self.tableWidget_3.setRowCount(3)
+        self.table_widget_verdura = QtWidgets.QTableWidget(self.frame_56)
+        self.table_widget_verdura.setObjectName("table_widget_verdura")
+        self.table_widget_verdura.setColumnCount(1)
+        self.table_widget_verdura.setRowCount(3)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_3.setVerticalHeaderItem(0, item)
+        self.table_widget_verdura.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_3.setVerticalHeaderItem(1, item)
+        self.table_widget_verdura.setVerticalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_3.setVerticalHeaderItem(2, item)
+        self.table_widget_verdura.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_3.setHorizontalHeaderItem(0, item)
-        self.horizontalLayout_27.addWidget(self.tableWidget_3)
-        self.tableWidget_4 = QtWidgets.QTableWidget(self.frame_56)
-        self.tableWidget_4.setObjectName("tableWidget_4")
-        self.tableWidget_4.setColumnCount(1)
-        self.tableWidget_4.setRowCount(4)
+        self.table_widget_verdura.setHorizontalHeaderItem(0, item)
+        self.horizontalLayout_27.addWidget(self.table_widget_verdura)
+        self.table_widget_altro = QtWidgets.QTableWidget(self.frame_56)
+        self.table_widget_altro.setObjectName("table_widget_altro")
+        self.table_widget_altro.setColumnCount(1)
+        self.table_widget_altro.setRowCount(4)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_4.setVerticalHeaderItem(0, item)
+        self.table_widget_altro.setVerticalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_4.setVerticalHeaderItem(1, item)
+        self.table_widget_altro.setVerticalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_4.setVerticalHeaderItem(2, item)
+        self.table_widget_altro.setVerticalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_4.setVerticalHeaderItem(3, item)
+        self.table_widget_altro.setVerticalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_4.setHorizontalHeaderItem(0, item)
-        self.horizontalLayout_27.addWidget(self.tableWidget_4)
+        self.table_widget_altro.setHorizontalHeaderItem(0, item)
+        self.horizontalLayout_27.addWidget(self.table_widget_altro)
         self.verticalLayout_33.addWidget(self.frame_56)
         self.frame_53 = QtWidgets.QFrame(self.magazzino)
         self.frame_53.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -1148,7 +1144,7 @@ class main_interface(object):
         self.verticalLayout.addWidget(self.central_frame)
         MainWindow.setCentralWidget(self.centralwidget)
 
-        #pagina StackedWidget2 per modificare il dipendente
+        # pagina StackedWidget2 per modificare il dipendente
         self.page_modifica_dipendente = QtWidgets.QWidget()
         self.page_modifica_dipendente.setObjectName("page_modifica_dipendente")
         self.verticalLayout_102 = QtWidgets.QVBoxLayout(self.page_modifica_dipendente)
@@ -1312,7 +1308,7 @@ class main_interface(object):
         self.horizontalLayout_122.setContentsMargins(9, -1, -1, -1)
         self.horizontalLayout_122.setObjectName("horizontalLayout_122")
         self.pushButton_salva_dipendenti2 = QtWidgets.QPushButton(self.frame_salva_dipendenti2)
-        #self.pushButton_salva_dipendenti2.setEnabled(False)
+        # self.pushButton_salva_dipendenti2.setEnabled(False)
         self.pushButton_salva_dipendenti2.setMinimumSize(QtCore.QSize(0, 36))
         self.pushButton_salva_dipendenti2.setMaximumSize(QtCore.QSize(145, 16777215))
         self.pushButton_salva_dipendenti2.setStyleSheet("font: 700 14pt \"Apple SD Gothic Neo\";\n"
@@ -1326,17 +1322,15 @@ class main_interface(object):
         self.verticalLayout_102.addWidget(self.frame_white2)
         self.stackedWidget_2.addWidget(self.page_modifica_dipendente)
 
-
         self.label_nome2.setText("Nome")
         self.label_oresettimanali2.setText("Ore settimanali")
-        self.label_pagaadora2.setText( "Paga ad ora (€)")
-        self.label_tipodicontratto2.setText( "Tipo di contratto")
-        self.label_email2.setText( "E-mail")
-        self.label_telefono2.setText( "Telefono")
-        self.pushButton_salva_dipendenti2.setText( "Modifica dipendente")
+        self.label_pagaadora2.setText("Paga ad ora (€)")
+        self.label_tipodicontratto2.setText("Tipo di contratto")
+        self.label_email2.setText("E-mail")
+        self.label_telefono2.setText("Telefono")
+        self.pushButton_salva_dipendenti2.setText("Modifica dipendente")
 
-
-        #parte con il main frame vuoto
+        # parte con il main frame vuoto
         self.stackedWidget.setCurrentIndex(1)
         self.stackedWidget_2.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -1346,70 +1340,73 @@ class main_interface(object):
 
         self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
 
-        for dipendente in self.controller.get_lista():
+        for \
+                dipendente in self.controller.get_lista():
             item = QStandardItem()
             item.setText(dipendente.nome)
             item.setEditable(False)
             self.listview_model.appendRow(item)
         self.listWidget_dipendenti.setModel(self.listview_model)
 
-        #visalizza a schermo le info di un dipendente
+        # visalizza a schermo le info di un dipendente
         self.controller2 = ControlloreDipendente(dipendente)
+
         def get_info_dipendente_selezionato():
             try:
-                 selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
 
-                 with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
-                  data = json.load(file)
-                 dip = data[selected]
+                with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
+                    data = json.load(file)
+                dip = data[selected]
 
-                 self.label_scrittvisualizzadipendente.setText(dip['nome'])
-                 self.label_visualizza_nome.setText("Nome:  " + dip['nome'])
-                 self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(dip['ore']))
-                 self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(dip['compenso_a_ore']))
-                 self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + dip['tipo_contratto'])
-                 self.label_visualizza_email_.setText("E-mail:  " + dip['email'])
-                 self.label_telefono_2.setText("Telefono:  " + dip['telefono'])
+                self.label_scrittvisualizzadipendente.setText(dip['nome'])
+                self.label_visualizza_nome.setText("Nome:  " + dip['nome'])
+                self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(dip['ore']))
+                self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(dip['compenso_a_ore']))
+                self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + dip['tipo_contratto'])
+                self.label_visualizza_email_.setText("E-mail:  " + dip['email'])
+                self.label_telefono_2.setText("Telefono:  " + dip['telefono'])
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                 QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
                 self.stackedWidget_2.setCurrentWidget(self.page_empty)
 
-
-        self.push_visualizza.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
+        self.push_visualizza.clicked.connect(
+            lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
         self.push_visualizza.clicked.connect(lambda: get_info_dipendente_selezionato())
 
-        #elimina un dipendente dalla lista
+        # elimina un dipendente dalla lista
         def box_question_eliminare_dipendente():
             try:
-              selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
-              with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
-                data = json.load(file)
-              dip = data[selected]
-
-              QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-              q = QMessageBox.question(MainWindow,'', "Sei sicuro di voler eliminare " + dip['nome'] + " dalla lista dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
-              if q == QMessageBox.Yes:
-                del data[selected]
-                with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
-                   json.dump(data, f, indent=4)
-
-                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+                with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
+                    data = json.load(file)
+                dip = data[selected]
 
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.about(MainWindow, "", dip['nome'] + " è stato eliminato dalla lista dipendenti")
+                q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + dip[
+                    'nome'] + " dalla lista dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
+                if q == QMessageBox.Yes:
+                    del data[selected]
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
+                        json.dump(data, f)
 
-                self.controller = ControlloreListaDipendenti()
-                self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
-                for dipendente in self.controller.get_lista():
-                   item = QStandardItem()
-                   item.setText(dipendente.nome)
-                   item.setEditable(False)
-                   self.listview_model.appendRow(item)
-                self.listWidget_dipendenti.setModel(self.listview_model)
+                    self.stackedWidget_2.setCurrentWidget(self.page_empty)
 
-              else:
-                pass
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.about(MainWindow, "", dip['nome'] + " è stato eliminato dalla lista dipendenti")
+
+                    self.controller = ControlloreListaDipendenti()
+                    self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
+                    for dipendente in self.controller.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model)
+
+                else:
+                    pass
 
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
@@ -1418,64 +1415,65 @@ class main_interface(object):
 
         self.push_elimina.clicked.connect(lambda: box_question_eliminare_dipendente())
 
-
         # prende il testo dei lineEdit in CreaNuovoDipendente e fa l'append al file .json
         def new_employee():
-          self.stackedWidget_2.setCurrentWidget(self.page_crea_nuovo_dipendente)
-          self.label_scritta.setText("Crea un nuovo dipendente!")
-          self.lineEdit_nome.clear()
-          self.spinBox_oresettimanali.clear()
-          self.spinBox_pagaadora.clear()
-          self.lineEdit_tipodicontratto.clear()
-          self.lineEdit_email.clear()
-          self.lineEdit_telefono.clear()
+            self.stackedWidget_2.setCurrentWidget(self.page_crea_nuovo_dipendente)
+            self.label_scritta.setText("Crea un nuovo dipendente!")
+            self.lineEdit_nome.clear()
+            self.spinBox_oresettimanali.clear()
+            self.spinBox_pagaadora.clear()
+            self.lineEdit_tipodicontratto.clear()
+            self.lineEdit_email.clear()
+            self.lineEdit_telefono.clear()
 
-          def get_line_edits():
-            nome = self.lineEdit_nome.text()
-            ore = self.spinBox_oresettimanali.value()
-            pagaadora = self.spinBox_pagaadora.value()
-            tipodicontratto = self.lineEdit_tipodicontratto.text()
-            email = self.lineEdit_email.text()
-            telefono = self.lineEdit_telefono.text()
+            def get_line_edits():
+                nome = self.lineEdit_nome.text()
+                ore = self.spinBox_oresettimanali.value()
+                pagaadora = self.spinBox_pagaadora.value()
+                tipodicontratto = self.lineEdit_tipodicontratto.text()
+                email = self.lineEdit_email.text()
+                telefono = self.lineEdit_telefono.text()
 
-            if nome == "" or ore == "" or pagaadora == "" or tipodicontratto == "" or email == "" or telefono == "":
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok, QMessageBox.Ok)
+                if nome == "" or ore == "" or pagaadora == "" or tipodicontratto == "" or email == "" or telefono == "":
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok,
+                                         QMessageBox.Ok)
 
-            else:
+                else:
 
-                dipendente_creato = {"nome": str(nome),
-                                     "ore": ore,
-                                     "compenso_a_ore": pagaadora,
-                                     "tipo_contratto": str(tipodicontratto),
-                                     "email": str(email),
-                                     "telefono": str(telefono)
-                                     }
+                    dipendente_creato = {"nome": str(nome),
+                                         "ore": ore,
+                                         "compenso_a_ore": pagaadora,
+                                         "tipo_contratto": str(tipodicontratto),
+                                         "email": str(email),
+                                         "telefono": str(telefono)
+                                         }
 
-                with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
-                    data = json.load(file)
-                    data.append(dipendente_creato)
-                    file.seek(0)
-                    json.dump(data, file, indent=4)
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
+                        data = json.load(file)
+                        data.append(dipendente_creato)
+                        file.seek(0)
+                        json.dump(data, file)
 
-                self.lineEdit_nome.clear()
-                self.spinBox_oresettimanali.clear()
-                self.spinBox_pagaadora.clear()
-                self.lineEdit_tipodicontratto.clear()
-                self.lineEdit_email.clear()
-                self.lineEdit_telefono.clear()
+                    self.lineEdit_nome.clear()
+                    self.spinBox_oresettimanali.clear()
+                    self.spinBox_pagaadora.clear()
+                    self.lineEdit_tipodicontratto.clear()
+                    self.lineEdit_email.clear()
+                    self.lineEdit_telefono.clear()
 
-                self.contr = ControlloreListaDipendenti()
-                self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
+                    self.contr = ControlloreListaDipendenti()
+                    self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
 
-                for dipendente in self.contr.get_lista():
-                    item = QStandardItem()
-                    item.setText(dipendente.nome)
-                    item.setEditable(False)
-                    self.listview_model2.appendRow(item)
-                self.listWidget_dipendenti.setModel(self.listview_model2)
+                    for dipendente in self.contr.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model2.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model2)
 
-          self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
+            self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
+
         self.push_creanuovodipendente.clicked.connect(lambda: new_employee())
         self.retranslateUi(MainWindow)
 
@@ -1497,19 +1495,29 @@ class main_interface(object):
                 self.lineEdit_email2.setText(dip['email'])
                 self.lineEdit_telefono2.setText(dip['telefono'])
 
-
-
                 def salva_dipendente_modificato():
-                    dip['nome'] = self.lineEdit_nome2.text()
-                    dip['ore'] = self.spinBox_oresettimanali2.value()
-                    dip['compenso_a_ore'] = self.spinBox_pagaadora2.value()
-                    dip['tipo_contratto'] = self.lineEdit_tipodicontratto2.text()
-                    dip['email'] = self.lineEdit_email2.text()
-                    dip['telefono'] = self.lineEdit_telefono2.text()
-                    self.label_scritta2.setText(self.lineEdit_nome2.text())
+                    nome = self.lineEdit_nome2.text()
+                    ore = self.spinBox_oresettimanali2.value()
+                    pagaadora = self.spinBox_pagaadora2.value()
+                    tipodicontratto = self.lineEdit_tipodicontratto2.text()
+                    email = self.lineEdit_email2.text()
+                    telefono = self.lineEdit_telefono2.text()
 
-                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "w") as file:
-                        json.dump(data, file, indent=4)
+                    dipendente_modificato = {"nome": nome,
+                                             "ore": ore,
+                                             "compenso_a_ore": pagaadora,
+                                             "tipo_contratto": tipodicontratto,
+                                             "email": email,
+                                             "telefono": telefono
+                                             }
+
+                    self.label_scritta2.setText(nome)
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
+                        data = json.load(file)
+                        del data[selected]
+                        data.append(dipendente_modificato)
+                        file.seek(0)
+                        json.dump(data, file)
 
                     self.contr = ControlloreListaDipendenti()
                     self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
@@ -1530,13 +1538,11 @@ class main_interface(object):
         self.push_modifica.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_modifica_dipendente))
         self.push_modifica.clicked.connect(lambda: update_info_dipendente())
 
-
         # sezione Piano di Lavoro
         self.push_listadelleattivita.clicked.connect(self.nuovapagina)
 
-        #popolo le listWidget di PianoLavoro
-        def fill_task_calendar():
-          with open('pianodilavoro/data/lista_task.json') as f:
+        # popolo le listWidget di Lista
+        with open('pianodilavoro/data/lista_task.json') as f:
             tasks = json.load(f)
             for task in tasks:
                 if task['giorni_rimanenti_alla_scadenza'] == 0:
@@ -1553,29 +1559,8 @@ class main_interface(object):
                     self.listWidget_7.addItem(task['nome_task'])
                 elif task['giorni_rimanenti_alla_scadenza'] == 6:
                     self.listWidget_8.addItem(task['nome_task'])
-                else: pass
-        fill_task_calendar()
-
-
-
-        def elimina_lista_attivita():
-            QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
-                                                  "background-color: rgb(235, 235, 235);"
-                                                  "border: none")
-            q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare tutta la lista delle attività? ", QMessageBox.Yes | QMessageBox.No)
-            if q == QMessageBox.Yes:
-                tasks = []
-                with open("pianodilavoro/data/lista_task.json", 'w') as file:
-                     json.dump(tasks, file)
-                self.listWidget_2.clear()
-                self.listWidget_3.clear()
-                self.listWidget_4.clear()
-                self.listWidget_5.clear()
-                self.listWidget_6.clear()
-                self.listWidget_7.clear()
-                self.listWidget_8.clear()
-
-        self.push_eliminapianodilavoro.clicked.connect(lambda: elimina_lista_attivita())
+                else:
+                    pass
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -1698,43 +1683,43 @@ class main_interface(object):
         self.label_35.setText(_translate("MainWindow", "MAGAZZINO"))
         self.label_37.setText(_translate("MainWindow", "Frutta"))
         self.label_36.setText(_translate("MainWindow", "Erbe aromatiche"))
-        item = self.tableWidget_2.verticalHeaderItem(0)
+        item = self.table_widget_frutta.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_2.verticalHeaderItem(1)
+        item = self.table_widget_frutta.verticalHeaderItem(1)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_2.verticalHeaderItem(2)
+        item = self.table_widget_frutta.verticalHeaderItem(2)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_2.verticalHeaderItem(3)
+        item = self.table_widget_frutta.verticalHeaderItem(3)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_2.horizontalHeaderItem(0)
+        item = self.table_widget_frutta.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Quantità"))
-        item = self.tableWidget.verticalHeaderItem(0)
+        item = self.table_widget_erbe.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget.verticalHeaderItem(1)
+        item = self.table_widget_erbe.verticalHeaderItem(1)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget.verticalHeaderItem(2)
+        item = self.table_widget_erbe.verticalHeaderItem(2)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget.horizontalHeaderItem(0)
+        item = self.table_widget_erbe.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Quantità"))
         self.label_38.setText(_translate("MainWindow", "Verdura"))
         self.label_39.setText(_translate("MainWindow", "Altro"))
-        item = self.tableWidget_3.verticalHeaderItem(0)
+        item = self.table_widget_verdura.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_3.verticalHeaderItem(1)
+        item = self.table_widget_verdura.verticalHeaderItem(1)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_3.verticalHeaderItem(2)
+        item = self.table_widget_verdura.verticalHeaderItem(2)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_3.horizontalHeaderItem(0)
+        item = self.table_widget_verdura.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Quantità"))
-        item = self.tableWidget_4.verticalHeaderItem(0)
+        item = self.table_widget_altro.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_4.verticalHeaderItem(1)
+        item = self.table_widget_altro.verticalHeaderItem(1)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_4.verticalHeaderItem(2)
+        item = self.table_widget_altro.verticalHeaderItem(2)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_4.verticalHeaderItem(3)
+        item = self.table_widget_altro.verticalHeaderItem(3)
         item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_4.horizontalHeaderItem(0)
+        item = self.table_widget_altro.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Quantità"))
         self.pushButton_15.setText(_translate("MainWindow", "ELIMINA TUTTI I PRODOTTI"))
         self.label_22.setText(_translate("MainWindow", "CONTABILITA\'"))
@@ -1787,4 +1772,3 @@ class main_interface(object):
         item = self.tableWidget_6.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Costo"))
         self.label_23.setText(_translate("MainWindow", "Utile: "))
-
