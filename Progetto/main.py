@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self, dipendente)
         self.show()
 
-        self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.clienti)
 
         self.ui.push_dipendenti.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.dipendenti))
         self.ui.push_dipendenti.clicked.connect(lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_empty))
@@ -20,9 +20,9 @@ class MainWindow(QMainWindow):
 
         self.ui.push_pianodilavoro.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.pianodilavoro))
 
-
-
         self.ui.push_magazzino.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.magazzino))
+
+        self.ui.push_clienti.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.clienti))
 
         self.ui.push_contabilita.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.contabilita))
 
