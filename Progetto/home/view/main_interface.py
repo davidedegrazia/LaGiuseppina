@@ -17,12 +17,14 @@ from Progetto.listaprodotti.view.VistaProdottiMagazzino import VistaProdottiMaga
 from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 from Progetto.clienti.controller.ControlloreListaOrdinazioni import ControlloreListaOrdinazioni
+from Progetto.contabilità.view.VistaVociDiBilancio import VistaVociDiBilancio
 
 
 class main_interface(object):
     def __init__(self):
         self.vista_pianolavoro = VistaPianoLavoro()
         self.vista_listaprodotti = VistaProdottiMagazzino()
+        self.vista_vocidibilancio = VistaVociDiBilancio()
 
     def vista_lista_prodotti(self):
         self.window = QtWidgets.QMainWindow()
@@ -32,6 +34,11 @@ class main_interface(object):
     def vista_piano_lavoro(self):
         self.window = QtWidgets.QMainWindow()
         self.vista_pianolavoro.setupUi(self.window)
+        self.window.show()
+
+    def vista_voci_di_bilancio(self):
+        self.window = QtWidgets.QMainWindow()
+        self.vista_vocidibilancio.setupUi(self.window)
         self.window.show()
 
     def setupUi(self, MainWindow, dipendente):
@@ -1734,16 +1741,16 @@ class main_interface(object):
         self.frame_19.setObjectName("frame_19")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.frame_19)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.pushButton = QtWidgets.QPushButton(self.frame_19)
-        self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
-        self.pushButton.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.pushButton.setStyleSheet("font: 700 16pt \"Apple SD Gothic Neo\";\n"
+        self.pushButton_vocidibilancio = QtWidgets.QPushButton(self.frame_19)
+        self.pushButton_vocidibilancio.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton_vocidibilancio.setMaximumSize(QtCore.QSize(130, 16777215))
+        self.pushButton_vocidibilancio.setStyleSheet("font: 700 16pt \"Apple SD Gothic Neo\";\n"
                                       "background-color: rgb(255, 255, 255);\n"
                                       "border-radius: 11px;\n"
                                       "background-color: rgba(0, 122, 255, 204);\n"
                                       "color: rgb(255, 255, 255);")
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_17.addWidget(self.pushButton)
+        self.pushButton_vocidibilancio.setObjectName("pushButton_vocidibilancio")
+        self.horizontalLayout_17.addWidget(self.pushButton_vocidibilancio)
         self.verticalLayout_29.addWidget(self.frame_19)
         self.stackedWidget.addWidget(self.contabilita)
         self.statistiche = QtWidgets.QWidget()
@@ -2361,6 +2368,10 @@ class main_interface(object):
 
         self.push_elimina_ordine.clicked.connect(lambda: elimina_ordine())
 
+        #CONTABILITA'
+
+        self.pushButton_vocidibilancio.clicked.connect(self.vista_voci_di_bilancio)
+
 
 
 
@@ -2563,4 +2574,4 @@ class main_interface(object):
         self.checkBox_mese_uscite.setText(_translate("MainWindow", "Uscite"))
         self.label_mese_ricavi_costi_utile.setText(_translate("MainWindow", "Ricavi:    Costi:    Utile:"))
         self.tabWidget_contabilita.setTabText(self.tabWidget_contabilita.indexOf(self.mensile), _translate("MainWindow", "Mensile"))
-        self.pushButton.setText(_translate("MainWindow", "Voci di bilancio"))
+        self.pushButton_vocidibilancio.setText(_translate("MainWindow", "Voci di bilancio"))

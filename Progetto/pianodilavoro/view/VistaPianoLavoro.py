@@ -99,7 +99,7 @@ class VistaPianoLavoro(object):
                                       "background-color: rgb(255, 255, 255);\n"
                                       "border-radius: 12px;"
                                       "color: rgb(0,0,0);")
-        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setObjectName("pushButton_vocidibilancio")
         self.verticalLayout_2.addWidget(self.pushButton)
         self.pushButton_2 = QtWidgets.QPushButton(self.frame_3)
         self.pushButton_2.setMinimumSize(QtCore.QSize(0, 25))
@@ -472,12 +472,12 @@ class VistaPianoLavoro(object):
         self.stackedWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        # popolo la lista widget delle task
+        # popolo la lista_prodotti_salvati widget delle task
         self.controllore = ControllorePianoLavoro()
         for task in self.controllore.get_lista_task():
             self.listWidget.addItem(task.nome_task)
 
-        # mette in lista solo le task completate
+        # mette in lista_prodotti_salvati solo le task completate
         def task_completate():
             self.listWidget.setStyleSheet("color: rgb(0, 160, 0);"
                                           "background-color: rgb(255,255,255);")
@@ -490,7 +490,7 @@ class VistaPianoLavoro(object):
 
         self.pushButton_att_compl.clicked.connect(lambda: task_completate())
 
-        # mette in lista solo le task non completate
+        # mette in lista_prodotti_salvati solo le task non completate
         def task_non_completate():
             self.listWidget.setStyleSheet("color: rgb(209, 0, 0);"
                                           "background-color: rgb(255,255,255);")
@@ -503,7 +503,7 @@ class VistaPianoLavoro(object):
 
         self.pushButton_att_non_compl.clicked.connect(lambda: task_non_completate())
 
-        # mette in lista tutte le task
+        # mette in lista_prodotti_salvati tutte le task
         def task_tutte():
             self.listWidget.setStyleSheet("color: rgb(0, 0, 0);"
                                           "background-color: rgb(255,255,255);")
@@ -564,7 +564,7 @@ class VistaPianoLavoro(object):
 
         self.pushButton.clicked.connect(lambda: visualizza_task())
 
-        # riempie la lista di assegnatari per creare una task con i dipendenti e relative check box
+        # riempie la lista_prodotti_salvati di assegnatari per creare una task con i dipendenti e relative check box
         self.controllore_dipendenti = ControlloreListaDipendenti()
 
         for dipendente in self.controllore_dipendenti.get_lista():
@@ -575,7 +575,7 @@ class VistaPianoLavoro(object):
             item2 = item
             self.listWidget_assegnatari.addItem(item)
 
-        # aggiunge in lista e salva una nuova task
+        # aggiunge in lista_prodotti_salvati e salva una nuova task
         def aggiungi_nuova_task():
             self.stackedWidget.setCurrentWidget(self.page_crea_attivita)
             self.dateEdit_new.setMinimumDate(
@@ -629,10 +629,7 @@ class VistaPianoLavoro(object):
 
 
 
-                QMessageBox.about(MainWindow, "", "La nuova attività è stata salvata con successo!")
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0,0,0);"
-                                                      "background-color: rgb(235, 235, 235);"
-                                                      "border: none;")
+
 
         self.pushButton_4.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.page_crea_attivita))
 
@@ -659,7 +656,7 @@ class VistaPianoLavoro(object):
                                                           "background-color: rgb(235, 235, 235);"
                                                           "border: none")
                     q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + "'" + tasks[i][
-                        'nome_task'] + "'" + " dalla lista delle attività?", QMessageBox.Yes | QMessageBox.No)
+                        'nome_task'] + "'" + " dalla lista_prodotti_salvati delle attività?", QMessageBox.Yes | QMessageBox.No)
                     nome_da_eliminare = tasks[i]['nome_task']
                     if q == QMessageBox.Yes:
                         del tasks[i]
@@ -672,7 +669,7 @@ class VistaPianoLavoro(object):
                                 self.listWidget.addItem(task_aggiornata['nome_task'])
                         self.stackedWidget.setCurrentWidget(self.page_vuota)
                         QMessageBox.about(MainWindow, "",
-                                          "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista!")
+                                          "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista_prodotti_salvati!")
                         QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
                                                               "background-color: rgb(235, 235, 235);"
                                                               "border: none;")
@@ -683,12 +680,12 @@ class VistaPianoLavoro(object):
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow,
                                           "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista_prodotti_salvati!",
                                      QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton_3.clicked.connect(lambda: elimina_task())
 
-        # riempie la lista di assegnatari per modificare una task con i dipendenti e relative check box
+        # riempie la lista_prodotti_salvati di assegnatari per modificare una task con i dipendenti e relative check box
         for dipendente in self.controllore_dipendenti.get_lista():
             item = QtWidgets.QListWidgetItem()
             item.setText(dipendente.nome)
@@ -761,7 +758,7 @@ class VistaPianoLavoro(object):
                 self.pushButton_modifica_attivita.clicked.connect(lambda: update_task())
             except Exception:
                 QMessageBox.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista_prodotti_salvati!",
                                      QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton_2.clicked.connect(lambda: modifica_task())

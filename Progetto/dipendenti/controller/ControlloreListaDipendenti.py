@@ -7,21 +7,21 @@ class ControlloreListaDipendenti:
         super(ControlloreListaDipendenti, self).__init__()
         self.model = ListaDipendenti()
 
-    # aggiunge un elemento alla lista
+    # aggiunge un elemento alla lista_prodotti_salvati
     def aggiungi_elemento(self, elemento):
         self.model.aggiungi_dipendente(elemento)
         self.save_data()
 
-    # ritorna la lista
+    # ritorna la lista_prodotti_salvati
     def get_lista(self):
         return self.model.get_lista_dipendenti()
 
-    # rimuove un elemento dalla lista per mezzo dell'indice
+    # rimuove un elemento dalla lista_prodotti_salvati per mezzo dell'indice
     def rimuovi_by_index(self, index):
         self.model.rimuovi_dipendente_by_index(index)
         self.save_data()
 
-    # restituisce un dipendente dalla lista per mezzo dell'indice
+    # restituisce un dipendente dalla lista_prodotti_salvati per mezzo dell'indice
     def get_dipendente_by_index(self, index):
         self.model.get_dipendente_by_index(index)
 
@@ -32,7 +32,7 @@ class ControlloreListaDipendenti:
             totale += dipendente.calcola_stipendio()  # Da cambiare nelle altre classi
 
     def get_numero_dipendenti(self):
-        self.model.get_numero_dipendenti()
+        return self.model.get_numero_dipendenti()
 
     def get_totale_stipendi(self):
         lista = self.model.get_lista_dipendenti()

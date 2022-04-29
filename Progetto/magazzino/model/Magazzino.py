@@ -1,42 +1,29 @@
-class Magazzino():
 
-    def __init__(self, prodotto, numero_prodotti, categorie, totale, aggiungi_a_bilancio):
-        self.prodotto = prodotto
-        self.numero_prodotti = numero_prodotti
-        self.categorie = categorie
-        self.totale = totale
-        self.aggiungi_a_bilancio = aggiungi_a_bilancio
+class Magazzino:
+    def __init__(self):
+        super(Magazzino, self).__init__()
+        self.lista_magazzino = []
+        self.valore = 0
+        self.numero_elementi = 0
+        self.__len__ = self.lista_prodotti_salvati.__len__()
 
-    def get_prodotti(self):
-        return self.prodotto
+        if os.path.isfile('/Users/davidedegrazia/PycharmProjects/LaGiuseppina/Progetto/listaprodotti/data/ListaProdottiSalvati.pickle'):
+                with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina/Progetto/listaprodotti/data/ListaProdottiSalvati.pickle','rb') as f:
+                    self.lista_prodotti_salvati = pickle.load(f)
+        else:
+            with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina/Progetto/listaprodotti/data/ListaProdottiSalvati.json') as f:
+                lista_prodotti_salvati_iniziale = json.load(f)
+            for prodotto in lista_prodotti_salvati_iniziale:
+                self.aggiungi_elemento(Prodotto(prodotto['nome'], prodotto['categoria'], prodotto['tipo_unita'],
+                                                prodotto['prezzo_su_unita']))
 
-    def get_totale(self):
-        return self.totale
+    def aggiungi_elemento(self, prodotto: Prodotto):
+        for elemento in self.lista_prodotti_salvati:
+            if elemento.get_nome().lower() == prodotto.get_nome().lower():
+               raise ValueError('L\'elemento è già presente all\'interno della lista_prodotti_salvati')
 
-    def get_categorie(self):
-        return self.categorie
-
-    def get_numero_prodotti(self):
-        return self.numero_prodotti
-
-    def rimuovi_prodotto_by_index(self, index):
-        self.prodotto_by_index(index)
-
-    def aggiungi_prodotto(self, prodotto):
-        self.prodotto(prodotto)
-
-    def get_prodotto_by_index(self, index):
-        return self.prodotto_by_index(index)
-
-    def categoria_prodotti(self, prodotti):
-        self.categoria_prodotti(prodotti)
-
-    def prodotto_by_index(self, index):
-        self.prodotto_by_index(index)
-
-    def quantita_by_index(self, index):
-        self.quantita_by_index(index)
-
+        self.lista_prodotti_salvati.append(prodotto)
+        #self.lista_prodotti_salvati.sort(key=Prodotto.get_nome)
 
 
 

@@ -58,9 +58,9 @@ class ControlloreListaProdotti(ControlloreListaProdottiSalvati):
             if not file_is_present:
                 error_string = 'Non è stato creato nesssun file al path: ' + path
                 if exists(self.path_json):
-                    error_string + '\n File ' + self.path_json + ' crato con successo!'
+                    error_string + '\n File ' + self.path_json + ' creato con successo!'
                 elif exists(self.path_pickle):
-                    error_string + '\n File ' + self.path_pickle + ' crato con successo!'
+                    error_string + '\n File ' + self.path_pickle + ' creato con successo!'
                 raise FileNotFoundError(error_string)
 
     def aggiungi_elemento_by_name(self, nome: str, quantita: int):
@@ -77,8 +77,6 @@ class ControlloreListaProdotti(ControlloreListaProdottiSalvati):
         with open(self.path_pickle, 'wb') as handle:
             pickle.dump(self.model.getLista(), handle, pickle.HIGHEST_PROTOCOL)
 
-    def funzione_prova(self):
-        pass
 
 
 if __name__ == "__main__":

@@ -7,11 +7,11 @@ class ControllorePianoLavoro:
         super(ControllorePianoLavoro, self).__init__()
         self.model = PianoLavoro()
 
-    # aggiunge una task alla lista
+    # aggiunge una task alla lista_prodotti_salvati
     def aggiungi_task(self, task):
         self.model.aggiungi_task(task)
 
-    # ritorna la lista delle task
+    # ritorna la lista_prodotti_salvati delle task
     def get_lista_task(self):
         return self.model.get_lista_task()
 
@@ -21,15 +21,15 @@ class ControllorePianoLavoro:
     def get_task_by_index(self, index):
         return self.model.get_task_by_index(index)
 
-    # ritorna la lista delle task completate
+    # ritorna la lista_prodotti_salvati delle task completate
     def get_task_completate(self):
         return self.model.get_lista_task_completate()
 
-    # ritorna la lista delle task in scadenza
+    # ritorna la lista_prodotti_salvati delle task in scadenza
     def get_task_in_scadenza(self):
         return self.model.get_lista_task_in_scadenza()
 
-    # ritorna la lista delle task da completare
+    # ritorna la lista_prodotti_salvati delle task da completare
     def get_task_da_completare(self):
         return self.model.get_lista_task_da_completare()
 
