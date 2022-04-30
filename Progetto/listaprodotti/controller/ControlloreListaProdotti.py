@@ -7,6 +7,7 @@ from Progetto.listaprodotti.controller.ControlloreListaProdottiSalvati import Co
 from Progetto.listaprodotti.model.ListaProdottiConQuantita import ListaProdottiConQuantita
 from Progetto.listaprodotti.model.Prodotto import Prodotto, CategoriaProdotti, UnitaDiMisura
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
+from Progetto.classi_astratte.ComponentBilancio import ComponentBilancio
 
 
 def prova_init():
@@ -27,11 +28,12 @@ def get_nome(prodotto: Prodotto):
     return prodotto.get_nome()
 
 
-class ControlloreListaProdotti(ControlloreListaProdottiSalvati):
+class ControlloreListaProdotti(ComponentBilancio,ControlloreListaProdottiSalvati):
 
     # Il path è il path del file in cui sono salvati i dati del Controllore, funziona sia con .pickle che con .json
     # Se il file al path specificato non esiste lo crea ed in tal caso ritorna FIleNotFoundError con un messaggio che riporta l'avvenuta creazione
-    def __init__(self, c_lista_prodotti_salvati: ControlloreListaProdottiSalvati, path):
+    def __init__(self, c_lista_prodotti_salvati: ControlloreListaProdottiSalvati, path, nome):
+        super(ControlloreListaProdotti, self).__init__()
         self.clps = c_lista_prodotti_salvati
         if path.endswith('.pickle'):
             self.path_pickle = path
@@ -62,9 +64,11 @@ class ControlloreListaProdotti(ControlloreListaProdottiSalvati):
                 elif exists(self.path_pickle):
                     error_string + '\n File ' + self.path_pickle + ' crato con successo!'
                 raise FileNotFoundError(error_string)
+        self.valore = self.model.get_valore()
+        self.nome = nome
 
     def aggiungi_elemento_by_name(self, nome: str, quantita: int):
-        lista = self.model.getLista()
+        lista = self.model.get_lista()
         if self.clps.is_present(nome):
             prodotto_salvato = self.clps.get_elemento_by_name(nome)
             nuovo_prodotto = ProdottoConQuantità.costruttore_da_prodotto(prodotto_salvato, quantita)
@@ -73,12 +77,23 @@ class ControlloreListaProdotti(ControlloreListaProdottiSalvati):
         lista.append(nuovo_prodotto)
         lista.sort(key=get_nome)
 
+    def get_valore(self):
+        self.aggiorna_valore()
+        return self.valore
+
+    def aggiorna_valore(self):
+        lista = self.model.get_lista()
+        valore = 0
+        for prodotto in lista:
+            valore += prodotto.get_valore()
+        self.valore = valore
+
     def save_data(self):
         with open(self.path_pickle, 'wb') as handle:
-            pickle.dump(self.model.getLista(), handle, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(self.model.get_lista(), handle, pickle.HIGHEST_PROTOCOL)
 
-    def funzione_prova(self):
-        pass
+    def get_nome(self):
+        return self.nome
 
 
 if __name__ == "__main__":
