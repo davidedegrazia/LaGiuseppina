@@ -6,6 +6,10 @@ from Progetto.dipendenti.model.Dipendente import Dipendente
 
 
 class ListaDipendenti:
+    @staticmethod
+    def prova_classe():
+        lista = ListaDipendenti()
+        lista.save_data()
 
     def __init__(self):
         super(ListaDipendenti, self).__init__()
@@ -18,7 +22,8 @@ class ListaDipendenti:
                 lista_dipendenti_iniziali = json.load(f)
             for dipendente_iniziale in lista_dipendenti_iniziali:
                 self.aggiungi_dipendente(Dipendente(dipendente_iniziale["nome"], dipendente_iniziale["ore"],
-                                                    dipendente_iniziale["compenso_a_ore"], dipendente_iniziale["tipo_contratto"],
+                                                    dipendente_iniziale["compenso_a_ore"],
+                                                    dipendente_iniziale["tipo_contratto"],
                                                     dipendente_iniziale["email"], dipendente_iniziale["telefono"]))
 
     def aggiungi_dipendente(self, dipendente):
@@ -41,3 +46,8 @@ class ListaDipendenti:
     def save_data(self):
         with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
+
+
+if __name__ == "__main__":
+    lista = ListaDipendenti()
+    ListaDipendenti.prova_classe()

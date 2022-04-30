@@ -3,7 +3,7 @@ import uuid
 from Progetto.listaprodotti.model.Prodotto import Prodotto, CategoriaProdotti
 
 
-class ListaProdottiConQuantita:
+class ListaProdottiConQuantita():
     def __init__(self, file_json):
         super(ListaProdottiConQuantita, self).__init__()
         self.data_json = file_json
@@ -43,6 +43,3 @@ class ListaProdottiConQuantita:
 
     def get_elemento_by_index(self, index):
         return self.lista[index]
-
-    def getLista(self):
-        return self.lista
