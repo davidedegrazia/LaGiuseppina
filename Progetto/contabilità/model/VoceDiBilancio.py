@@ -154,7 +154,6 @@ class VoceDiBilancio:
             self.eterno = True
         else:
             self.eterno = False
-        self.component.set_aggiunto_a_bilancio(True)
 
     def get_prodotto(self):
         """
