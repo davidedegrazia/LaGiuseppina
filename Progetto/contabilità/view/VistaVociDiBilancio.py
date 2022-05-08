@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 from datetime import datetime
 
 from PyQt5 import QtCore, QtWidgets
 
 from Progetto.contabilità.model.VoceDiBilancio import VoceDiBilancio, ComponenteGenerica, Periodicita
+=======
+from PyQt5 import QtCore, QtGui, QtWidgets
+>>>>>>> origin/main
 
 
 class VistaVociDiBilancio(object):
@@ -96,6 +100,7 @@ class VistaVociDiBilancio(object):
         self.label_nome_voce = QtWidgets.QLabel(self.page_visualizza_voce)
         self.label_nome_voce.setMaximumSize(QtCore.QSize(16777215, 80))
         self.label_nome_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+<<<<<<< HEAD
                                            "color: rgb(0, 0, 0);")
         self.label_nome_voce.setObjectName("label_nome_voce")
         self.verticalLayout_3.addWidget(self.label_nome_voce)
@@ -105,6 +110,38 @@ class VistaVociDiBilancio(object):
                                              "color: rgb(0, 0, 0);")
         self.label_valore_voce.setObjectName("label_valore_voce")
         self.verticalLayout_3.addWidget(self.label_valore_voce)
+=======
+                                           "color: rgb(0,0,0);")
+        self.label_nome_voce.setObjectName("label_nome_voce")
+        self.verticalLayout_3.addWidget(self.label_nome_voce)
+        self.label_prezzo_voce = QtWidgets.QLabel(self.page_visualizza_voce)
+        self.label_prezzo_voce.setMaximumSize(QtCore.QSize(16777215, 80))
+        self.label_prezzo_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+                                             "color: rgb(0,0,0);")
+        self.label_prezzo_voce.setObjectName("label_prezzo_voce")
+        self.verticalLayout_3.addWidget(self.label_prezzo_voce)
+        self.label_entrata_voce = QtWidgets.QLabel(self.page_visualizza_voce)
+        self.label_entrata_voce.setMaximumSize(QtCore.QSize(16777215, 80))
+        self.label_entrata_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+                                              "color: rgb(0,0,0);")
+        self.label_entrata_voce.setObjectName("label_entrata_voce")
+        self.verticalLayout_3.addWidget(self.label_entrata_voce)
+        self.label_periodicita_voce = QtWidgets.QLabel(self.page_visualizza_voce)
+        self.label_periodicita_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+                                                  "color: rgb(0,0,0);")
+        self.label_periodicita_voce.setObjectName("label_periodicita_voce")
+        self.verticalLayout_3.addWidget(self.label_periodicita_voce)
+        self.label_num_iterazioni_voce = QtWidgets.QLabel(self.page_visualizza_voce)
+        self.label_num_iterazioni_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+                                                     "color: rgb(0,0,0);")
+        self.label_num_iterazioni_voce.setObjectName("label_num_iterazioni_voce")
+        self.verticalLayout_3.addWidget(self.label_num_iterazioni_voce)
+        self.label_prima_iterazione_voce = QtWidgets.QLabel(self.page_visualizza_voce)
+        self.label_prima_iterazione_voce.setStyleSheet("font: 800 20pt \"Apple SD Gothic Neo\";"
+                                                       "color: rgb(0,0,0);")
+        self.label_prima_iterazione_voce.setObjectName("label_prima_iterazione_voce")
+        self.verticalLayout_3.addWidget(self.label_prima_iterazione_voce)
+>>>>>>> origin/main
         self.stackedWidget.addWidget(self.page_visualizza_voce)
         self.page_crea_nuova_voce = QtWidgets.QWidget()
         self.page_crea_nuova_voce.setObjectName("page_crea_nuova_voce")
@@ -285,6 +322,7 @@ class VistaVociDiBilancio(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
+<<<<<<< HEAD
         self.stackedWidget.setCurrentIndex(2)  ##########################0 : vuota, 1: visualizza, 2: creea
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         voce = VoceDiBilancio(ComponenteGenerica(10, 'ciao'), True, Periodicita.NESSUNA)
@@ -293,6 +331,11 @@ class VistaVociDiBilancio(object):
         self.salva()
 
     # qui---------------
+=======
+        self.stackedWidget.setCurrentIndex(1)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+>>>>>>> origin/main
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -301,7 +344,15 @@ class VistaVociDiBilancio(object):
         self.push_creanuovavoce.setText(_translate("MainWindow", "Crea nuova \n"
                                                                  " voce"))
         self.label_nome_voce.setText(_translate("MainWindow", "Nome:"))
+<<<<<<< HEAD
         self.label_valore_voce.setText(_translate("MainWindow", "Valore:"))
+=======
+        self.label_prezzo_voce.setText(_translate("MainWindow", "Prezzo:"))
+        self.label_entrata_voce.setText(_translate("MainWindow", "Entrata?: "))
+        self.label_periodicita_voce.setText(_translate("MainWindow", "Periodicità: "))
+        self.label_num_iterazioni_voce.setText(_translate("MainWindow", "Numero iterazioni: "))
+        self.label_prima_iterazione_voce.setText(_translate("MainWindow", "Data prima iterazione:"))
+>>>>>>> origin/main
         self.label_7.setText(_translate("MainWindow", "Crea una nuova voce di bilancio!"))
         self.label_8.setText(_translate("MainWindow", "Nome: "))
         self.label_11.setText(_translate("MainWindow", "Prezzo:"))
@@ -315,6 +366,7 @@ class VistaVociDiBilancio(object):
         self.label_10.setText(_translate("MainWindow", "Numero iterazioni:"))
         self.label_2.setText(_translate("MainWindow", "Data prima iterazione:"))
         self.pushButton_salva_voce.setText(_translate("MainWindow", "Salva voce"))
+<<<<<<< HEAD
 
         ################################################################
 
@@ -337,3 +389,5 @@ class VistaVociDiBilancio(object):
         'Annuale': Periodicita.ANNUALE
 
     }
+=======
+>>>>>>> origin/main
