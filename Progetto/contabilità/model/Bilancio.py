@@ -140,6 +140,12 @@ class BilancioSettimanale:
         """
         return self.settimana_iso
 
+    def get_data_iniziale(self):
+        return datetime.fromisocalendar(self.anno, self.settimana_iso, 1)
+
+    def get_data_finale(self):
+        return datetime.fromisocalendar(self.anno, self.settimana_iso, 7)
+
     def get_voci_settimanali(self):
         """
         :return: array composto da elementi del tipo (ComponentBilancio, data, bool) ordinato per data crescente in cui il booleano di ogni elemento è vero se il ComponentBilancio si riferisce a un'entrata, falso altrimenit
@@ -183,12 +189,20 @@ class BilancioSettimanale:
             self.costi += uscita[0].get_valore()
         return self.costi
 
+    def add(self, voce: VoceDiBilancio):
+        self.tutte_le_voci.add(voce)
+        self.__init__(self.tutte_le_voci, self.anno, self.settimana_iso)
+
+    def remove(self, voce: VoceDiBilancio):
+        self.tutte_le_voci.remove(voce)
+        self.__init__(self.tutte_le_voci, self.anno, self.settimana_iso)
+
     def next(self):
-        nuova_data = datetime.fromisocalendar(self.get_anno(), self.get_settimana(), 0) + timedelta(weeks=1)
+        nuova_data = datetime.fromisocalendar(self.get_anno(), self.get_settimana(), 1) + timedelta(weeks=1)
         self.__init__(self.tutte_le_voci, nuova_data.isocalendar().year, nuova_data.isocalendar().week)
 
     def previous(self):
-        nuova_data = datetime.fromisocalendar(self.get_anno(), self.get_settimana(), 0) - timedelta(weeks=1)
+        nuova_data = datetime.fromisocalendar(self.get_anno(), self.get_settimana(), 1) - timedelta(weeks=1)
         self.__init__(self.tutte_le_voci, nuova_data.isocalendar().year, nuova_data.isocalendar().week)
 
 
@@ -202,6 +216,9 @@ class BilancioMensile:
         self.mese = mese
         self.tutte_le_voci = voci
         self.voci_mensili = self.__trova_voci_mensili()
+        self.costi = self.get_costi()
+        self.ricavo = self.get_ricavo()
+        self.utile = self.get_utile()
 
     def __trova_voci_mensili(self):
         anno = self.get_anno()
@@ -221,6 +238,12 @@ class BilancioMensile:
 
     def get_mese(self):
         return self.mese
+
+    def get_data_iniziale(self):
+        return datetime(self.anno, self.mese, monthrange(self.anno, self.mese)[0])
+
+    def get_data_finale(self):
+        return datetime(self.anno, self.mese, monthrange(self.anno, self.mese)[1])
 
     def get_voci_mensili(self):
         return self.voci_mensili
@@ -258,6 +281,14 @@ class BilancioMensile:
         for uscita in self.get_uscite_mensili():
             self.costi += uscita[0].get_valore()
         return self.costi
+
+    def add(self, voce: VoceDiBilancio):
+        self.tutte_le_voci.add(voce)
+        self.__init__(self.tutte_le_voci, self.anno, self.mese)
+
+    def remove(self, voce: VoceDiBilancio):
+        self.tutte_le_voci.remove(voce)
+        self.__init__(self.tutte_le_voci, self.anno, self.settimana_iso)
 
     def next(self):
         anno = self.get_anno()
@@ -306,18 +337,30 @@ def __ProvaInit():
 class Bilancio:
     def __init__(self):
         super(Bilancio, self).__init__()
-        self.voci_di_bilancio = set(VoceDiBilancio)
+        self.voci_di_bilancio = set()
         self.__modified = True
         self.voci_ordinate_data_iniziale = self.get_voci(ordine='po')
         self.voci_ordinate_data_finale = self.get_voci(ordine='uo')
-        self.bilancio_corrente = BilancioSettimanale(self.voci_di_bilancio)
+        self.bilancio_corrente_sett = BilancioSettimanale(self.get_voci())
+        self.bilancio_corrente_mens = BilancioMensile(self.get_voci())
         self.__modified = False
 
     def aggiungi_elemento(self, voce: VoceDiBilancio):
         if self.is_present_by_id(voce.get_id()):
             raise ValueError('Elemento già presente all\'interno del bilancio')
         self.voci_di_bilancio.add(voce)
+        self.bilancio_corrente_sett.add(voce)
+        self.bilancio_corrente_mens.add(voce)
         self.__modified = True
+
+    def rimuovi_elemento(self, voce: VoceDiBilancio):
+        if self.is_present_by_id(voce.get_id()):
+            self.voci_di_bilancio.remove(voce)
+            self.bilancio_corrente_sett.remove(voce)
+            self.bilancio_corrente_mens.remove(voce)
+            self.__modified = True
+        else:
+            raise ValueError('L\'elemento non è presente all\'interno del bilancio')
 
     def is_present_by_id(self, _id):
         voci = self.get_voci()
@@ -361,21 +404,27 @@ class Bilancio:
                 raise ValueError
 
     def get_bilancio_settimanale(self, anno=datetime.today().year, settimana_iso=datetime.today().isocalendar().week):
-        self.bilancio_corrente = BilancioSettimanale(self.get_voci(), anno, settimana_iso)
-        return self.bilancio_corrente
+        self.bilancio_corrente_sett = BilancioSettimanale(self.get_voci(), anno, settimana_iso)
+        return self.bilancio_corrente_sett
 
     def get_bilancio_mensile(self, anno=datetime.today().year, mese=datetime.today().month):
-        self.bilancio_corrente = BilancioMensile(self.get_voci(), anno, mese)
-        return self.bilancio_corrente
+        self.bilancio_corrente_mens = BilancioMensile(self.get_voci(), anno, mese)
+        return self.bilancio_corrente_mens
 
-    def next(self):
-        return self.bilancio_corrente.next()
+    def next_sett(self):
+        self.bilancio_corrente_sett.next()
 
-    def previous(self):
-        return self.bilancio_corrente.previous()
+    def previous_sett(self):
+        self.bilancio_corrente_sett.previous()
+
+    def next_mens(self):
+        self.bilancio_corrente_mens.next()
+
+    def previous_mens(self):
+        self.bilancio_corrente_mens.previous()
 
 
 if __name__ == '__main__':
-    #__ProvaInit()
+    # __ProvaInit()
     __ProvaBilancioSettimanale()
-    #__ProvaBilancioMensile()
+    # __ProvaBilancioMensile()

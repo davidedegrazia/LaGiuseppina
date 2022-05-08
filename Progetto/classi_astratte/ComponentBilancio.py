@@ -1,4 +1,5 @@
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
+
 
 class ComponentBilancio:
 
@@ -7,7 +8,11 @@ class ComponentBilancio:
         pass
 
     @abstractmethod
-    def get_totale(self):
+    def get_valore(self):
+        pass
+
+    @abstractmethod
+    def get_nome(self):
         pass
 
     @abstractmethod
@@ -17,3 +22,12 @@ class ComponentBilancio:
     @abstractmethod
     def is_aggiunto_a_bilancio(self):
         pass
+
+    def get_valore_euro(self):
+        valore = self.get_valore()
+        centesimi = valore % 100
+        if valore >= 100:
+            euro = int((valore - centesimi) / 100)
+        else:
+            euro = 0
+        return euro, centesimi

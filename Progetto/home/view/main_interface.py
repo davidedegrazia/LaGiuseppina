@@ -3,11 +3,11 @@ import datetime
 # import self as self
 import json
 
-import self
 from PyQt5 import QtCore, QtWidgets
 # from pyqt5_plugins.examplebuttonplugin import QtGui
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from PyQt5.QtWidgets import QListView, QMessageBox, QListWidget, QTableWidgetItem
+from googletrans import Translator
 
 from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
 from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
@@ -17,12 +17,18 @@ from Progetto.listaprodotti.view.VistaProdottiMagazzino import VistaProdottiMaga
 from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 from Progetto.clienti.controller.ControlloreListaOrdinazioni import ControlloreListaOrdinazioni
+from Progetto.contabilità.view.VistaVociDiBilancio import VistaVociDiBilancio
+from Progetto.contabilità.model.VoceDiBilancio import VoceDiBilancio, ComponenteGenerica, Periodicita
+from Progetto.contabilità.model.Bilancio import Bilancio, BilancioMensile, BilancioSettimanale
+from Progetto.contabilità.utils import centToEuroString
+from Progetto.contabilità.model import Bilancio as B
 
 
 class main_interface(object):
     def __init__(self):
         self.vista_pianolavoro = VistaPianoLavoro()
         self.vista_listaprodotti = VistaProdottiMagazzino()
+        self.vista_vocidibilancio = VistaVociDiBilancio()
 
     def vista_lista_prodotti(self):
         self.window = QtWidgets.QMainWindow()
@@ -32,6 +38,11 @@ class main_interface(object):
     def vista_piano_lavoro(self):
         self.window = QtWidgets.QMainWindow()
         self.vista_pianolavoro.setupUi(self.window)
+        self.window.show()
+
+    def vista_voci_di_bilancio(self):
+        self.window = QtWidgets.QMainWindow()
+        self.vista_vocidibilancio.setupUi(self.window)
         self.window.show()
 
     def setupUi(self, MainWindow, dipendente):
@@ -508,7 +519,7 @@ class main_interface(object):
         self.frame_visualizza_nuovo_dipendente.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_visualizza_nuovo_dipendente.setObjectName("frame_visualizza_nuovo_dipendente")
         self.verticalLayout_30 = QtWidgets.QVBoxLayout(self.frame_visualizza_nuovo_dipendente)
-        self.verticalLayout_30.setContentsMargins(0, 0, 13,6)
+        self.verticalLayout_30.setContentsMargins(0, 0, 13, 6)
         self.verticalLayout_30.setObjectName("verticalLayout_30")
         self.frame_scritta_dipendente = QtWidgets.QFrame(self.frame_visualizza_nuovo_dipendente)
         self.frame_scritta_dipendente.setMaximumSize(QtCore.QSize(16777215, 46))
@@ -1031,15 +1042,15 @@ class main_interface(object):
         self.push_visualizza_ordine.setIconSize(QtCore.QSize(0, 0))
         self.push_visualizza_ordine.setObjectName("push_visualizza_ordine")
         self.verticalLayout_38.addWidget(self.push_visualizza_ordine)
-        #self.push_modifica_ordine = QtWidgets.QPushButton(self.frame_2)
-        #self.push_modifica_ordine.setMinimumSize(QtCore.QSize(120, 41))
-        #self.push_modifica_ordine.setMaximumSize(QtCore.QSize(120, 16777215))
-        #self.push_modifica_ordine.setStyleSheet("font: 700 15pt \"Apple SD Gothic Neo\";\n"
+        # self.push_modifica_ordine = QtWidgets.QPushButton(self.frame_2)
+        # self.push_modifica_ordine.setMinimumSize(QtCore.QSize(120, 41))
+        # self.push_modifica_ordine.setMaximumSize(QtCore.QSize(120, 16777215))
+        # self.push_modifica_ordine.setStyleSheet("font: 700 15pt \"Apple SD Gothic Neo\";\n"
         #                                        "background-color: rgb(255, 255, 255);\n"
         #                                        "border-radius: 17px;"
         #                                        "color: rgb(0,0,0);")
-        #self.push_modifica_ordine.setObjectName("push_modifica_ordine")
-        #self.verticalLayout_38.addWidget(self.push_modifica_ordine)
+        # self.push_modifica_ordine.setObjectName("push_modifica_ordine")
+        # self.verticalLayout_38.addWidget(self.push_modifica_ordine)
         self.push_elimina_ordine = QtWidgets.QPushButton(self.frame_2)
         self.push_elimina_ordine.setMinimumSize(QtCore.QSize(120, 41))
         self.push_elimina_ordine.setMaximumSize(QtCore.QSize(120, 16777215))
@@ -1610,12 +1621,6 @@ class main_interface(object):
         self.tableWidget_settimanale.setColumnCount(4)
         self.tableWidget_settimanale.setRowCount(3)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_settimanale.setVerticalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_settimanale.setVerticalHeaderItem(1, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget_settimanale.setVerticalHeaderItem(2, item)
-        item = QtWidgets.QTableWidgetItem()
         self.tableWidget_settimanale.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_settimanale.setHorizontalHeaderItem(1, item)
@@ -1734,16 +1739,16 @@ class main_interface(object):
         self.frame_19.setObjectName("frame_19")
         self.horizontalLayout_17 = QtWidgets.QHBoxLayout(self.frame_19)
         self.horizontalLayout_17.setObjectName("horizontalLayout_17")
-        self.pushButton = QtWidgets.QPushButton(self.frame_19)
-        self.pushButton.setMinimumSize(QtCore.QSize(0, 40))
-        self.pushButton.setMaximumSize(QtCore.QSize(130, 16777215))
-        self.pushButton.setStyleSheet("font: 700 16pt \"Apple SD Gothic Neo\";\n"
-                                      "background-color: rgb(255, 255, 255);\n"
-                                      "border-radius: 11px;\n"
-                                      "background-color: rgba(0, 122, 255, 204);\n"
-                                      "color: rgb(255, 255, 255);")
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout_17.addWidget(self.pushButton)
+        self.pushButton_vocidibilancio = QtWidgets.QPushButton(self.frame_19)
+        self.pushButton_vocidibilancio.setMinimumSize(QtCore.QSize(0, 40))
+        self.pushButton_vocidibilancio.setMaximumSize(QtCore.QSize(130, 16777215))
+        self.pushButton_vocidibilancio.setStyleSheet("font: 700 16pt \"Apple SD Gothic Neo\";\n"
+                                                     "background-color: rgb(255, 255, 255);\n"
+                                                     "border-radius: 11px;\n"
+                                                     "background-color: rgba(0, 122, 255, 204);\n"
+                                                     "color: rgb(255, 255, 255);")
+        self.pushButton_vocidibilancio.setObjectName("pushButton_vocidibilancio")
+        self.horizontalLayout_17.addWidget(self.pushButton_vocidibilancio)
         self.verticalLayout_29.addWidget(self.frame_19)
         self.stackedWidget.addWidget(self.contabilita)
         self.statistiche = QtWidgets.QWidget()
@@ -1754,7 +1759,7 @@ class main_interface(object):
         self.verticalLayout.addWidget(self.central_frame)
         MainWindow.setCentralWidget(self.centralwidget)
 
-        #pagina StackedWidget2 per modificare il dipendente
+        # pagina StackedWidget2 per modificare il dipendente
         self.page_modifica_dipendente = QtWidgets.QWidget()
         self.page_modifica_dipendente.setObjectName("page_modifica_dipendente")
         self.verticalLayout_102 = QtWidgets.QVBoxLayout(self.page_modifica_dipendente)
@@ -1918,7 +1923,7 @@ class main_interface(object):
         self.horizontalLayout_122.setContentsMargins(9, -1, -1, -1)
         self.horizontalLayout_122.setObjectName("horizontalLayout_122")
         self.pushButton_salva_dipendenti2 = QtWidgets.QPushButton(self.frame_salva_dipendenti2)
-        #self.pushButton_salva_dipendenti2.setEnabled(False)
+        # self.pushButton_salva_dipendenti2.setEnabled(False)
         self.pushButton_salva_dipendenti2.setMinimumSize(QtCore.QSize(0, 36))
         self.pushButton_salva_dipendenti2.setMaximumSize(QtCore.QSize(145, 16777215))
         self.pushButton_salva_dipendenti2.setStyleSheet("font: 700 14pt \"Apple SD Gothic Neo\";\n"
@@ -1932,17 +1937,15 @@ class main_interface(object):
         self.verticalLayout_102.addWidget(self.frame_white2)
         self.stackedWidget_2.addWidget(self.page_modifica_dipendente)
 
-
         self.label_nome2.setText("Nome")
         self.label_oresettimanali2.setText("Ore settimanali")
-        self.label_pagaadora2.setText( "Paga ad ora (€)")
-        self.label_tipodicontratto2.setText( "Tipo di contratto")
-        self.label_email2.setText( "E-mail")
-        self.label_telefono2.setText( "Telefono")
-        self.pushButton_salva_dipendenti2.setText( "Modifica dipendente")
+        self.label_pagaadora2.setText("Paga ad ora (€)")
+        self.label_tipodicontratto2.setText("Tipo di contratto")
+        self.label_email2.setText("E-mail")
+        self.label_telefono2.setText("Telefono")
+        self.pushButton_salva_dipendenti2.setText("Modifica dipendente")
 
-
-        #parte con il main frame vuoto
+        # parte con il main frame vuoto
         self.stackedWidget.setCurrentIndex(1)
         self.stackedWidget_2.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -1959,63 +1962,66 @@ class main_interface(object):
             self.listview_model.appendRow(item)
         self.listWidget_dipendenti.setModel(self.listview_model)
 
-        #visalizza a schermo le info di un dipendente
+        # visalizza a schermo le info di un dipendente
         self.controller2 = ControlloreDipendente(dipendente)
+
         def get_info_dipendente_selezionato():
             try:
-                 selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
 
-                 with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
-                  data = json.load(file)
-                 dip = data[selected]
+                with open("dipendenti/data/lista_dipendenti_iniziali.json", "r") as file:
+                    data = json.load(file)
+                dip = data[selected]
 
-                 self.label_scrittvisualizzadipendente.setText(dip['nome'])
-                 self.label_visualizza_nome.setText("Nome:  " + dip['nome'])
-                 self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(dip['ore']))
-                 self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(dip['compenso_a_ore']))
-                 self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + dip['tipo_contratto'])
-                 self.label_visualizza_email_.setText("E-mail:  " + dip['email'])
-                 self.label_telefono_2.setText("Telefono:  " + dip['telefono'])
+                self.label_scrittvisualizzadipendente.setText(dip['nome'])
+                self.label_visualizza_nome.setText("Nome:  " + dip['nome'])
+                self.label_visualizza_oresettimanali.setText("Ore settimanali:  " + str(dip['ore']))
+                self.label__visualizza_pagaadora.setText("Paga ad ora (€):  " + str(dip['compenso_a_ore']))
+                self.label_visualizza_tipodicontratto.setText("Tipo di contratto:  " + dip['tipo_contratto'])
+                self.label_visualizza_email_.setText("E-mail:  " + dip['email'])
+                self.label_telefono_2.setText("Telefono:  " + dip['telefono'])
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                 QMessageBox.about(MainWindow, " ", "Devi selezionare prima un dipendente!")
                 self.stackedWidget_2.setCurrentWidget(self.page_empty)
 
-
-        self.push_visualizza.clicked.connect(lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
+        self.push_visualizza.clicked.connect(
+            lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
         self.push_visualizza.clicked.connect(lambda: get_info_dipendente_selezionato())
 
-        #elimina un dipendente dalla lista_prodotti_salvati
+        # elimina un dipendente dalla lista_prodotti_salvati
         def box_question_eliminare_dipendente():
             try:
-              selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
-              with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
-                data = json.load(file)
-              dip = data[selected]
-
-              QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-              q = QMessageBox.question(MainWindow,'', "Sei sicuro di voler eliminare " + dip['nome'] + " dalla lista_prodotti_salvati dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
-              if q == QMessageBox.Yes:
-                del data[selected]
-                with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
-                   json.dump(data, f, indent=4)
-
-                self.stackedWidget_2.setCurrentWidget(self.page_empty)
+                selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
+                with open("dipendenti/data/lista_dipendenti_iniziali.json") as file:
+                    data = json.load(file)
+                dip = data[selected]
 
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.about(MainWindow, "", dip['nome'] + " è stato eliminato dalla lista_prodotti_salvati dipendenti")
+                q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + dip[
+                    'nome'] + " dalla lista_prodotti_salvati dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
+                if q == QMessageBox.Yes:
+                    del data[selected]
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
+                        json.dump(data, f, indent=4)
 
-                self.controller = ControlloreListaDipendenti()
-                self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
-                for dipendente in self.controller.get_lista():
-                   item = QStandardItem()
-                   item.setText(dipendente.nome)
-                   item.setEditable(False)
-                   self.listview_model.appendRow(item)
-                self.listWidget_dipendenti.setModel(self.listview_model)
+                    self.stackedWidget_2.setCurrentWidget(self.page_empty)
 
-              else:
-                pass
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.about(MainWindow, "",
+                                      dip['nome'] + " è stato eliminato dalla lista_prodotti_salvati dipendenti")
+
+                    self.controller = ControlloreListaDipendenti()
+                    self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
+                    for dipendente in self.controller.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model)
+
+                else:
+                    pass
 
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
@@ -2024,68 +2030,70 @@ class main_interface(object):
 
         self.push_elimina.clicked.connect(lambda: box_question_eliminare_dipendente())
 
-
         # prende il testo dei lineEdit in CreaNuovoDipendente e fa l'append al file .json
         def new_employee():
-          self.stackedWidget_2.setCurrentWidget(self.page_crea_nuovo_dipendente)
-          self.label_scritta.setText("Crea un nuovo dipendente!")
-          self.lineEdit_nome.clear()
-          self.spinBox_oresettimanali.clear()
-          self.spinBox_pagaadora.clear()
-          self.lineEdit_tipodicontratto.clear()
-          self.lineEdit_email.clear()
-          self.lineEdit_telefono.clear()
+            self.stackedWidget_2.setCurrentWidget(self.page_crea_nuovo_dipendente)
+            self.label_scritta.setText("Crea un nuovo dipendente!")
+            self.lineEdit_nome.clear()
+            self.spinBox_oresettimanali.clear()
+            self.spinBox_pagaadora.clear()
+            self.lineEdit_tipodicontratto.clear()
+            self.lineEdit_email.clear()
+            self.lineEdit_telefono.clear()
 
-          def get_line_edits():
-            nome = self.lineEdit_nome.text()
-            ore = self.spinBox_oresettimanali.value()
-            pagaadora = self.spinBox_pagaadora.value()
-            tipodicontratto = self.lineEdit_tipodicontratto.text()
-            email = self.lineEdit_email.text()
-            telefono = self.lineEdit_telefono.text()
+            def get_line_edits():
+                nome = self.lineEdit_nome.text()
+                ore = self.spinBox_oresettimanali.value()
+                pagaadora = self.spinBox_pagaadora.value()
+                tipodicontratto = self.lineEdit_tipodicontratto.text()
+                email = self.lineEdit_email.text()
+                telefono = self.lineEdit_telefono.text()
 
-            if nome == "" or ore == "" or pagaadora == "" or tipodicontratto == "" or email == "" or telefono == "":
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok, QMessageBox.Ok)
+                if nome == "" or ore == "" or pagaadora == "" or tipodicontratto == "" or email == "" or telefono == "":
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok,
+                                         QMessageBox.Ok)
 
-            else:
+                else:
 
-                dipendente_creato = {
-                                     "nome": str(nome),
-                                     "ore": ore,
-                                     "compenso_a_ore": pagaadora,
-                                     "tipo_contratto": str(tipodicontratto),
-                                     "email": str(email),
-                                     "telefono": str(telefono)
-                                     }
+                    dipendente_creato = {
+                        "nome": str(nome),
+                        "ore": ore,
+                        "compenso_a_ore": pagaadora,
+                        "tipo_contratto": str(tipodicontratto),
+                        "email": str(email),
+                        "telefono": str(telefono)
+                    }
 
-                with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
-                    data = json.load(file)
-                    data.append(dipendente_creato)
-                    file.seek(0)
-                    json.dump(data, file, indent=4)
+                    with open("dipendenti/data/lista_dipendenti_iniziali.json", "r+") as file:
+                        data = json.load(file)
+                        data.append(dipendente_creato)
+                        file.seek(0)
+                        json.dump(data, file, indent=4)
 
-                QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                QMessageBox.about(MainWindow, "", str(nome) + " è stato creato correttamente nella lista_prodotti_salvati dei dipendenti!")
+                    QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
+                    QMessageBox.about(MainWindow, "",
+                                      str(nome) + " è stato creato correttamente nella lista_prodotti_salvati dei dipendenti!")
 
-                self.lineEdit_nome.clear()
-                self.spinBox_oresettimanali.clear()
-                self.spinBox_pagaadora.clear()
-                self.lineEdit_tipodicontratto.clear()
-                self.lineEdit_email.clear()
-                self.lineEdit_telefono.clear()
+                    self.lineEdit_nome.clear()
+                    self.spinBox_oresettimanali.clear()
+                    self.spinBox_pagaadora.clear()
+                    self.lineEdit_tipodicontratto.clear()
+                    self.lineEdit_email.clear()
+                    self.lineEdit_telefono.clear()
 
-                self.contr = ControlloreListaDipendenti()
-                self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
+                    self.contr = ControlloreListaDipendenti()
+                    self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
 
-                for dipendente in self.contr.get_lista():
-                    item = QStandardItem()
-                    item.setText(dipendente.nome)
-                    item.setEditable(False)
-                    self.listview_model2.appendRow(item)
-                self.listWidget_dipendenti.setModel(self.listview_model2)
+                    for dipendente in self.contr.get_lista():
+                        item = QStandardItem()
+                        item.setText(dipendente.nome)
+                        item.setEditable(False)
+                        self.listview_model2.appendRow(item)
+                    self.listWidget_dipendenti.setModel(self.listview_model2)
 
-          self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
+            self.pushButton_salva_dipendenti.clicked.connect(lambda: get_line_edits())
+
         self.push_creanuovodipendente.clicked.connect(lambda: new_employee())
         self.retranslateUi(MainWindow)
 
@@ -2107,8 +2115,6 @@ class main_interface(object):
                 self.lineEdit_email2.setText(dip['email'])
                 self.lineEdit_telefono2.setText(dip['telefono'])
 
-
-
                 def salva_dipendente_modificato():
                     dip['nome'] = self.lineEdit_nome2.text()
                     dip['ore'] = self.spinBox_oresettimanali2.value()
@@ -2122,7 +2128,8 @@ class main_interface(object):
                         json.dump(data, file, indent=4)
 
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                    QMessageBox.about(MainWindow, "", "Il dipendente "+ self.lineEdit_nome2.text() + " è stato modificato correttamente!")
+                    QMessageBox.about(MainWindow, "",
+                                      "Il dipendente " + self.lineEdit_nome2.text() + " è stato modificato correttamente!")
 
                     self.contr = ControlloreListaDipendenti()
                     self.listview_model2 = QStandardItemModel(self.listWidget_dipendenti)
@@ -2149,40 +2156,41 @@ class main_interface(object):
         # sezione Piano di Lavoro
         self.push_listadelleattivita.clicked.connect(self.vista_piano_lavoro)
 
-        #popolo le listWidget di PianoLavoro
+        # popolo le listWidget di PianoLavoro
         def fill_task_calendar():
-          with open('pianodilavoro/data/lista_task.json') as f:
-            tasks = json.load(f)
-            for task in tasks:
-                if task['giorni_rimanenti_alla_scadenza'] == 0:
-                    self.listWidget_2.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 1:
-                    self.listWidget_3.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 2:
-                    self.listWidget_4.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 3:
-                    self.listWidget_5.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 4:
-                    self.listWidget_6.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 5:
-                    self.listWidget_7.addItem(task['nome_task'])
-                elif task['giorni_rimanenti_alla_scadenza'] == 6:
-                    self.listWidget_8.addItem(task['nome_task'])
-                else: pass
+            with open('pianodilavoro/data/lista_task.json') as f:
+                tasks = json.load(f)
+                for task in tasks:
+                    if task['giorni_rimanenti_alla_scadenza'] == 0:
+                        self.listWidget_2.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 1:
+                        self.listWidget_3.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 2:
+                        self.listWidget_4.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 3:
+                        self.listWidget_5.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 4:
+                        self.listWidget_6.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 5:
+                        self.listWidget_7.addItem(task['nome_task'])
+                    elif task['giorni_rimanenti_alla_scadenza'] == 6:
+                        self.listWidget_8.addItem(task['nome_task'])
+                    else:
+                        pass
+
         fill_task_calendar()
-        
-
-
 
         def elimina_lista_attivita():
             QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
                                                   "background-color: rgb(235, 235, 235);"
                                                   "border: none")
-            q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare tutta la lista_prodotti_salvati delle attività? ", QMessageBox.Yes | QMessageBox.No)
+            q = QMessageBox.question(MainWindow, '',
+                                     "Sei sicuro di voler eliminare tutta la lista_prodotti_salvati delle attività? ",
+                                     QMessageBox.Yes | QMessageBox.No)
             if q == QMessageBox.Yes:
                 tasks = []
                 with open("pianodilavoro/data/lista_task.json", 'w') as file:
-                     json.dump(tasks, file)
+                    json.dump(tasks, file)
                 self.listWidget_2.clear()
                 self.listWidget_3.clear()
                 self.listWidget_4.clear()
@@ -2195,19 +2203,20 @@ class main_interface(object):
 
         # MAGAZZINO
         lista_magazzino = ControlloreListaProdottiSalvati()
-        self.tableWidget_frutta.setRowCount(lista_magazzino.get_count_lista_frutta())
+        self.tableWidget_frutta.setRowCount(lista_magazzino.get_count_lista_frutta())  #
         self.tableWidget_frutta.setColumnCount(2)
         self.tableWidget_frutta.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
         self.tableWidget_frutta.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
-        row_frutta = 0
-        for frutto in lista_magazzino.get_lista_frutta():
+        row_frutta = 0  #
+        for frutto in lista_magazzino.get_lista_frutta():  #
 
             self.tableWidget_frutta.setVerticalHeaderItem(row_frutta, QtWidgets.QTableWidgetItem(frutto['nome']))
             self.tableWidget_frutta.verticalHeader().setMinimumWidth(130)
             self.tableWidget_frutta.setItem(row_frutta, 0, QtWidgets.QTableWidgetItem(str(frutto['quantita'])))
-            self.tableWidget_frutta.setItem(row_frutta, 1, QtWidgets.QTableWidgetItem(str(frutto['quantita']*frutto['prezzo_su_unita'])))
+            self.tableWidget_frutta.setItem(row_frutta, 1, QtWidgets.QTableWidgetItem(
+                str(frutto['quantita'] * frutto['prezzo_su_unita'])))
             row_frutta = row_frutta + 1
-
+        #
         self.tableWidget_verdura.setRowCount(lista_magazzino.get_count_lista_verdura())
         self.tableWidget_verdura.setColumnCount(2)
         self.tableWidget_verdura.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
@@ -2227,9 +2236,11 @@ class main_interface(object):
         self.tableWidget_erbe_aromatiche.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
         row_erbe_aromatiche = 0
         for erba in lista_magazzino.get_lista_erbe_aromatiche():
-            self.tableWidget_erbe_aromatiche.setVerticalHeaderItem(row_erbe_aromatiche, QtWidgets.QTableWidgetItem(erba['nome']))
+            self.tableWidget_erbe_aromatiche.setVerticalHeaderItem(row_erbe_aromatiche,
+                                                                   QtWidgets.QTableWidgetItem(erba['nome']))
             self.tableWidget_erbe_aromatiche.verticalHeader().setMinimumWidth(130)
-            self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 0, QtWidgets.QTableWidgetItem(str(erba['quantita'])))
+            self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 0,
+                                                     QtWidgets.QTableWidgetItem(str(erba['quantita'])))
             self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 1, QtWidgets.QTableWidgetItem(
                 str(erba['quantita'] * erba['prezzo_su_unita'])))
             row_erbe_aromatiche = row_erbe_aromatiche + 1
@@ -2258,8 +2269,7 @@ class main_interface(object):
 
         self.push_mag_salva.clicked.connect(lambda: get_quantita_magazzino())
 
-
-        #CLIENTI
+        # CLIENTI
         self.stackedWidget_ordini.setCurrentWidget(self.page_2)
         lista_ordini = ControlloreListaOrdinazioni()
         for ordine in lista_ordini.get_lista_ordinazioni():
@@ -2272,10 +2282,10 @@ class main_interface(object):
             lista_ordini = ControlloreListaOrdinazioni()
             ordine_selezionato = lista_ordini.get_ordine_by_index(selected)
 
-            self.label_scritta_ordine.setText( "Ordine di: " + ordine_selezionato.get_nome_cliente())
-            self.label_visualizza_nome_cliente.setText( "Nome cliente:  " + ordine_selezionato.get_nome_cliente())
-            self.label_visualizza_indirizzo.setText( "Indirizzo di consegna:  " + ordine_selezionato.get_indirizzo() )
-            self.label_visualizza_consegna.setText( "Giorno della consegna:  " + ordine_selezionato.get_data())
+            self.label_scritta_ordine.setText("Ordine di: " + ordine_selezionato.get_nome_cliente())
+            self.label_visualizza_nome_cliente.setText("Nome cliente:  " + ordine_selezionato.get_nome_cliente())
+            self.label_visualizza_indirizzo.setText("Indirizzo di consegna:  " + ordine_selezionato.get_indirizzo())
+            self.label_visualizza_consegna.setText("Giorno della consegna:  " + ordine_selezionato.get_data())
             self.label_prodotti.setText("Prodotti")
             self.tableWidget_visualizza_prodotti.setRowCount(ordine_selezionato.get_count_prodotti())
             self.tableWidget_visualizza_prodotti.setColumnCount(1)
@@ -2284,11 +2294,14 @@ class main_interface(object):
             lista_prodotti = ControlloreListaProdottiSalvati()
             row = 0
             for row in range(ordine_selezionato.get_count_prodotti()):
-                self.tableWidget_visualizza_prodotti.setVerticalHeaderItem(row, QtWidgets.QTableWidgetItem(str(ordine_selezionato.get_prodotto_by_index(row))))
-                self.tableWidget_visualizza_prodotti.setItem(row, 0, QtWidgets.QTableWidgetItem(str(ordine_selezionato.get_quantita_by_index(row))))
-                totale += (ordine_selezionato.get_quantita_by_index(row))*(lista_prodotti.get_prezzo_by_name(ordine_selezionato.get_prodotto_by_index(row)))
+                self.tableWidget_visualizza_prodotti.setVerticalHeaderItem(row, QtWidgets.QTableWidgetItem(
+                    str(ordine_selezionato.get_prodotto_by_index(row))))
+                self.tableWidget_visualizza_prodotti.setItem(row, 0, QtWidgets.QTableWidgetItem(
+                    str(ordine_selezionato.get_quantita_by_index(row))))
+                totale += (ordine_selezionato.get_quantita_by_index(row)) * (
+                    lista_prodotti.get_prezzo_by_name(ordine_selezionato.get_prodotto_by_index(row)))
                 row += 1
-            self.label_visualizza_totale.setText( "Totale:  " + str(totale) + " €")
+            self.label_visualizza_totale.setText("Totale:  " + str(totale) + " €")
 
         self.push_visualizza_ordine.clicked.connect(lambda: visualizza_ordine())
 
@@ -2299,11 +2312,13 @@ class main_interface(object):
                 self.comboBox_prodotti.addItem(prodotto.get_nome())
                 prodotti = []
                 quantita = []
+
             def aggiungi_prodotto():
                 prod = self.comboBox_prodotti.currentText()
-                if prod == "" :
+                if prod == "":
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Devi selezionare prima un prodotto!', QMessageBox.Ok, QMessageBox.Ok)
+                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Devi selezionare prima un prodotto!', QMessageBox.Ok,
+                                         QMessageBox.Ok)
                 else:
                     self.listWidget_nome_prodotti.addItem(prod)
                     prodotti.append(prod)
@@ -2311,17 +2326,21 @@ class main_interface(object):
                     quantita.append(self.spinBox_quantita_prodotti.value())
                     self.comboBox_prodotti.setCurrentIndex(0)
                     self.spinBox_quantita_prodotti.setValue(0)
+
             self.push_aggiungi_prodotti.clicked.connect(lambda: aggiungi_prodotto())
 
             def aggiungi_ordine():
                 nome = self.lineEdit_nome_cliente.text()
                 indirizzo = self.lineEdit_indirizzo.text()
-                if nome == "" or indirizzo == "" :
+                if nome == "" or indirizzo == "":
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok, QMessageBox.Ok)
+                    QMessageBox.critical(MainWindow, 'ERRORE!', 'Completa tutti i campi richiesti!', QMessageBox.Ok,
+                                         QMessageBox.Ok)
                 else:
                     data_consegna_sfalsata = self.dateEdit_consegna.date()
-                    data_consegna_giusta = str(str(data_consegna_sfalsata.day()) + "-" + str(data_consegna_sfalsata.month()) + "-" + str(data_consegna_sfalsata.year()))
+                    data_consegna_giusta = str(
+                        str(data_consegna_sfalsata.day()) + "-" + str(data_consegna_sfalsata.month()) + "-" + str(
+                            data_consegna_sfalsata.year()))
                     lista_ordini.add_ordine(nome, indirizzo, data_consegna_giusta, prodotti, quantita)
                     self.lineEdit_nome_cliente.clear()
                     self.lineEdit_indirizzo.clear()
@@ -2331,7 +2350,9 @@ class main_interface(object):
                     self.listWidget_nome_prodotti.clear()
                     self.listWidget_quantita_prodotti.clear()
                     self.listWidget_ordini.addItem(nome)
+
             self.pushButton_salva_ordine.clicked.connect(lambda: aggiungi_ordine())
+
         self.push_creanuovoordine.clicked.connect(lambda: crea_nuovo_ordine())
 
         def elimina_ordine():
@@ -2339,13 +2360,15 @@ class main_interface(object):
                 selected = self.listWidget_ordini.selectedIndexes()[0].row()
                 nome_eliminato = self.listWidget_ordini.currentItem().text()
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare '" + nome_eliminato  + "' dalla lista delle ordinazioni?", QMessageBox.Yes | QMessageBox.No)
+                q = QMessageBox.question(MainWindow, '',
+                                         "Sei sicuro di voler eliminare '" + nome_eliminato + "' dalla lista delle ordinazioni?",
+                                         QMessageBox.Yes | QMessageBox.No)
                 if q == QMessageBox.Yes:
                     with open("clienti/data/lista_ordinazioni.json", "r") as file:
                         data = json.load(file)
                     with open("clienti/data/lista_ordinazioni.json", "w") as file:
                         del data[selected]
-                        json.dump(data, file, indent = 4)
+                        json.dump(data, file, indent=4)
                     self.listWidget_ordini.clear()
                     lista_ordini = ControlloreListaOrdinazioni()
                     for ordine in lista_ordini.get_lista_ordinazioni():
@@ -2353,16 +2376,186 @@ class main_interface(object):
                     self.stackedWidget_ordini.setCurrentWidget(self.page_2)
 
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
-                    QMessageBox.about(MainWindow, "", "'" + nome_eliminato +  "' è stato eliminato dalla lista delle ordinazioni")
+                    QMessageBox.about(MainWindow, "",
+                                      "'" + nome_eliminato + "' è stato eliminato dalla lista delle ordinazioni")
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                 QMessageBox.about(MainWindow, " ", "Devi selezionare prima un ordine!")
 
-
         self.push_elimina_ordine.clicked.connect(lambda: elimina_ordine())
 
+        # CONTABILITA'
+        bilancio = Bilancio()
+        self.pushButton_vocidibilancio.clicked.connect(self.vista_voci_di_bilancio)
+        self.push_sett_prec.clicked.connect(lambda: self.click_sett_prec(bilancio))
+        self.push_sett_succ.clicked.connect(lambda: self.click_sett_succ(bilancio))
+        self.push_mese_prec.clicked.connect(lambda: self.click_mese_prec(bilancio))
+        self.push_mese_succ.clicked.connect(lambda: self.click_mese_succ(bilancio))
+        oggi = datetime.datetime.today()
+        v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
+                            iterazioni=15)
+        v2 = VoceDiBilancio(ComponenteGenerica(150000, 'Comodato d\'uso'), True, Periodicita.ANNUALE, arg_periodicita=1,
+                            iterazioni=16)
+        v3 = VoceDiBilancio(ComponenteGenerica(30000, 'Cozze'), True, Periodicita.NESSUNA, arg_periodicita=1,
+                            data=oggi.replace(day=28))
+        try:
+            v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                arg_periodicita=1,
+                                data=oggi.replace(day=datetime.datetime.today().day + 1))
+        except Exception:
+            try:
+                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                    arg_periodicita=1,
+                                    data=oggi.replace(day=1, month=datetime.datetime.today().month + 1))
+            except Exception:
+                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                    arg_periodicita=1,
+                                    data=oggi.replace(day=1, month=1, year=datetime.datetime.today().year + 1))
+        vettore = [v1, v2, v3, v4]
+        self.checkBox_sett_entrate.setChecked(True)
+        self.checkBox_sett_uscite.setChecked(True)
+        self.checkBox_mese_entrate.setChecked(True)
+        self.checkBox_mese_uscite.setChecked(True)
+        for v in vettore:
+            bilancio.aggiungi_elemento(v)
+        self.visualizzaBilancioSettimanale(bilancio, self.label_settimana)
+        self.visualizzaBilancioMensile(bilancio, self.label_mese)
+        self.checkBox_sett_entrate.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(bilancio))
+        self.checkBox_sett_uscite.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(bilancio))
+        self.checkBox_mese_entrate.stateChanged.connect(lambda: self.visualizzaBilancioMensile(bilancio))
+        self.checkBox_mese_uscite.stateChanged.connect(lambda: self.visualizzaBilancioMensile(bilancio))
+
+    def click_sett_prec(self, bilancio):
+        bilancio.previous_sett()
+        self.visualizzaBilancioSettimanale(bilancio)
+
+    def click_sett_succ(self, bilancio):
+        bilancio.next_sett()
+        self.visualizzaBilancioSettimanale(bilancio)
+
+    def click_mese_prec(self, bilancio):
+        bilancio.previous_mens()
+        self.visualizzaBilancioMensile(bilancio)
+
+    def click_mese_succ(self, bilancio):
+        bilancio.next_mens()
+        self.visualizzaBilancioMensile(bilancio)
+
+    def visualizzaBilancioSettimanale(self, bilancio, label):
+        row_bilancio = 0
+        bilancio_sett = bilancio.bilancio_corrente_sett
+        dat_iniziale_str = bilancio_sett.get_data_iniziale().strftime('%d %B %Y')
+        dat_finale_str = bilancio_sett.get_data_finale().strftime('%d %B %Y')
+        self.label_settimana.setText('{dt1} - {dt2}'.format(dt1=dat_iniziale_str, dt2= dat_finale_str))
+        if self.checkBox_sett_entrate.isChecked() and not self.checkBox_sett_uscite.isChecked():
+            l = len(bilancio_sett.get_entrate_settimanali())
+            self.tableWidget_settimanale.setRowCount(l)
+            for voce in bilancio_sett.get_entrate_settimanali():
+                self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = 'Sì'
+                self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_sett.get_ricavo())
+            costi_str = centToEuroString(bilancio_sett.get_costi())
+            utile_str = centToEuroString(bilancio_sett.get_utile())
+            self.label_sett_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
+
+        if (not self.checkBox_sett_entrate.isChecked()) and self.checkBox_sett_uscite.isChecked():
+            l = len(bilancio_sett.get_uscite_settimanali())
+            self.tableWidget_settimanale.setRowCount(l)
+            for voce in bilancio_sett.get_uscite_settimanali():
+                self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = 'No'
+                self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_sett.get_ricavo())
+            costi_str = centToEuroString(bilancio_sett.get_costi())
+            utile_str = centToEuroString(bilancio_sett.get_utile())
+            self.label_sett_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
 
+        if not self.checkBox_sett_entrate.isChecked() and not self.checkBox_sett_uscite.isChecked():
+            self.tableWidget_settimanale.setRowCount(0)
+        if self.checkBox_sett_entrate.isChecked() and self.checkBox_sett_uscite.isChecked():
+            l = len(bilancio_sett.get_voci_settimanali())
+            self.tableWidget_settimanale.setRowCount(l)
+            for voce in bilancio_sett.get_voci_settimanali():
+                self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = None
+                if voce[2]:
+                    entrata = 'Sì'
+                else:
+                    entrata = 'No'
+                self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_sett.get_ricavo())
+            costi_str = centToEuroString(bilancio_sett.get_costi())
+            utile_str = centToEuroString(bilancio_sett.get_utile())
+            self.label_sett_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
+
+
+    def visualizzaBilancioMensile(self, bilancio, label):
+        row_bilancio = 0
+        #dat_iniziale_str = bilancio.bilancio_corrente_mens.get_data_iniziale().strftime('%d %B %Y')
+        #dat_finale_str = bilancio.bilancio_corrente_mens.get_data_finale().strftime('%d %B %Y')
+        #self.label_mese.setText('{dt1} - {dt2}'.format(dt1=dat_iniziale_str, dt2= dat_finale_str))
+
+        if self.checkBox_mese_entrate.isChecked() and not self.checkBox_mese_uscite.isChecked():
+            l = len(bilancio.bilancio_corrente_mens.get_entrate_mensili())
+            self.tableWidget_mensile.setRowCount(l)
+            for voce in bilancio.bilancio_corrente_mens.get_entrate_mensili():
+                self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = 'Sì'
+                self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
+
+        if (not self.checkBox_mese_entrate.isChecked()) and self.checkBox_mese_uscite.isChecked():
+            l = len(bilancio.bilancio_corrente_mens.get_uscite_mensili())
+            self.tableWidget_mensile.setRowCount(l)
+            for voce in bilancio.bilancio_corrente_mens.get_uscite_mensili():
+                self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = 'No'
+                self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
+
+        if not self.checkBox_mese_entrate.isChecked() and not self.checkBox_mese_uscite.isChecked():
+            self.tableWidget_mensile.setRowCount(0)
+        if self.checkBox_mese_entrate.isChecked() and self.checkBox_mese_uscite.isChecked():
+            l = len(bilancio.bilancio_corrente_mens.get_voci_mensili())
+            self.tableWidget_mensile.setRowCount(l)
+            for voce in bilancio.bilancio_corrente_mens.get_voci_mensili():
+                self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
+                entrata = None
+                if voce[2]:
+                    entrata = 'Sì'
+                else:
+                    entrata = 'No'
+                self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
+                    '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
+                                            cent=str(voce[0].get_valore_euro()[1]))))
+                row_bilancio += 1
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -2485,7 +2678,6 @@ class main_interface(object):
         self.label_38.setText(_translate("MainWindow", "Verdura"))
         self.label_39.setText(_translate("MainWindow", "Altro"))
 
-
         self.push_mag_listaprodotti.setText(_translate("MainWindow", "LISTA DEI PRODOTTI"))
         self.push_mag_salva.setText(_translate("MainWindow", "SALVA"))
         self.push_mag_elimina_tutto.setText(_translate("MainWindow", "ELIMINA TUTTI I \n"
@@ -2495,7 +2687,7 @@ class main_interface(object):
         self.listWidget_ordini.setSortingEnabled(False)
         self.listWidget_ordini.setSortingEnabled(__sortingEnabled)
         self.push_visualizza_ordine.setText(_translate("MainWindow", "Visualizza"))
-        #self.push_modifica_ordine.setText(_translate("MainWindow", "Modifica"))
+        # self.push_modifica_ordine.setText(_translate("MainWindow", "Modifica"))
         self.push_elimina_ordine.setText(_translate("MainWindow", "Elimina"))
         self.push_creanuovoordine.setText(_translate("MainWindow", "Crea un nuovo \n"
                                                                    " ordine"))
@@ -2523,12 +2715,6 @@ class main_interface(object):
         self.push_sett_prec.setText(_translate("MainWindow", "<"))
         self.label_settimana.setText(_translate("MainWindow", "SETTIMANA 25/04 - 1/05"))
         self.push_sett_succ.setText(_translate("MainWindow", ">"))
-        item = self.tableWidget_settimanale.verticalHeaderItem(0)
-        item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_settimanale.verticalHeaderItem(1)
-        item.setText(_translate("MainWindow", "New Row"))
-        item = self.tableWidget_settimanale.verticalHeaderItem(2)
-        item.setText(_translate("MainWindow", "New Row"))
         item = self.tableWidget_settimanale.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Voce"))
         item = self.tableWidget_settimanale.horizontalHeaderItem(1)
@@ -2546,11 +2732,11 @@ class main_interface(object):
         self.label_mese.setText(_translate("MainWindow", "APRILE 2022"))
         self.push_mese_succ.setText(_translate("MainWindow", ">"))
         item = self.tableWidget_mensile.verticalHeaderItem(0)
-        item.setText(_translate("MainWindow", "New Row"))
+        item.setText(_translate("MainWindow", '1'))
         item = self.tableWidget_mensile.verticalHeaderItem(1)
-        item.setText(_translate("MainWindow", "New Row"))
+        item.setText(_translate("MainWindow", '2'))
         item = self.tableWidget_mensile.verticalHeaderItem(2)
-        item.setText(_translate("MainWindow", "New Row"))
+        item.setText(_translate("MainWindow", '3'))
         item = self.tableWidget_mensile.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Voce"))
         item = self.tableWidget_mensile.horizontalHeaderItem(1)
@@ -2562,5 +2748,6 @@ class main_interface(object):
         self.checkBox_mese_entrate.setText(_translate("MainWindow", "Entrate"))
         self.checkBox_mese_uscite.setText(_translate("MainWindow", "Uscite"))
         self.label_mese_ricavi_costi_utile.setText(_translate("MainWindow", "Ricavi:    Costi:    Utile:"))
-        self.tabWidget_contabilita.setTabText(self.tabWidget_contabilita.indexOf(self.mensile), _translate("MainWindow", "Mensile"))
-        self.pushButton.setText(_translate("MainWindow", "Voci di bilancio"))
+        self.tabWidget_contabilita.setTabText(self.tabWidget_contabilita.indexOf(self.mensile),
+                                              _translate("MainWindow", "Mensile"))
+        self.pushButton_vocidibilancio.setText(_translate("MainWindow", "Voci di bilancio"))
