@@ -6,22 +6,18 @@ import json
 from PyQt5 import QtCore, QtWidgets
 # from pyqt5_plugins.examplebuttonplugin import QtGui
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QListView, QMessageBox, QListWidget, QTableWidgetItem
-from googletrans import Translator
+from PyQt5.QtWidgets import QListView, QMessageBox
 
 from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
 from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
-from Progetto.dipendenti.model.Dipendente import Dipendente
 from Progetto.listaprodotti.controller.ControlloreListaProdottiSalvati import ControlloreListaProdottiSalvati
 from Progetto.listaprodotti.view.VistaProdottiMagazzino import VistaProdottiMagazzino
-from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 from Progetto.clienti.controller.ControlloreListaOrdinazioni import ControlloreListaOrdinazioni
 from Progetto.contabilità.view.VistaVociDiBilancio import VistaVociDiBilancio
 from Progetto.contabilità.model.VoceDiBilancio import VoceDiBilancio, ComponenteGenerica, Periodicita
-from Progetto.contabilità.model.Bilancio import Bilancio, BilancioMensile, BilancioSettimanale
+from Progetto.contabilità.model.Bilancio import Bilancio
 from Progetto.contabilità.utils import centToEuroString
-from Progetto.contabilità.model import Bilancio as B
 
 
 class main_interface(object):

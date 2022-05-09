@@ -14,7 +14,7 @@ class ListaDipendenti:
     def __init__(self):
         super(ListaDipendenti, self).__init__()
         self.lista_dipendenti = []
-        if os.path.isfile('dipendenti/data/lista_dipendenti_salvata.pickle'):
+        if os.path.isfile('Progetto/listaprodotti/data'):
             with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'rb') as f:
                 self.lista_dipendenti = pickle.load(f)
         else:

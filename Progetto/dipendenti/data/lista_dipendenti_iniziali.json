@@ -1,1 +1,26 @@
-[{"nome": "Buuuuu", "ore": 12, "compenso_a_ore": 5, "tipo_contratto": "dgfgg", "email": "dgdggdf", "telefono": "33434224"}]
+[
+    {
+        "nome": "Buuuuu",
+        "ore": 12,
+        "compenso_a_ore": 5,
+        "tipo_contratto": "dgfgg",
+        "email": "dgdggdf",
+        "telefono": "33434224"
+    },
+    {
+        "nome": "3333",
+        "ore": 2,
+        "compenso_a_ore": 2,
+        "tipo_contratto": "3lrrlr",
+        "email": "rrrr",
+        "telefono": "gt,kopeqtg"
+    },
+    {
+        "nome": "rrr",
+        "ore": 6,
+        "compenso_a_ore": 66,
+        "tipo_contratto": "cazz",
+        "email": "tttt",
+        "telefono": "6069406"
+    }
+]

@@ -1,11 +1,13 @@
-from Progetto.listaprodotti.model.Prodotto import Prodotto, CategoriaProdotti
+from Progetto.listaprodotti.model import Prodotto
+from Progetto.listaprodotti.model.Prodotto import CategoriaProdotti
 
 #Un'istanza di questa classe descrive un prodotto a cui è associata una quantita: utile per descrivere un prodotto in un ordine o nel magazzino
-class ProdottoConQuantità(Prodotto):
-    def __init__(self, nome, categoria: CategoriaProdotti, tipo_unita, prezzo_su_unita, quantita):
+class ProdottoConQuantità(Prodotto.Prodotto):
+    def __init__(self, nome, categoria, tipo_unita, prezzo_su_unita, quantita):
         super().__init__(nome, categoria, tipo_unita, prezzo_su_unita)
         self.quantita = quantita
-        self.valore = self.get_valore()
+
+
 
     #Ritorna un'istanza del Prodotto associato
     def get_prodotto(self) -> Prodotto:
@@ -13,6 +15,9 @@ class ProdottoConQuantità(Prodotto):
 
     def get_quantita(self) -> int:
         return self.quantita
+
+    def set_quantita(self, quantita: int):
+        self.quantita = quantita
 
     #Ritorna il valore IN CENTESIMI del prodotto
     def get_valore(self):

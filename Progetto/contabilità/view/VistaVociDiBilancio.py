@@ -2,6 +2,7 @@ from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from Progetto.contabilità.model.Bilancio import Bilancio
 from Progetto.contabilità.model.VoceDiBilancio import Periodicita, VoceDiBilancio, ComponenteGenerica
 
 
@@ -309,9 +310,32 @@ class VistaVociDiBilancio(object):
         self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        voce = VoceDiBilancio(ComponenteGenerica(10, 'ciao'), True, Periodicita.NESSUNA)
-        self.listWidget_vocidibilancio.addItem(voce.component.get_nome())
-
+        # bilancio = Bilancio()
+        # # #oggi = datetime.datetime.today
+        # # v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
+        # #                     iterazioni=15)
+        # # v2 = VoceDiBilancio(ComponenteGenerica(150000, 'Comodato d\'uso'), True, Periodicita.ANNUALE, arg_periodicita=1,
+        # #                     iterazioni=16)
+        # # v3 = VoceDiBilancio(ComponenteGenerica(30000, 'Cozze'), True, Periodicita.NESSUNA, arg_periodicita=1,
+        # #                     data=oggi.replace(day=28))
+        # # try:
+        # #     v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+        # #                         arg_periodicita=1,
+        # #                         data=oggi.replace(day=datetime.datetime.today().day + 1))
+        # # except Exception:
+        # #     try:
+        # #         v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+        # #                             arg_periodicita=1,
+        # #                             data=oggi.replace(day=1, month=datetime.datetime.today().month + 1))
+        # #     except Exception:
+        # #         v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+        # #                             arg_periodicita=1,
+        # #                             data=oggi.replace(day=1, month=1, year=datetime.datetime.today().year + 1))
+        # # vettore = [v1, v2, v3, v4]
+        # # for v in vettore:
+        # #     bilancio.aggiungi_elemento(v)
+        # for voce in bilancio.get_voci('po'):
+        #     self.listWidget_vocidibilancio.addItem(voce.component.get_nome())
         self.salva()
 
     def retranslateUi(self, MainWindow):

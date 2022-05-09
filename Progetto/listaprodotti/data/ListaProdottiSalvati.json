@@ -1,1 +1,37 @@
-[]
+[
+    {
+        "nome": "Uova",
+        "categoria": "Altro",
+        "tipo_unita": "al pezzo",
+        "prezzo_su_unita": 1.0,
+        "quantita": 0
+    },
+    {
+        "nome": "Vino",
+        "categoria": "Altro",
+        "tipo_unita": "al litro",
+        "prezzo_su_unita": 9.0,
+        "quantita": 0
+    },
+    {
+        "nome": "Mele",
+        "categoria": "Frutta",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 2.0,
+        "quantita": 0
+    },
+    {
+        "nome": "Pere",
+        "categoria": "Frutta",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 2.0,
+        "quantita": 0
+    },
+    {
+        "nome": "Cocomero",
+        "categoria": "Frutta",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 1.0,
+        "quantita": 0
+    }
+]
