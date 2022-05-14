@@ -51,8 +51,17 @@ class ControlloreListaProdottiSalvati:
     def set_quantita_by_name(self, nome: str, quantita: int):
         self.model.set_quantita_by_name(nome, quantita)
 
+    def modifica_quantita_by_index(self, index: int, quantita: int):
+        self.model.modifica_quantita_by_index(index, quantita)
+
     def get_prezzo_by_name(self, nome: str) -> int:
         return self.model.get_prezzo_by_name(nome)
+
+    def get_prezzo_by_index(self, index: int):
+        return self.model.get_prezzo_by_index(index)
+
+    def valore_totale(self):
+        return self.model.valore_totale()
 
     def get_lista(self):
         return self.model.getLista()
@@ -86,4 +95,6 @@ class ControlloreListaProdottiSalvati:
 
     def get_count_lista_altro(self):
         return self.model.get_count_lista_altro()
+
+
 

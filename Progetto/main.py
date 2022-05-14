@@ -10,8 +10,9 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self, dipendente)
         self.show()
 
-        self.ui.stackedWidget.setCurrentWidget(self.ui.clienti)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.homepage)
 
+        self.ui.push_home.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.homepage))
         self.ui.push_dipendenti.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.dipendenti))
         self.ui.push_dipendenti.clicked.connect(lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_empty))
 

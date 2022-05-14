@@ -29,8 +29,7 @@ class ListaProdottiSalvati:
                     'rb') as f:
                 self.lista_prodotti_salvati = pickle.load(f)
         else:
-            with open(
-                    PATH_PRODOTTI_JSON) as f:
+            with open(PATH_PRODOTTI_JSON) as f:
                 lista_prodotti_salvati_iniziale = json.load(f)
             for prodotto in lista_prodotti_salvati_iniziale:
                 self.aggiungi_elemento(Prodotto(prodotto['nome'], prodotto['categoria'], prodotto['tipo_unita'],
@@ -90,11 +89,31 @@ class ListaProdottiSalvati:
             if elemento.get_nome().lower() == nome.lower():
                 return elemento.get_prezzo_su_unita()
 
+    def valore_totale(self):
+        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+            data = json.load(file)
+        valore = 0
+        for elemento in data:
+            valore = valore + (elemento['quantita'] * elemento['prezzo_su_unita'])
+        return round(valore, 2)
+
+    def get_prezzo_by_index(self, index: int):
+        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+            data = json.load(file)
+        return data[index]['prezzo_su_unita']
+
     def set_quantita_by_name(self, nome: str, quantita: str):
         for elemento in self.lista_prodotti_salvati:
             if elemento.get_nome().lower() == nome.lower():
                 elemento['quantita'] = quantita
         self.save_data()
+
+    def modifica_quantita_by_index(self, index: int, quantita: int):
+        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+            data = json.load(file)
+            data[index]['quantita'] = int(quantita)
+        with open("listaprodotti/data/ListaProdottiSalvati.json", "w") as file:
+            json.dump(data, file, indent=4)
 
     def rimuovi_elemento_by_name(self, nome: str):
         for elemento in self.lista_prodotti_salvati:

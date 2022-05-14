@@ -14,11 +14,11 @@ class ListaDipendenti:
     def __init__(self):
         super(ListaDipendenti, self).__init__()
         self.lista_dipendenti = []
-        if os.path.isfile('Progetto/listaprodotti/data'):
-            with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'rb') as f:
+        if os.path.isfile('../data'):
+            with open('../data/lista_dipendenti_salvata.pickle', 'rb') as f:
                 self.lista_dipendenti = pickle.load(f)
         else:
-            with open('dipendenti/data/lista_dipendenti_iniziali.json') as f:
+            with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina3/Progetto/dipendenti/data/lista_dipendenti_iniziali.json') as f:
                 lista_dipendenti_iniziali = json.load(f)
             for dipendente_iniziale in lista_dipendenti_iniziali:
                 self.aggiungi_dipendente(Dipendente(dipendente_iniziale["nome"], dipendente_iniziale["ore"],
@@ -41,13 +41,16 @@ class ListaDipendenti:
         return self.lista_dipendenti
 
     def get_numero_dipendenti(self):
-        len(self.lista_dipendenti)
+        with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina3/Progetto/dipendenti/data/lista_dipendenti_iniziali.json') as file:
+            lista = json.load(file)
+        return len(lista)
 
     def save_data(self):
         with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
 
 
+
 if __name__ == "__main__":
     lista = ListaDipendenti()
-    ListaDipendenti.prova_classe()
+    print(lista.get_numero_dipendenti())

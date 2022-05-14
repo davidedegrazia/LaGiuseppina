@@ -656,7 +656,7 @@ class VistaPianoLavoro(object):
                                                           "background-color: rgb(235, 235, 235);"
                                                           "border: none")
                     q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + "'" + tasks[i][
-                        'nome_task'] + "'" + " dalla lista_prodotti_salvati delle attività?", QMessageBox.Yes | QMessageBox.No)
+                        'nome_task'] + "'" + " dalla lista delle attività?", QMessageBox.Yes | QMessageBox.No)
                     nome_da_eliminare = tasks[i]['nome_task']
                     if q == QMessageBox.Yes:
                         del tasks[i]
@@ -669,7 +669,7 @@ class VistaPianoLavoro(object):
                                 self.listWidget.addItem(task_aggiornata['nome_task'])
                         self.stackedWidget.setCurrentWidget(self.page_vuota)
                         QMessageBox.about(MainWindow, "",
-                                          "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista_prodotti_salvati!")
+                                          "L'attività '" + nome_da_eliminare + "' è stata eliminata dalla lista!")
                         QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
                                                               "background-color: rgb(235, 235, 235);"
                                                               "border: none;")
@@ -680,7 +680,7 @@ class VistaPianoLavoro(object):
             except Exception:
                 QMessageBox.setStyleSheet(MainWindow,
                                           "color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista_prodotti_salvati!",
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
                                      QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton_3.clicked.connect(lambda: elimina_task())
@@ -758,7 +758,7 @@ class VistaPianoLavoro(object):
                 self.pushButton_modifica_attivita.clicked.connect(lambda: update_task())
             except Exception:
                 QMessageBox.setStyleSheet("color: rgb(0, 0, 0); background-color: rgb(235, 235, 235); border:none;")
-                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista_prodotti_salvati!",
+                QMessageBox.critical(MainWindow, 'ERRORE!', "Selezionare prima un'attività dalla lista!",
                                      QMessageBox.Ok, QMessageBox.Ok)
 
         self.pushButton_2.clicked.connect(lambda: modifica_task())

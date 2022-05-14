@@ -78,8 +78,10 @@ class ListaOrdinazioni():
        return self.lista_ordinazioni
 
     def get_numero_ordinazioni(self):
-        len(self.lista_ordinazioni)
-
+        with open('clienti/data/lista_ordinazioni.json') as file:
+            lista_ordini = json.load(file)
+        return len(lista_ordini
+                   )
     def save_data(self):
         with open(PATH_JSON, 'wb') as handle:
             pickle.dump(self.lista_ordinazioni, handle, pickle.HIGHEST_PROTOCOL)
@@ -96,7 +98,6 @@ class ListaOrdinazioni():
 
     def get_totale_by_index(self, index: int) -> int:
         pass
-
 
 
 

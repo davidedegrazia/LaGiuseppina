@@ -15,7 +15,7 @@ class PianoLavoro:
             with open('pianodilavoro/data/lista_task.pickle', 'rb') as f:
                 self.piano_lavoro = pickle.load(f)
         else:
-            with open('pianodilavoro/data/lista_task.json') as f:
+            with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina3/Progetto/pianodilavoro/data/lista_task.json') as f:
                 piano_lavoro_iniziale = json.load(f)
             for task_iniziale in piano_lavoro_iniziale:
                 self.aggiungi_task(Task(task_iniziale["nome_task"], task_iniziale["descrizione"],
@@ -39,9 +39,16 @@ class PianoLavoro:
     def get_lista_task_completate(self):
         completate = []
         for task in self.piano_lavoro:
-            if task.completata == True:
+            if task.completata == "True":
                 self.completate.append(task)
         return completate
+
+    def get_count_task_completate(self):
+        i = 0
+        for task in self.piano_lavoro:
+            if task.completata == "True":
+                i+=1
+        return i
 
     def get_lista_task_in_scadenza(self, margine_scadenza):
         in_scadenza = []
@@ -56,6 +63,14 @@ class PianoLavoro:
             if task.completata == False:
                 self.da_completare.append(task)
         return da_completare
+
+    def get_count_task_da_completare(self):
+        i = 0
+        for task in self.piano_lavoro:
+            if task.completata == "False":
+                i+=1
+        return i
+
 
     def remove_task(self, task):
         self.piano_lavoro.remove(task)

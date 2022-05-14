@@ -1,37 +1,72 @@
 [
     {
-        "nome": "Uova",
-        "categoria": "Altro",
-        "tipo_unita": "al pezzo",
-        "prezzo_su_unita": 1.0,
-        "quantita": 0
-    },
-    {
-        "nome": "Vino",
-        "categoria": "Altro",
-        "tipo_unita": "al litro",
-        "prezzo_su_unita": 9.0,
-        "quantita": 0
-    },
-    {
         "nome": "Mele",
         "categoria": "Frutta",
         "tipo_unita": "al chilo",
-        "prezzo_su_unita": 2.0,
-        "quantita": 0
+        "prezzo_su_unita": 2.53,
+        "quantita": 42
     },
     {
         "nome": "Pere",
         "categoria": "Frutta",
         "tipo_unita": "al chilo",
-        "prezzo_su_unita": 2.0,
-        "quantita": 0
+        "prezzo_su_unita": 3.73,
+        "quantita": 12
     },
     {
-        "nome": "Cocomero",
-        "categoria": "Frutta",
+        "nome": "Vino",
+        "categoria": "Altro",
+        "tipo_unita": "al litro",
+        "prezzo_su_unita": 12.0,
+        "quantita": 98
+    },
+    {
+        "nome": "Uova",
+        "categoria": "Altro",
+        "tipo_unita": "al pezzo",
+        "prezzo_su_unita": 0.4,
+        "quantita": 66
+    },
+    {
+        "nome": "Insalata",
+        "categoria": "Verdura",
         "tipo_unita": "al chilo",
-        "prezzo_su_unita": 1.0,
-        "quantita": 0
+        "prezzo_su_unita": 1.75,
+        "quantita": 8
+    },
+    {
+        "nome": "Basilico",
+        "categoria": "Erbe aromatiche",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 2.45,
+        "quantita": 12
+    },
+    {
+        "nome": "Miele",
+        "categoria": "Altro",
+        "tipo_unita": "al pezzo",
+        "prezzo_su_unita": 8.5,
+        "quantita": 7
+    },
+    {
+        "nome": "Erba cipollina",
+        "categoria": "Erbe aromatiche",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 0.4,
+        "quantita": 7
+    },
+    {
+        "nome": "Cus cus",
+        "categoria": "Altro",
+        "tipo_unita": "al pezzo",
+        "prezzo_su_unita": 3.0,
+        "quantita": 1
+    },
+    {
+        "nome": "Carote",
+        "categoria": "Verdura",
+        "tipo_unita": "al chilo",
+        "prezzo_su_unita": 3.5,
+        "quantita": 2
     }
 ]

@@ -25,6 +25,9 @@ class ControllorePianoLavoro:
     def get_task_completate(self):
         return self.model.get_lista_task_completate()
 
+    def get_count_task_completate(self):
+        return self.model.get_count_task_completate()
+
     # ritorna la lista_prodotti_salvati delle task in scadenza
     def get_task_in_scadenza(self):
         return self.model.get_lista_task_in_scadenza()
@@ -32,6 +35,9 @@ class ControllorePianoLavoro:
     # ritorna la lista_prodotti_salvati delle task da completare
     def get_task_da_completare(self):
         return self.model.get_lista_task_da_completare()
+
+    def get_count_task_da_completare(self):
+        return self.model.get_count_task_da_completare()
 
     # ritorna il margine di scadenza
     def get_margine_di_scadenza(self):
@@ -48,3 +54,8 @@ class ControllorePianoLavoro:
     # save data
     def save(self):
         self.model.save_data()
+
+if __name__ == "__main__":
+    lista = ControllorePianoLavoro()
+    print(lista.get_count_task_completate())
+    print(lista.get_count_task_da_completare())

@@ -1,17 +1,16 @@
 import datetime
-
-# import self as self
 import json
 
 from PyQt5 import QtCore, QtWidgets
-# from pyqt5_plugins.examplebuttonplugin import QtGui
+from PyQt5.QtCore import QSize, QRect
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
-from PyQt5.QtWidgets import QListView, QMessageBox
+from PyQt5.QtWidgets import QListView, QMessageBox, QWidget, QVBoxLayout, QFrame, QLabel, QPushButton
 
 from Progetto.dipendenti.controller.ControlloreDipendente import ControlloreDipendente
 from Progetto.dipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
 from Progetto.listaprodotti.controller.ControlloreListaProdottiSalvati import ControlloreListaProdottiSalvati
 from Progetto.listaprodotti.view.VistaProdottiMagazzino import VistaProdottiMagazzino
+from Progetto.pianodilavoro.controller.ControllorePianoLavoro import ControllorePianoLavoro
 from Progetto.pianodilavoro.view.VistaPianoLavoro import VistaPianoLavoro
 from Progetto.clienti.controller.ControlloreListaOrdinazioni import ControlloreListaOrdinazioni
 from Progetto.contabilità.view.VistaVociDiBilancio import VistaVociDiBilancio
@@ -69,11 +68,18 @@ class main_interface(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.banda_arancione)
         self.horizontalLayout.setContentsMargins(-1, 8, -1, 5)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.home = QtWidgets.QLabel(self.banda_arancione)
-        self.home.setStyleSheet("COLOR: rgb(255, 255, 255);\n"
-                                "font: 600 18pt \"SF Pro\";")
-        self.home.setObjectName("home")
-        self.horizontalLayout.addWidget(self.home, 0, QtCore.Qt.AlignLeft)
+        self.push_home = QPushButton(self.banda_arancione)
+        self.push_home.setObjectName(u"push_home")
+        self.push_home.setMaximumSize(QSize(60, 16777215))
+        self.push_home.setStyleSheet(u"COLOR: rgb(255, 255, 255);\n"
+                                     "font: 600 18pt \"SF Pro\";")
+
+        self.horizontalLayout.addWidget(self.push_home)
+        #self.home = QtWidgets.QLabel(self.banda_arancione)
+        #self.home.setStyleSheet("COLOR: rgb(255, 255, 255);\n"
+        #                        "font: 600 18pt \"SF Pro\";")
+        #self.home.setObjectName("home")
+        #self.horizontalLayout.addWidget(self.home, 0, QtCore.Qt.AlignLeft)
         self.la_giuseppina = QtWidgets.QLabel(self.banda_arancione)
         self.la_giuseppina.setStyleSheet("COLOR: rgb(255, 255, 255);\n"
                                          "font: 650 35pt \"SF Pro\";")
@@ -195,7 +201,31 @@ class main_interface(object):
                                          "border-radius: 18px;"
                                          "background-color: rgb(235, 235, 235);")
         self.stackedWidget.setObjectName("stackedWidget")
+        self.homepage = QWidget()
+        self.homepage.setObjectName(u"homepage")
+        self.verticalLayout_54 = QVBoxLayout(self.homepage)
+        self.verticalLayout_54.setObjectName(u"verticalLayout_54")
+        self.verticalLayout_54.setContentsMargins(25, 30, 25, 700)
+        self.verticalLayout_54.setSpacing(35)
+        self.label_tit_homepage = QLabel(self.homepage)
+        self.label_tit_homepage.setObjectName(u"label_tit_homepage")
+        self.label_tit_homepage.setMaximumSize(QSize(16777215, 80))
+        self.label_tit_homepage.setStyleSheet(u"\n"
+                                              "font: 600 36pt \"SF Pro\";\n"
+                                              "color: rgb(0, 0, 0);\n"
+                                              "")
 
+        self.verticalLayout_54.addWidget(self.label_tit_homepage)
+
+        self.label_descrizione_sito = QLabel(self.homepage)
+        self.label_descrizione_sito.setObjectName(u"label_descrizione_sito")
+        self.label_descrizione_sito.setStyleSheet(u"font: 300 22pt \"SF Pro\";\n"
+                                                  "color: rgb(0, 0, 0);\n"
+                                                  "")
+
+        self.verticalLayout_54.addWidget(self.label_descrizione_sito)
+
+        self.stackedWidget.addWidget(self.homepage)
         self.dipendenti = QtWidgets.QWidget()
         self.dipendenti.setStyleSheet("")
         self.dipendenti.setObjectName("dipendenti")
@@ -959,16 +989,6 @@ class main_interface(object):
                                           "font: 700 13pt \"SF Pro\";")
         self.push_mag_salva.setObjectName("push_mag_salva")
         self.horizontalLayout_28.addWidget(self.push_mag_salva)
-        self.push_mag_elimina_tutto = QtWidgets.QPushButton(self.frame_53)
-        self.push_mag_elimina_tutto.setMinimumSize(QtCore.QSize(0, 38))
-        self.push_mag_elimina_tutto.setMaximumSize(QtCore.QSize(220, 16777215))
-        self.push_mag_elimina_tutto.setStyleSheet("BORDER-RADIUS:18PX;\n"
-                                                  "color: rgb(255, 255, 255);\n"
-                                                  "border-color: rgb(235, 77, 3);\n"
-                                                  "background-color: rgb(240, 0, 0);\n"
-                                                  "font: 700 13pt \"SF Pro\";")
-        self.push_mag_elimina_tutto.setObjectName("push_mag_elimina_tutto")
-        self.horizontalLayout_28.addWidget(self.push_mag_elimina_tutto)
         self.verticalLayout_33.addWidget(self.frame_53)
         self.stackedWidget.addWidget(self.magazzino)
         self.clienti = QtWidgets.QWidget()
@@ -1222,8 +1242,8 @@ class main_interface(object):
         self.frame_18.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_18.setObjectName("frame_18")
         self.horizontalLayout_43 = QtWidgets.QHBoxLayout(self.frame_18)
-        self.horizontalLayout_43.setContentsMargins(-1, -1, 465, -1)
-        self.horizontalLayout_43.setSpacing(0)
+        self.horizontalLayout_43.setContentsMargins(-1, -1, 450, -1)
+        self.horizontalLayout_43.setSpacing(10)
         self.horizontalLayout_43.setObjectName("horizontalLayout_43")
         self.listWidget_nome_prodotti = QtWidgets.QListWidget(self.frame_18)
         self.listWidget_nome_prodotti.setMaximumSize(QtCore.QSize(250, 16777215))
@@ -1237,6 +1257,13 @@ class main_interface(object):
                                                         "color: rgb(0,0,0);")
         self.listWidget_quantita_prodotti.setObjectName("listWidget_quantita_prodotti")
         self.horizontalLayout_43.addWidget(self.listWidget_quantita_prodotti)
+        self.pushButton_rimuovi_prodotto = QtWidgets.QPushButton(self.frame_18)
+        self.pushButton_rimuovi_prodotto.setStyleSheet("font: 800 24pt \"Apple SD Gothic Neo\";\n"
+                                                       "background-color: rgb(226, 0, 0);\n"
+                                                       "border-radius: 11px;\n"
+                                                       "color: rgb(255, 255, 255);")
+        self.pushButton_rimuovi_prodotto.setObjectName("pushButton_rimuovi_prodotto")
+        self.horizontalLayout_43.addWidget(self.pushButton_rimuovi_prodotto)
         self.verticalLayout_43.addWidget(self.frame_18)
         self.horizontalLayout_30.addWidget(self.frame_7)
         self.verticalLayout_41.addWidget(self.frame_aggiungi_prodotti)
@@ -1932,7 +1959,6 @@ class main_interface(object):
         self.verticalLayout_122.addWidget(self.frame_salva_dipendenti2)
         self.verticalLayout_102.addWidget(self.frame_white2)
         self.stackedWidget_2.addWidget(self.page_modifica_dipendente)
-
         self.label_nome2.setText("Nome")
         self.label_oresettimanali2.setText("Ore settimanali")
         self.label_pagaadora2.setText("Paga ad ora (€)")
@@ -1940,6 +1966,108 @@ class main_interface(object):
         self.label_email2.setText("E-mail")
         self.label_telefono2.setText("Telefono")
         self.pushButton_salva_dipendenti2.setText("Modifica dipendente")
+        self.statistiche = QWidget()
+        self.statistiche.setObjectName(u"statistiche")
+        self.verticalLayout_51 = QVBoxLayout(self.statistiche)
+        self.verticalLayout_51.setObjectName(u"verticalLayout_51")
+        self.frame_statistiche = QFrame(self.statistiche)
+        self.frame_statistiche.setObjectName(u"frame_statistiche")
+        sizePolicy.setHeightForWidth(self.frame_statistiche.sizePolicy().hasHeightForWidth())
+        self.frame_statistiche.setSizePolicy(sizePolicy)
+        self.frame_statistiche.setMinimumSize(QSize(0, 50))
+        self.frame_statistiche.setMaximumSize(QSize(16777215, 55))
+        self.frame_statistiche.setFrameShape(QFrame.StyledPanel)
+        self.frame_statistiche.setFrameShadow(QFrame.Raised)
+        self.frame_statistiche.setLineWidth(-1)
+        self.label = QLabel(self.frame_statistiche)
+        self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"font: 600 36pt \"SF Pro\";\n"
+                                 "color: rgb(0, 0, 0);")
+        self.label.setMaximumSize(QSize(16777215, 30))
+        self.verticalLayout_51.addWidget(self.label)
+
+        self.verticalLayout_51.addWidget(self.frame_statistiche)
+
+        self.label_tot_dipendenti = QLabel(self.statistiche)
+        self.label_tot_dipendenti.setObjectName(u"label_tot_dipendenti")
+        self.label_tot_dipendenti.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_dipendenti.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_tot_dipendenti)
+
+        self.label_tot_att_da_completare = QLabel(self.statistiche)
+        self.label_tot_att_da_completare.setObjectName(u"label_tot_att_da_completare")
+        self.label_tot_att_da_completare.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_att_da_completare.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                       "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_tot_att_da_completare)
+
+        self.label_tot_att_completate = QLabel(self.statistiche)
+        self.label_tot_att_completate.setObjectName(u"label_tot_att_completate")
+        self.label_tot_att_completate.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_att_completate.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                    "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_tot_att_completate)
+
+        self.label_tot_frutta = QLabel(self.statistiche)
+        self.label_tot_frutta.setObjectName(u"label_tot_frutta")
+        self.label_tot_frutta.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_frutta.setStyleSheet(u"color: rgb(0, 0, 0);\n"
+                                            "font: 500 18pt \"SF Pro\";")
+
+        self.verticalLayout_51.addWidget(self.label_tot_frutta)
+
+        self.label_tot_verdura = QLabel(self.statistiche)
+        self.label_tot_verdura.setObjectName(u"label_tot_verdura")
+        self.label_tot_verdura.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_verdura.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                             "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_tot_verdura)
+
+        self.label_erbe_aromatiche = QLabel(self.statistiche)
+        self.label_erbe_aromatiche.setObjectName(u"label_erbe_aromatiche")
+        self.label_erbe_aromatiche.setMaximumSize(QSize(16777215, 60))
+        self.label_erbe_aromatiche.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                 "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_erbe_aromatiche)
+
+        self.label_altro = QLabel(self.statistiche)
+        self.label_altro.setObjectName(u"label_altro")
+        self.label_altro.setMaximumSize(QSize(16777215, 60))
+        self.label_altro.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                       "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_altro)
+
+        self.label_valore_magazzino = QLabel(self.statistiche)
+        self.label_valore_magazzino.setObjectName(u"label_valore_magazzino")
+        self.label_valore_magazzino.setMaximumSize(QSize(16777215, 60))
+        self.label_valore_magazzino.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                  "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_valore_magazzino)
+
+        self.label_tot_ordinazioni = QLabel(self.statistiche)
+        self.label_tot_ordinazioni.setObjectName(u"label_tot_ordinazioni")
+        self.label_tot_ordinazioni.setMaximumSize(QSize(16777215, 60))
+        self.label_tot_ordinazioni.setStyleSheet(u"font: 500 18pt \"SF Pro\";\n"
+                                                 "color: rgb(0, 0, 0);")
+
+        self.verticalLayout_51.addWidget(self.label_tot_ordinazioni)
+
+        self.label_9 = QLabel(self.statistiche)
+        self.label_9.setObjectName(u"label_9")
+
+        self.verticalLayout_51.addWidget(self.label_9)
+
+        self.stackedWidget.addWidget(self.statistiche)
+
+        self.horizontalLayout_2.addWidget(self.stackedWidget)
 
         # parte con il main frame vuoto
         self.stackedWidget.setCurrentIndex(1)
@@ -1985,7 +2113,7 @@ class main_interface(object):
             lambda: self.stackedWidget_2.setCurrentWidget(self.page_visualizza_dipendente))
         self.push_visualizza.clicked.connect(lambda: get_info_dipendente_selezionato())
 
-        # elimina un dipendente dalla lista_prodotti_salvati
+        # elimina un dipendente dalla lista
         def box_question_eliminare_dipendente():
             try:
                 selected = self.listWidget_dipendenti.selectedIndexes()[0].row()
@@ -1995,7 +2123,7 @@ class main_interface(object):
 
                 QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                 q = QMessageBox.question(MainWindow, '', "Sei sicuro di voler eliminare " + dip[
-                    'nome'] + " dalla lista_prodotti_salvati dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
+                    'nome'] + " dalla lista dei dipendenti?", QMessageBox.Yes | QMessageBox.No)
                 if q == QMessageBox.Yes:
                     del data[selected]
                     with open("dipendenti/data/lista_dipendenti_iniziali.json", 'w') as f:
@@ -2005,7 +2133,7 @@ class main_interface(object):
 
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                     QMessageBox.about(MainWindow, "",
-                                      dip['nome'] + " è stato eliminato dalla lista_prodotti_salvati dipendenti")
+                                      dip['nome'] + " è stato eliminato dalla lista dei dipendenti")
 
                     self.controller = ControlloreListaDipendenti()
                     self.listview_model = QStandardItemModel(self.listWidget_dipendenti)
@@ -2069,7 +2197,7 @@ class main_interface(object):
 
                     QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);")
                     QMessageBox.about(MainWindow, "",
-                                      str(nome) + " è stato creato correttamente nella lista_prodotti_salvati dei dipendenti!")
+                                      str(nome) + " è stato creato correttamente nella lista dei dipendenti!")
 
                     self.lineEdit_nome.clear()
                     self.spinBox_oresettimanali.clear()
@@ -2154,6 +2282,13 @@ class main_interface(object):
 
         # popolo le listWidget di PianoLavoro
         def fill_task_calendar():
+            self.listWidget_2.clear()
+            self.listWidget_3.clear()
+            self.listWidget_4.clear()
+            self.listWidget_5.clear()
+            self.listWidget_6.clear()
+            self.listWidget_7.clear()
+            self.listWidget_8.clear()
             with open('pianodilavoro/data/lista_task.json') as f:
                 tasks = json.load(f)
                 for task in tasks:
@@ -2173,15 +2308,16 @@ class main_interface(object):
                         self.listWidget_8.addItem(task['nome_task'])
                     else:
                         pass
+        self.push_pianodilavoro.clicked.connect(lambda: fill_task_calendar())
 
-        fill_task_calendar()
+
 
         def elimina_lista_attivita():
             QMessageBox.setStyleSheet(MainWindow, "color: rgb(0, 0, 0);"
                                                   "background-color: rgb(235, 235, 235);"
                                                   "border: none")
             q = QMessageBox.question(MainWindow, '',
-                                     "Sei sicuro di voler eliminare tutta la lista_prodotti_salvati delle attività? ",
+                                     "Sei sicuro di voler eliminare tutta la lista delle attività? ",
                                      QMessageBox.Yes | QMessageBox.No)
             if q == QMessageBox.Yes:
                 tasks = []
@@ -2194,76 +2330,103 @@ class main_interface(object):
                 self.listWidget_6.clear()
                 self.listWidget_7.clear()
                 self.listWidget_8.clear()
-
         self.push_eliminapianodilavoro.clicked.connect(lambda: elimina_lista_attivita())
 
         # MAGAZZINO
+
+        def aggiorna_magazzino():
+            lista_magazzino = ControlloreListaProdottiSalvati()
+            self.tableWidget_frutta.setRowCount(lista_magazzino.get_count_lista_frutta())  #
+            self.tableWidget_frutta.setColumnCount(2)
+            self.tableWidget_frutta.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
+            self.tableWidget_frutta.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
+            row_frutta = 0  #
+            for frutto in lista_magazzino.get_lista_frutta():  #
+
+                self.tableWidget_frutta.setVerticalHeaderItem(row_frutta, QtWidgets.QTableWidgetItem(frutto['nome']))
+                self.tableWidget_frutta.verticalHeader().setMinimumWidth(130)
+                self.tableWidget_frutta.setItem(row_frutta, 0, QtWidgets.QTableWidgetItem(str(frutto['quantita'])))
+                self.tableWidget_frutta.setItem(row_frutta, 1, QtWidgets.QTableWidgetItem(str(round((frutto['quantita'] * frutto['prezzo_su_unita']), 2))))
+                row_frutta = row_frutta + 1
+            #
+            self.tableWidget_verdura.setRowCount(lista_magazzino.get_count_lista_verdura())
+            self.tableWidget_verdura.setColumnCount(2)
+            self.tableWidget_verdura.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
+            self.tableWidget_verdura.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
+            row_verdura = 0
+            for verdura in lista_magazzino.get_lista_verdura():
+                self.tableWidget_verdura.setVerticalHeaderItem(row_verdura, QtWidgets.QTableWidgetItem(verdura['nome']))
+                self.tableWidget_verdura.verticalHeader().setMinimumWidth(130)
+                self.tableWidget_verdura.setItem(row_verdura, 0, QtWidgets.QTableWidgetItem(str(verdura['quantita'])))
+                self.tableWidget_verdura.setItem(row_verdura, 1, QtWidgets.QTableWidgetItem(
+                    str(round((verdura['quantita'] * verdura['prezzo_su_unita']), 2))))
+                row_verdura = row_verdura + 1
+
+            self.tableWidget_erbe_aromatiche.setRowCount(lista_magazzino.get_count_lista_erbe_aromatiche())
+            self.tableWidget_erbe_aromatiche.setColumnCount(2)
+            self.tableWidget_erbe_aromatiche.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
+            self.tableWidget_erbe_aromatiche.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
+            row_erbe_aromatiche = 0
+            for erba in lista_magazzino.get_lista_erbe_aromatiche():
+                self.tableWidget_erbe_aromatiche.setVerticalHeaderItem(row_erbe_aromatiche,
+                                                                       QtWidgets.QTableWidgetItem(erba['nome']))
+                self.tableWidget_erbe_aromatiche.verticalHeader().setMinimumWidth(130)
+                self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 0,
+                                                         QtWidgets.QTableWidgetItem(str(erba['quantita'])))
+                self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 1, QtWidgets.QTableWidgetItem(
+                    str(round((erba['quantita'] * erba['prezzo_su_unita']), 2))))
+                row_erbe_aromatiche = row_erbe_aromatiche + 1
+
+            self.tableWidget_altro.setRowCount(lista_magazzino.get_count_lista_altro())
+            self.tableWidget_altro.setColumnCount(2)
+            self.tableWidget_altro.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
+            self.tableWidget_altro.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
+            row_altro = 0
+            for altro in lista_magazzino.get_lista_altro():
+                self.tableWidget_altro.setVerticalHeaderItem(row_altro, QtWidgets.QTableWidgetItem(altro['nome']))
+                self.tableWidget_altro.verticalHeader().setMinimumWidth(130)
+                self.tableWidget_altro.setItem(row_altro, 0, QtWidgets.QTableWidgetItem(str(altro['quantita'])))
+                self.tableWidget_altro.setItem(row_altro, 1, QtWidgets.QTableWidgetItem(
+                    str(round((altro['quantita'] * altro['prezzo_su_unita']), 2))))
+                row_altro = row_altro + 1
+        self.push_magazzino.clicked.connect(lambda: aggiorna_magazzino())
+
         lista_magazzino = ControlloreListaProdottiSalvati()
-        self.tableWidget_frutta.setRowCount(lista_magazzino.get_count_lista_frutta())  #
-        self.tableWidget_frutta.setColumnCount(2)
-        self.tableWidget_frutta.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
-        self.tableWidget_frutta.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
-        row_frutta = 0  #
-        for frutto in lista_magazzino.get_lista_frutta():  #
-
-            self.tableWidget_frutta.setVerticalHeaderItem(row_frutta, QtWidgets.QTableWidgetItem(frutto['nome']))
-            self.tableWidget_frutta.verticalHeader().setMinimumWidth(130)
-            self.tableWidget_frutta.setItem(row_frutta, 0, QtWidgets.QTableWidgetItem(str(frutto['quantita'])))
-            self.tableWidget_frutta.setItem(row_frutta, 1, QtWidgets.QTableWidgetItem(
-                str(frutto['quantita'] * frutto['prezzo_su_unita'])))
-            row_frutta = row_frutta + 1
-        #
-        self.tableWidget_verdura.setRowCount(lista_magazzino.get_count_lista_verdura())
-        self.tableWidget_verdura.setColumnCount(2)
-        self.tableWidget_verdura.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
-        self.tableWidget_verdura.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
-        row_verdura = 0
-        for verdura in lista_magazzino.get_lista_verdura():
-            self.tableWidget_verdura.setVerticalHeaderItem(row_verdura, QtWidgets.QTableWidgetItem(verdura['nome']))
-            self.tableWidget_verdura.verticalHeader().setMinimumWidth(130)
-            self.tableWidget_verdura.setItem(row_verdura, 0, QtWidgets.QTableWidgetItem(str(verdura['quantita'])))
-            self.tableWidget_verdura.setItem(row_verdura, 1, QtWidgets.QTableWidgetItem(
-                str(verdura['quantita'] * verdura['prezzo_su_unita'])))
-            row_verdura = row_verdura + 1
-
-        self.tableWidget_erbe_aromatiche.setRowCount(lista_magazzino.get_count_lista_erbe_aromatiche())
-        self.tableWidget_erbe_aromatiche.setColumnCount(2)
-        self.tableWidget_erbe_aromatiche.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
-        self.tableWidget_erbe_aromatiche.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
-        row_erbe_aromatiche = 0
-        for erba in lista_magazzino.get_lista_erbe_aromatiche():
-            self.tableWidget_erbe_aromatiche.setVerticalHeaderItem(row_erbe_aromatiche,
-                                                                   QtWidgets.QTableWidgetItem(erba['nome']))
-            self.tableWidget_erbe_aromatiche.verticalHeader().setMinimumWidth(130)
-            self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 0,
-                                                     QtWidgets.QTableWidgetItem(str(erba['quantita'])))
-            self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 1, QtWidgets.QTableWidgetItem(
-                str(erba['quantita'] * erba['prezzo_su_unita'])))
-            row_erbe_aromatiche = row_erbe_aromatiche + 1
-
-        self.tableWidget_altro.setRowCount(lista_magazzino.get_count_lista_altro())
-        self.tableWidget_altro.setColumnCount(2)
-        self.tableWidget_altro.setHorizontalHeaderItem(0, QtWidgets.QTableWidgetItem("Quantità"))
-        self.tableWidget_altro.setHorizontalHeaderItem(1, QtWidgets.QTableWidgetItem("Valore (€)"))
-        row_altro = 0
-        for altro in lista_magazzino.get_lista_altro():
-            self.tableWidget_altro.setVerticalHeaderItem(row_altro, QtWidgets.QTableWidgetItem(altro['nome']))
-            self.tableWidget_altro.verticalHeader().setMinimumWidth(130)
-            self.tableWidget_altro.setItem(row_altro, 0, QtWidgets.QTableWidgetItem(str(altro['quantita'])))
-            self.tableWidget_altro.setItem(row_altro, 1, QtWidgets.QTableWidgetItem(
-                str(altro['quantita'] * altro['prezzo_su_unita'])))
-            row_altro = row_altro + 1
-
         def get_quantita_magazzino():
-            with open("listaprodotti/data/ListaProdottiSalvati.json", "w") as file:
-                data = json.file(file)
+            lista_magazzino = ControlloreListaProdottiSalvati()
             row_frutta = 0
             for frutto in lista_magazzino.get_lista_frutta():
                 index = lista_magazzino.get_index_by_name(self.tableWidget_frutta.verticalHeaderItem(row_frutta).text())
-                self.tableWidget_frutta.item(row_frutta, 0).text()
+                quantita = int(self.tableWidget_frutta.item(row_frutta, 0).text())
+                lista_magazzino.modifica_quantita_by_index(index, quantita)
+                self.tableWidget_frutta.setItem(row_frutta, 1, QtWidgets.QTableWidgetItem(str(round(quantita * lista_magazzino.get_prezzo_by_index(index), 2))))
                 row_frutta += 1
 
+            row_verdura = 0
+            for verdura in lista_magazzino.get_lista_verdura():
+                index = lista_magazzino.get_index_by_name(self.tableWidget_verdura.verticalHeaderItem(row_verdura).text())
+                quantita = int(self.tableWidget_verdura.item(row_verdura, 0).text())
+                lista_magazzino.modifica_quantita_by_index(index, quantita)
+                self.tableWidget_verdura.setItem(row_verdura, 1, QtWidgets.QTableWidgetItem(str(round(quantita * lista_magazzino.get_prezzo_by_index(index),2))))
+                row_verdura += 1
+
+            row_erbe_aromatiche = 0
+            for erba_aromatica in lista_magazzino.get_lista_erbe_aromatiche():
+                index = lista_magazzino.get_index_by_name(self.tableWidget_erbe_aromatiche.verticalHeaderItem(row_erbe_aromatiche).text())
+                quantita = int(self.tableWidget_erbe_aromatiche.item(row_erbe_aromatiche, 0).text())
+                lista_magazzino.modifica_quantita_by_index(index, quantita)
+                self.tableWidget_erbe_aromatiche.setItem(row_erbe_aromatiche, 1, QtWidgets.QTableWidgetItem(str(round(quantita * lista_magazzino.get_prezzo_by_index(index),2))))
+                row_erbe_aromatiche += 1
+
+            row_altro = 0
+            for altro in lista_magazzino.get_lista_altro():
+                index = lista_magazzino.get_index_by_name(self.tableWidget_altro.verticalHeaderItem(row_altro).text())
+                quantita = int(self.tableWidget_altro.item(row_altro, 0).text())
+                lista_magazzino.modifica_quantita_by_index(index, quantita)
+                self.tableWidget_altro.setItem(row_altro, 1, QtWidgets.QTableWidgetItem(str(round(quantita * lista_magazzino.get_prezzo_by_index(index),2))))
+                row_altro += 1
         self.push_mag_salva.clicked.connect(lambda: get_quantita_magazzino())
+
 
         # CLIENTI
         self.stackedWidget_ordini.setCurrentWidget(self.page_2)
@@ -2324,6 +2487,20 @@ class main_interface(object):
                     self.spinBox_quantita_prodotti.setValue(0)
 
             self.push_aggiungi_prodotti.clicked.connect(lambda: aggiungi_prodotto())
+
+            def elimina_prodotto_da_ordine():
+                selected = self.listWidget_nome_prodotti.selectedIndexes()[0].row()
+                del prodotti[selected]
+                del quantita[selected]
+                self.listWidget_nome_prodotti.clear()
+                self.listWidget_quantita_prodotti.clear()
+
+                for prodotto in prodotti:
+                    self.listWidget_nome_prodotti.addItem(prodotto)
+                for q in quantita:
+                    self.listWidget_quantita_prodotti.addItem(str(q))
+
+            self.pushButton_rimuovi_prodotto.clicked.connect(lambda: elimina_prodotto_da_ordine())
 
             def aggiungi_ordine():
                 nome = self.lineEdit_nome_cliente.text()
@@ -2446,6 +2623,7 @@ class main_interface(object):
         if self.checkBox_sett_entrate.isChecked() and not self.checkBox_sett_uscite.isChecked():
             l = len(bilancio_sett.get_entrate_settimanali())
             self.tableWidget_settimanale.setRowCount(l)
+            self.tableWidget_settimanale.setColumnWidth(0, 130)
             for voce in bilancio_sett.get_entrate_settimanali():
                 self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'Sì'
@@ -2463,6 +2641,7 @@ class main_interface(object):
         if (not self.checkBox_sett_entrate.isChecked()) and self.checkBox_sett_uscite.isChecked():
             l = len(bilancio_sett.get_uscite_settimanali())
             self.tableWidget_settimanale.setRowCount(l)
+            self.tableWidget_settimanale.setColumnWidth(0, 130)
             for voce in bilancio_sett.get_uscite_settimanali():
                 self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'No'
@@ -2483,6 +2662,7 @@ class main_interface(object):
         if self.checkBox_sett_entrate.isChecked() and self.checkBox_sett_uscite.isChecked():
             l = len(bilancio_sett.get_voci_settimanali())
             self.tableWidget_settimanale.setRowCount(l)
+            self.tableWidget_settimanale.setColumnWidth(0, 130)
             for voce in bilancio_sett.get_voci_settimanali():
                 self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = None
@@ -2511,6 +2691,7 @@ class main_interface(object):
         if self.checkBox_mese_entrate.isChecked() and not self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_entrate_mensili())
             self.tableWidget_mensile.setRowCount(l)
+            self.tableWidget_mensile.setColumnWidth(0, 130)
             for voce in bilancio.bilancio_corrente_mens.get_entrate_mensili():
                 self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'Sì'
@@ -2524,6 +2705,7 @@ class main_interface(object):
         if (not self.checkBox_mese_entrate.isChecked()) and self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_uscite_mensili())
             self.tableWidget_mensile.setRowCount(l)
+            self.tableWidget_mensile.setColumnWidth(0, 130)
             for voce in bilancio.bilancio_corrente_mens.get_uscite_mensili():
                 self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'No'
@@ -2539,6 +2721,7 @@ class main_interface(object):
         if self.checkBox_mese_entrate.isChecked() and self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_voci_mensili())
             self.tableWidget_mensile.setRowCount(l)
+            self.tableWidget_mensile.setColumnWidth(0, 130)
             for voce in bilancio.bilancio_corrente_mens.get_voci_mensili():
                 self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = None
@@ -2553,10 +2736,29 @@ class main_interface(object):
                                             cent=str(voce[0].get_valore_euro()[1]))))
                 row_bilancio += 1
 
+        # STATISTICHE
+        controllore_lista_dipendenti = ControlloreListaDipendenti()
+        self.label_tot_dipendenti.setText("TOT DIPENDENTI:  " + str(controllore_lista_dipendenti.get_numero_dipendenti()))
+        controllore_pianolavoro = ControllorePianoLavoro()
+        self.label_tot_att_da_completare.setText("TOT. ATTIVITA' DA COMPLETARE:  " + str(controllore_pianolavoro.get_count_task_completate()))
+        self.label_tot_att_completate.setText("TOT. ATTIVITA' COMPLETATE:  " + str(controllore_pianolavoro.get_count_task_da_completare()))
+        controllore_magazzino = ControlloreListaProdottiSalvati()
+        self.label_tot_frutta.setText("TOT. PRODOTTI 'FRUTTA' NEL MAGAZZINO:  " + str(controllore_magazzino.get_count_lista_frutta()))
+        self.label_tot_verdura.setText("TOT. PRODOTTI 'VERDURA' NEL MAGAZZINO:  "+ str(controllore_magazzino.get_count_lista_verdura()))
+        self.label_erbe_aromatiche.setText("TOT. PRODOTTI 'ERBE AROMATICHE' NEL MAGAZZINO:  "+ str(controllore_magazzino.get_count_lista_erbe_aromatiche()))
+        self.label_altro.setText("TOT. PRODOTTI 'ALTRO' NEL MAGAZZINO:  "+ str(controllore_magazzino.get_count_lista_altro()))
+        self.label_valore_magazzino.setText("TOT. VALORE MAGAZZINO:  " + str(controllore_magazzino.valore_totale()) + "€")
+        controllore_ordini = ControlloreListaOrdinazioni()
+        self.label_tot_ordinazioni.setText("TOT. ORDINAZIONI:  " + str(controllore_ordini.get_numero_ordinazioni()))
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.home.setText(_translate("MainWindow", "HOME"))
+        self.push_home.setText(_translate("MainWindow", "HOME"))
+        self.label_tit_homepage.setText("Azienda Agricola \"LaGiuseppina\"")
+        self.label_descrizione_sito.setText("Benvenuto nella Homepage! \n"
+                                                                                     "Grazie a questo software avrai a disposizione degli efficaci strumenti per la gestione della tua azienda.  \n"
+                                                                                     "Potrai infatti cliccare sulle 6 sezioni che vedi a sinistra per accedere alle diverse sezioni del programma \norganizzando cos\u00ec il tuo business in modo otttimale.")
         self.la_giuseppina.setWhatsThis(_translate("MainWindow",
                                                    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -2676,14 +2878,11 @@ class main_interface(object):
 
         self.push_mag_listaprodotti.setText(_translate("MainWindow", "LISTA DEI PRODOTTI"))
         self.push_mag_salva.setText(_translate("MainWindow", "SALVA"))
-        self.push_mag_elimina_tutto.setText(_translate("MainWindow", "ELIMINA TUTTI I \n"
-                                                                     " PRODOTTI DAL MAGAZZINO"))
         self.frame_listadelleordinazioni.setText(_translate("MainWindow", "LISTA DELLE ORDINAZIONI"))
         __sortingEnabled = self.listWidget_ordini.isSortingEnabled()
         self.listWidget_ordini.setSortingEnabled(False)
         self.listWidget_ordini.setSortingEnabled(__sortingEnabled)
         self.push_visualizza_ordine.setText(_translate("MainWindow", "Visualizza"))
-        # self.push_modifica_ordine.setText(_translate("MainWindow", "Modifica"))
         self.push_elimina_ordine.setText(_translate("MainWindow", "Elimina"))
         self.push_creanuovoordine.setText(_translate("MainWindow", "Crea un nuovo \n"
                                                                    " ordine"))
@@ -2702,6 +2901,7 @@ class main_interface(object):
         self.comboBox_mod_prodotti.setItemText(0, _translate("MainWindow", "New Item"))
         self.comboBox_mod_prodotti.setItemText(1, _translate("MainWindow", "New Item"))
         self.pushButton_modi_aggiungi_prodotto.setText(_translate("MainWindow", "+"))
+        self.pushButton_rimuovi_prodotto.setText(_translate("MainWindow", "-"))
         item = self.tableWidget_mod_prodotti.verticalHeaderItem(0)
         item.setText(_translate("MainWindow", "New Row"))
         item = self.tableWidget_mod_prodotti.horizontalHeaderItem(0)
@@ -2747,3 +2947,6 @@ class main_interface(object):
         self.tabWidget_contabilita.setTabText(self.tabWidget_contabilita.indexOf(self.mensile),
                                               _translate("MainWindow", "Mensile"))
         self.pushButton_vocidibilancio.setText(_translate("MainWindow", "Voci di bilancio"))
+        self.label.setText("STATISTICHE")
+
+
