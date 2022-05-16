@@ -226,7 +226,7 @@ class BilancioMensile:
 
         voci_date = []
         for voce in self.tutte_le_voci:
-            primo_giorno = datetime(anno, mese, monthrange(anno, mese)[0])
+            primo_giorno = datetime(anno, mese, 1)
             ultimo_giorno = datetime(anno, mese, monthrange(anno, mese)[1])
             occorrenze = voce.occorrenze_in(primo_giorno, ultimo_giorno)
             for data in occorrenze:
@@ -293,13 +293,13 @@ class BilancioMensile:
     def next(self):
         anno = self.get_anno()
         mese = self.get_mese()
-        nuova_data = datetime(year=anno, month=self.mese) + timedelta(days=1)
+        nuova_data = datetime(year=anno, month=mese, day=1) + timedelta(days=31)
         self.__init__(self.tutte_le_voci, nuova_data.year, nuova_data.month)
 
     def previous(self):
         anno = self.get_anno()
         mese = self.get_mese()
-        nuova_data = datetime(year=anno, month=self.mese) - timedelta(days=1)
+        nuova_data = datetime(year=anno, month=self.mese, day=1) - timedelta(days=1)
         self.__init__(self.tutte_le_voci, nuova_data.year, nuova_data.month)
 
 
@@ -356,8 +356,6 @@ class Bilancio:
     def rimuovi_elemento(self, voce: VoceDiBilancio):
         if self.is_present_by_id(voce.get_id()):
             self.voci_di_bilancio.remove(voce)
-            self.bilancio_corrente_sett.remove(voce)
-            self.bilancio_corrente_mens.remove(voce)
             self.__modified = True
         else:
             raise ValueError('L\'elemento non è presente all\'interno del bilancio')
@@ -423,6 +421,12 @@ class Bilancio:
     def previous_mens(self):
         self.bilancio_corrente_mens.previous()
 
+    def trova(self, nome_componente: str, data_iniziale_g_m_a: datetime, indice: int):
+        voce = None
+        indice +=1
+        for i in range(indice):
+            voce = next(v for v in self.get_voci('po') if v.get_component.get_nome() is nome_componente and data_iniziale_g_m_a.date() is v.get_data())
+        return voce
 
 if __name__ == '__main__':
     # __ProvaInit()

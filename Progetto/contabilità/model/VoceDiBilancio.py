@@ -28,15 +28,15 @@ class Periodicita(Enum):
         """
         match self:
             case Periodicita.NESSUNA:
-                return 'non periodico'
+                return 'Non periodico'
             case Periodicita.GIORNALIERA:
-                return 'giorni'
+                return 'Giorni'
             case Periodicita.SETTIMANALE:
-                return 'settimane'
+                return 'Settimane'
             case Periodicita.MENSILE:
-                return 'mesi'
+                return 'Mesi'
             case Periodicita.ANNUALE:
-                return 'anni'
+                return 'Anni'
 
 
 MESI_IN_UN_ANNO = 12
@@ -111,7 +111,7 @@ class VoceDiBilancio:
     # La ricorrenza deve essere utilizzata con una risoluzione massima di un giorno e deve essere non negativa, altrimenti viene lanciata un ValueError
     # La ricorrenzaa uguale al tempo nullo indica che la voce non è ricorrente
     # 'iterazioni' indica il numero di volte in cui la voce sarà aggiunta al bilancio
-    def __init__(self, component: ComponentBilancio, entrata: bool, periodicita: Periodicita, arg_periodicita=0,
+    def __init__(self, component: ComponentBilancio, entrata: bool, periodicita: Periodicita, arg_periodicita=1,
                  iterazioni=maxsize,
                  data=datetime.today()):
         """
@@ -150,7 +150,7 @@ class VoceDiBilancio:
         if self.is_periodico():
             self.storico_valori.append((data, component.get_valore()))
         self.eterno = None
-        if self.get_periodicita() != Periodicita.NESSUNA and iterazioni == maxsize:
+        if self.get_periodicita() != Periodicita.NESSUNA and iterazioni >= 10000:
             self.eterno = True
         else:
             self.eterno = False
@@ -229,7 +229,7 @@ class VoceDiBilancio:
         return self.iterazioni
 
     def set_iterazioni(self, nuovo_numero: int):
-        if nuovo_numero <= 0:
+        if nuovo_numero < 0:
             raise ValueError('Il numero delle iterazioni deve essere non negativo')
         self.iterazioni = nuovo_numero
 
@@ -262,10 +262,10 @@ class VoceDiBilancio:
 
     def get_ultima_data(self) -> datetime:
         """
-        :return: datetime che descrive la scadenza
+        :return: datetime che descrive la scadenza (datetime molto lontano nel fututro se la voce è eterna)
         """
         if self.is_eterno():
-            raise RuntimeError('Impossibile restituire l\'ultima data di una voce eterna')
+            return datetime.max  # giorno molto lontano futuro
         data = self.get_data()
         match self.get_periodicita():
             case Periodicita.NESSUNA:

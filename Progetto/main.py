@@ -18,7 +18,6 @@ class MainWindow(QMainWindow):
 
         self.ui.push_creanuovodipendente.clicked.connect(lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.page_crea_nuovo_dipendente))
 
-
         self.ui.push_pianodilavoro.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.pianodilavoro))
 
         self.ui.push_magazzino.clicked.connect(lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.magazzino))
@@ -34,3 +33,4 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow(dipendente= None)
     sys.exit(app.exec())
+

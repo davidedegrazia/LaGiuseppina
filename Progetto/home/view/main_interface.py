@@ -23,7 +23,32 @@ class main_interface(object):
     def __init__(self):
         self.vista_pianolavoro = VistaPianoLavoro()
         self.vista_listaprodotti = VistaProdottiMagazzino()
-        self.vista_vocidibilancio = VistaVociDiBilancio()
+        self.bilancio = Bilancio()
+        oggi = datetime.datetime.today()
+        v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
+                            iterazioni=15)
+        v2 = VoceDiBilancio(ComponenteGenerica(150000, 'Comodato d\'uso'), True, Periodicita.ANNUALE, arg_periodicita=1,
+                            iterazioni=16)
+        v3 = VoceDiBilancio(ComponenteGenerica(30000, 'Cozze'), True, Periodicita.NESSUNA, arg_periodicita=1,
+                            data=oggi.replace(day=28))
+        try:
+            v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                arg_periodicita=1,
+                                data=oggi.replace(day=datetime.datetime.today().day + 1))
+        except Exception:
+            try:
+                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                    arg_periodicita=1,
+                                    data=oggi.replace(day=1, month=datetime.datetime.today().month + 1))
+            except Exception:
+                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
+                                    arg_periodicita=1,
+                                    data=oggi.replace(day=1, month=1, year=datetime.datetime.today().year + 1))
+        vettore = [v1, v2, v3, v4]
+        for v in vettore:
+            self.bilancio.aggiungi_elemento(v)
+        self.vista_vocidibilancio = VistaVociDiBilancio(self.bilancio)
+
 
     def vista_lista_prodotti(self):
         self.window = QtWidgets.QMainWindow()
@@ -37,7 +62,7 @@ class main_interface(object):
 
     def vista_voci_di_bilancio(self):
         self.window = QtWidgets.QMainWindow()
-        self.vista_vocidibilancio.setupUi(self.window)
+        self.vista_vocidibilancio.setupUi(self.window, self.bilancio)
         self.window.show()
 
     def setupUi(self, MainWindow, dipendente):
@@ -2558,45 +2583,21 @@ class main_interface(object):
         self.push_elimina_ordine.clicked.connect(lambda: elimina_ordine())
 
         # CONTABILITA'
-        bilancio = Bilancio()
         self.pushButton_vocidibilancio.clicked.connect(self.vista_voci_di_bilancio)
-        self.push_sett_prec.clicked.connect(lambda: self.click_sett_prec(bilancio))
-        self.push_sett_succ.clicked.connect(lambda: self.click_sett_succ(bilancio))
-        self.push_mese_prec.clicked.connect(lambda: self.click_mese_prec(bilancio))
-        self.push_mese_succ.clicked.connect(lambda: self.click_mese_succ(bilancio))
-        oggi = datetime.datetime.today()
-        v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
-                            iterazioni=15)
-        v2 = VoceDiBilancio(ComponenteGenerica(150000, 'Comodato d\'uso'), True, Periodicita.ANNUALE, arg_periodicita=1,
-                            iterazioni=16)
-        v3 = VoceDiBilancio(ComponenteGenerica(30000, 'Cozze'), True, Periodicita.NESSUNA, arg_periodicita=1,
-                            data=oggi.replace(day=28))
-        try:
-            v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
-                                arg_periodicita=1,
-                                data=oggi.replace(day=datetime.datetime.today().day + 1))
-        except Exception:
-            try:
-                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
-                                    arg_periodicita=1,
-                                    data=oggi.replace(day=1, month=datetime.datetime.today().month + 1))
-            except Exception:
-                v4 = VoceDiBilancio(ComponenteGenerica(500, 'Software vari'), False, Periodicita.GIORNALIERA,
-                                    arg_periodicita=1,
-                                    data=oggi.replace(day=1, month=1, year=datetime.datetime.today().year + 1))
-        vettore = [v1, v2, v3, v4]
+        self.push_sett_prec.clicked.connect(lambda: self.click_sett_prec(self.bilancio))
+        self.push_sett_succ.clicked.connect(lambda: self.click_sett_succ(self.bilancio))
+        self.push_mese_prec.clicked.connect(lambda: self.click_mese_prec(self.bilancio))
+        self.push_mese_succ.clicked.connect(lambda: self.click_mese_succ(self.bilancio))
         self.checkBox_sett_entrate.setChecked(True)
         self.checkBox_sett_uscite.setChecked(True)
         self.checkBox_mese_entrate.setChecked(True)
         self.checkBox_mese_uscite.setChecked(True)
-        for v in vettore:
-            bilancio.aggiungi_elemento(v)
-        self.visualizzaBilancioSettimanale(bilancio, self.label_settimana)
-        self.visualizzaBilancioMensile(bilancio, self.label_mese)
-        self.checkBox_sett_entrate.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(bilancio))
-        self.checkBox_sett_uscite.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(bilancio))
-        self.checkBox_mese_entrate.stateChanged.connect(lambda: self.visualizzaBilancioMensile(bilancio))
-        self.checkBox_mese_uscite.stateChanged.connect(lambda: self.visualizzaBilancioMensile(bilancio))
+        self.visualizzaBilancioSettimanale(self.bilancio)
+        self.visualizzaBilancioMensile(self.bilancio)
+        self.checkBox_sett_entrate.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(self.bilancio))
+        self.checkBox_sett_uscite.stateChanged.connect(lambda: self.visualizzaBilancioSettimanale(self.bilancio))
+        self.checkBox_mese_entrate.stateChanged.connect(lambda: self.visualizzaBilancioMensile(self.bilancio))
+        self.checkBox_mese_uscite.stateChanged.connect(lambda: self.visualizzaBilancioMensile(self.bilancio))
 
     def click_sett_prec(self, bilancio):
         bilancio.previous_sett()
@@ -2614,7 +2615,7 @@ class main_interface(object):
         bilancio.next_mens()
         self.visualizzaBilancioMensile(bilancio)
 
-    def visualizzaBilancioSettimanale(self, bilancio, label):
+    def visualizzaBilancioSettimanale(self, bilancio):
         row_bilancio = 0
         bilancio_sett = bilancio.bilancio_corrente_sett
         dat_iniziale_str = bilancio_sett.get_data_iniziale().strftime('%d %B %Y')
@@ -2628,7 +2629,7 @@ class main_interface(object):
                 self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'Sì'
                 self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2646,7 +2647,7 @@ class main_interface(object):
                 self.tableWidget_settimanale.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'No'
                 self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2671,7 +2672,7 @@ class main_interface(object):
                 else:
                     entrata = 'No'
                 self.tableWidget_settimanale.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_settimanale.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_settimanale.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2681,13 +2682,13 @@ class main_interface(object):
             utile_str = centToEuroString(bilancio_sett.get_utile())
             self.label_sett_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
-
-    def visualizzaBilancioMensile(self, bilancio, label):
+    def visualizzaBilancioMensile(self, bilancio):
         row_bilancio = 0
         #dat_iniziale_str = bilancio.bilancio_corrente_mens.get_data_iniziale().strftime('%d %B %Y')
         #dat_finale_str = bilancio.bilancio_corrente_mens.get_data_finale().strftime('%d %B %Y')
         #self.label_mese.setText('{dt1} - {dt2}'.format(dt1=dat_iniziale_str, dt2= dat_finale_str))
-
+        data = datetime.date(self.bilancio.bilancio_corrente_mens.anno, self.bilancio.bilancio_corrente_mens.mese,day=1)
+        self.label_mese.setText(data.strftime('%B %Y'))
         if self.checkBox_mese_entrate.isChecked() and not self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_entrate_mensili())
             self.tableWidget_mensile.setRowCount(l)
@@ -2696,7 +2697,7 @@ class main_interface(object):
                 self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'Sì'
                 self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2710,7 +2711,7 @@ class main_interface(object):
                 self.tableWidget_mensile.setItem(row_bilancio, 0, QtWidgets.QTableWidgetItem(voce[0].get_nome()))
                 entrata = 'No'
                 self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2730,7 +2731,7 @@ class main_interface(object):
                 else:
                     entrata = 'No'
                 self.tableWidget_mensile.setItem(row_bilancio, 1, QtWidgets.QTableWidgetItem(entrata))
-                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1])))
+                self.tableWidget_mensile.setItem(row_bilancio, 2, QtWidgets.QTableWidgetItem(str(voce[1].date())))
                 self.tableWidget_mensile.setItem(row_bilancio, 3, QtWidgets.QTableWidgetItem(
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
@@ -2750,6 +2751,10 @@ class main_interface(object):
         self.label_valore_magazzino.setText("TOT. VALORE MAGAZZINO:  " + str(controllore_magazzino.valore_totale()) + "€")
         controllore_ordini = ControlloreListaOrdinazioni()
         self.label_tot_ordinazioni.setText("TOT. ORDINAZIONI:  " + str(controllore_ordini.get_numero_ordinazioni()))
+
+    def aggiorna_bilanci(self, bilancio):
+        self.visualizzaBilancioSettimanale(bilancio)
+        self.visualizzaBilancioMensile(bilancio)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

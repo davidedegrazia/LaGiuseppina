@@ -1,13 +1,25 @@
 from datetime import datetime
 
+import parse
 from PyQt5 import QtCore, QtGui, QtWidgets
+from  parse import compile
 
+import Progetto.contabilità.utils
 from Progetto.contabilità.model.Bilancio import Bilancio
 from Progetto.contabilità.model.VoceDiBilancio import Periodicita, VoceDiBilancio, ComponenteGenerica
 
 
 class VistaVociDiBilancio(object):
-    def setupUi(self, MainWindow):
+    def __init__(self, bilancio):
+        self.bilancio = bilancio
+        self.periodicita_dict = {
+            'Nessuna': Periodicita.NESSUNA,
+            'Giornaliera': Periodicita.GIORNALIERA,
+            'Mensile': Periodicita.MENSILE,
+            'Annuale': Periodicita.ANNUALE
+        }
+
+    def setupUi(self, MainWindow, bilancio):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(709, 616)
         MainWindow.setMaximumSize(QtCore.QSize(709, 670))
@@ -309,7 +321,18 @@ class VistaVociDiBilancio(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+        self.caricaLista()
+        try:
+            self.visualizza(self.bilancio.get_voci('po')[0])
+        except IndexError:
+            self.clearLabels()
+            pass
+        except Exception as e:
+            pass
+        self.pushButton_salva_voce.clicked.connect(lambda: self.salva())
+        self.push_visualizza.clicked.connect(lambda: self.visualizzaSelezionato())
+        self.push_creanuovavoce.clicked.connect(lambda: self.creaNuovaVoce())
+        self.push_elimina.clicked.connect(lambda: self.eliminaSelezionato())
         # bilancio = Bilancio()
         # # #oggi = datetime.datetime.today
         # # v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
@@ -336,7 +359,8 @@ class VistaVociDiBilancio(object):
         # #     bilancio.aggiungi_elemento(v)
         # for voce in bilancio.get_voci('po'):
         #     self.listWidget_vocidibilancio.addItem(voce.component.get_nome())
-        self.salva()
+
+        #self.salva()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -367,20 +391,77 @@ class VistaVociDiBilancio(object):
 
     def salva(self):
         nome = self.lineEdit_nome_voce.text()
-        prezzo = self.doubleSpinBox_prezzo_voce.value() * 100
+        prezzo = self.doubleSpinBox_prezzo_voce.value()
         entrata = self.checkBox_entrata.isChecked()
         periodicita_txt = self.comboBox_periodicita.currentText()
-        periodicita = periodicita_txt[periodicita_txt]
+        periodicita = self.periodicita_dict[periodicita_txt]
         numero_iterazioni = self.spinBox_numero_iterazioni.value()
         data = self.dateEdit_prima_iterazione.date().toPyDate()
         dt = datetime(data.year, data.month, data.day)
-        voce = VoceDiBilancio(ComponenteGenerica(prezzo, nome), entrata, periodicita, iterazioni=numero_iterazioni, data = dt)
-        print(voce)
+        try:
+            voce = VoceDiBilancio(ComponenteGenerica(prezzo, nome), entrata, periodicita, iterazioni=numero_iterazioni, data = dt)
+            self.bilancio.aggiungi_elemento(voce)
+            self.caricaLista()
+            self.visualizza(voce)
+        except ValueError as ve:
+            print(ve)
 
-    periodicita_dict = {
-        'Nessuna': Periodicita.NESSUNA,
-        'Giornaliera': Periodicita.GIORNALIERA,
-        'Mensile': Periodicita.MENSILE,
-        'Annuale': Periodicita.ANNUALE
+    def caricaLista(self):
+        voci = self.bilancio.get_voci('po')
+        self.listWidget_vocidibilancio.clear()
+        for voce in voci:
+            self.listWidget_vocidibilancio.addItem(voce.component.get_nome() + ' ' + str(voce.data.strftime("%Y/%m/%d")))
 
-    }
+    def trovaSelezionato(self)->VoceDiBilancio:
+        indice = self.listWidget_vocidibilancio.selectedIndexes()[0].row()
+        voce = self.bilancio.get_voci('po')[indice]
+        return voce
+
+    def visualizzaSelezionato(self):
+        try:
+            voce = self.trovaSelezionato()
+            self.visualizza(voce)
+        except IndexError:
+            pass
+
+    def visualizza(self, voce):
+        self.stackedWidget.setCurrentIndex(1)
+        self.label_nome_voce.setText('Nome: ' + voce.component.get_nome())
+        self.label_prezzo_voce.setText('Prezzo: ' +Progetto.contabilità.utils.centToEuroString(voce.get_valore()))
+        if voce.is_entrata():
+            entrata_str = 'Sì'
+        else:
+            entrata_str = 'False'
+        self.label_entrata_voce.setText('Entrata?: ' + entrata_str)
+        self.label_periodicita_voce.setText('Periodicità: ' + str(voce.get_periodicita()))
+        if voce.is_eterno():
+            self.label_num_iterazioni_voce.setText('Voce eterna')
+        else:
+            self.label_num_iterazioni_voce.setText('Numero iterazioni: ' + str(voce.get_iterazioni()))
+        self.label_prima_iterazione_voce.setText('Data prima occorrenza: ' + voce.get_data().strftime('%d/%m/%Y'))
+
+    def clearLabels(self):
+        self.label_nome_voce.setText('Nessuna voce presente')
+        self.label_prezzo_voce.setText('Cliccare \'Crea ')
+        self.label_entrata_voce.setText('')
+        self.label_periodicita_voce.setText('')
+        self.label_num_iterazioni_voce.setText('')
+        self.label_prima_iterazione_voce.setText('')
+
+    def creaNuovaVoce(self):
+        self.stackedWidget.setCurrentIndex(2)
+
+    def salvaVoce(self, voce):
+        self.bilancio.aggiungi_elemento(voce)
+        self.caricaLista()
+        self.visualizza(voce)
+
+    def eliminaSelezionato(self):
+        try:
+            indice =  self.listWidget_vocidibilancio.selectedIndexes()[0].row()
+            voci = self.bilancio.get_voci('po')
+            voce = voci[indice]
+            self.bilancio.rimuovi_elemento(voce)
+            self.caricaLista()
+        except IndexError:
+            pass
