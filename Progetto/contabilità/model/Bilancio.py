@@ -1,9 +1,10 @@
+import json
 from calendar import monthrange
 from datetime import datetime, timedelta
 
 from Progetto.contabilità.model.VoceDiBilancio import VoceDiBilancio, ComponenteGenerica, Periodicita
 
-pth_voci = '../data/voci_di_bilancio.json'
+pth_voci = 'contabilità/data/voci_di_bilancio.json'
 
 
 def __ProvaBilancioSettimanale():
@@ -338,6 +339,7 @@ class Bilancio:
     def __init__(self):
         super(Bilancio, self).__init__()
         self.voci_di_bilancio = set()
+        self.__caricaVoci()
         self.__modified = True
         self.voci_ordinate_data_iniziale = self.get_voci(ordine='po')
         self.voci_ordinate_data_finale = self.get_voci(ordine='uo')
@@ -345,13 +347,32 @@ class Bilancio:
         self.bilancio_corrente_mens = BilancioMensile(self.get_voci())
         self.__modified = False
 
+    def __caricaVoci(self):
+
+        with open(pth_voci) as f:
+            voci = json.load(f)
+        for voce_jsn in voci:
+            nome = voce_jsn['component']['nome']
+            valore = voce_jsn['component']['valore']
+            entrata = voce_jsn['entrata'] == 'True'
+            periodicita = Periodicita(voce_jsn['periodicita'])
+            arg_periodicita = voce_jsn['arg_periodicita']
+            iterazioni = voce_jsn['iterazioni']
+            data_date = datetime.strptime(voce_jsn['data'], '%Y/%m/%d')
+            data_datetime = datetime(data_date.year, data_date.month, data_date.day)
+            voce = VoceDiBilancio(ComponenteGenerica(valore, nome), entrata, periodicita, arg_periodicita, iterazioni,
+                                  data_date)
+            self.voci_di_bilancio.add(voce)
+
     def aggiungi_elemento(self, voce: VoceDiBilancio):
         if self.is_present_by_id(voce.get_id()):
             raise ValueError('Elemento già presente all\'interno del bilancio')
         self.voci_di_bilancio.add(voce)
         self.bilancio_corrente_sett.add(voce)
         self.bilancio_corrente_mens.add(voce)
+        self.save_data(voce)
         self.__modified = True
+
 
     def rimuovi_elemento(self, voce: VoceDiBilancio):
         if self.is_present_by_id(voce.get_id()):
@@ -423,12 +444,33 @@ class Bilancio:
 
     def trova(self, nome_componente: str, data_iniziale_g_m_a: datetime, indice: int):
         voce = None
-        indice +=1
+        indice += 1
         for i in range(indice):
-            voce = next(v for v in self.get_voci('po') if v.get_component.get_nome() is nome_componente and data_iniziale_g_m_a.date() is v.get_data())
+            voce = next(v for v in self.get_voci('po') if
+                        v.get_component.get_nome() is nome_componente and data_iniziale_g_m_a.date() is v.get_data())
         return voce
+
+    def save_data(self, voce):
+        with open(pth_voci) as f:
+            voci = json.load(f)
+            periodicita = voce.get_periodicita()
+            nuovo = {
+                "component": {
+                     "nome": voce.component.get_nome(),
+                     "valore": voce.get_valore()
+                },
+                "entrata": str(voce.is_entrata()),
+                "periodicita": voce.get_periodicita().value,
+                "arg_periodicita": voce.arg_periodicita,
+                "iterazioni": voce.get_iterazioni(),
+                "data": voce.get_data().date().strftime('%Y/%m/%d')
+            }
+            voci.append(nuovo)
+        with open(pth_voci, 'w') as file:
+            json.dump(voci, file, indent=4)
 
 if __name__ == '__main__':
     # __ProvaInit()
-    __ProvaBilancioSettimanale()
+    # __ProvaBilancioSettimanale()
     # __ProvaBilancioMensile()
+    pass

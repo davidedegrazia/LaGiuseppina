@@ -391,7 +391,7 @@ class VistaVociDiBilancio(object):
 
     def salva(self):
         nome = self.lineEdit_nome_voce.text()
-        prezzo = self.doubleSpinBox_prezzo_voce.value()
+        prezzo_cent = int(self.doubleSpinBox_prezzo_voce.value()) * 100
         entrata = self.checkBox_entrata.isChecked()
         periodicita_txt = self.comboBox_periodicita.currentText()
         periodicita = self.periodicita_dict[periodicita_txt]
@@ -399,7 +399,7 @@ class VistaVociDiBilancio(object):
         data = self.dateEdit_prima_iterazione.date().toPyDate()
         dt = datetime(data.year, data.month, data.day)
         try:
-            voce = VoceDiBilancio(ComponenteGenerica(prezzo, nome), entrata, periodicita, iterazioni=numero_iterazioni, data = dt)
+            voce = VoceDiBilancio(ComponenteGenerica(prezzo_cent, nome), entrata, periodicita, iterazioni=numero_iterazioni, data = dt)
             self.bilancio.aggiungi_elemento(voce)
             self.caricaLista()
             self.visualizza(voce)

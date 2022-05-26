@@ -22,5 +22,13 @@
         "tipo_contratto": "cazz",
         "email": "tttt",
         "telefono": "6069406"
+    },
+    {
+        "nome": "sdd",
+        "ore": 3,
+        "compenso_a_ore": 2,
+        "tipo_contratto": "ddvv",
+        "email": "ddd",
+        "telefono": "www"
     }
 ]

@@ -15,7 +15,7 @@ class PianoLavoro:
             with open('pianodilavoro/data/lista_task.pickle', 'rb') as f:
                 self.piano_lavoro = pickle.load(f)
         else:
-            with open('/Users/davidedegrazia/PycharmProjects/LaGiuseppina3/Progetto/pianodilavoro/data/lista_task.json') as f:
+            with open('pianodilavoro/data/lista_task.json') as f:
                 piano_lavoro_iniziale = json.load(f)
             for task_iniziale in piano_lavoro_iniziale:
                 self.aggiungi_task(Task(task_iniziale["nome_task"], task_iniziale["descrizione"],

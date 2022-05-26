@@ -1,0 +1,24 @@
+[
+    {
+        "component": {
+            "nome": "Pepe",
+            "valore": 10000
+        },
+        "entrata": "True",
+        "periodicita": 0,
+        "arg_periodicita": 1,
+        "iterazioni": 1,
+        "data": "2022/05/25"
+    },
+    {
+        "component": {
+            "nome": "yyyy",
+            "valore": 700
+        },
+        "entrata": "True",
+        "periodicita": 3,
+        "arg_periodicita": 1,
+        "iterazioni": 6,
+        "data": "2022/06/05"
+    }
+]
