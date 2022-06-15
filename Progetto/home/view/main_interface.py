@@ -2661,6 +2661,7 @@ class main_interface(object):
 
     def visualizzaBilancioMensile(self, bilancio):
         row_bilancio = 0
+        bilancio_mens = bilancio.bilancio_corrente_mens
         #dat_iniziale_str = bilancio.bilancio_corrente_mens.get_data_iniziale().strftime('%d %B %Y')
         #dat_finale_str = bilancio.bilancio_corrente_mens.get_data_finale().strftime('%d %B %Y')
         #self.label_mese.setText('{dt1} - {dt2}'.format(dt1=dat_iniziale_str, dt2= dat_finale_str))
@@ -2679,6 +2680,10 @@ class main_interface(object):
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
                 row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_mens.get_ricavo())
+            costi_str = centToEuroString(bilancio_mens.get_costi())
+            utile_str = centToEuroString(bilancio_mens.get_utile())
+            self.label_mese_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
         if (not self.checkBox_mese_entrate.isChecked()) and self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_uscite_mensili())
@@ -2693,9 +2698,17 @@ class main_interface(object):
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
                 row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_mens.get_ricavo())
+            costi_str = centToEuroString(bilancio_mens.get_costi())
+            utile_str = centToEuroString(bilancio_mens.get_utile())
+            self.label_mese_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
         if not self.checkBox_mese_entrate.isChecked() and not self.checkBox_mese_uscite.isChecked():
             self.tableWidget_mensile.setRowCount(0)
+            ricavo_str = centToEuroString(bilancio_mens.get_ricavo())
+            costi_str = centToEuroString(bilancio_mens.get_costi())
+            utile_str = centToEuroString(bilancio_mens.get_utile())
+            self.label_mese_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
         if self.checkBox_mese_entrate.isChecked() and self.checkBox_mese_uscite.isChecked():
             l = len(bilancio.bilancio_corrente_mens.get_voci_mensili())
             self.tableWidget_mensile.setRowCount(l)
@@ -2713,6 +2726,10 @@ class main_interface(object):
                     '{euro}.{cent}€'.format(euro=str(voce[0].get_valore_euro()[0]),
                                             cent=str(voce[0].get_valore_euro()[1]))))
                 row_bilancio += 1
+            ricavo_str = centToEuroString(bilancio_mens.get_ricavo())
+            costi_str = centToEuroString(bilancio_mens.get_costi())
+            utile_str = centToEuroString(bilancio_mens.get_utile())
+            self.label_mese_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
         # STATISTICHE
         controllore_lista_dipendenti = ControlloreListaDipendenti()
@@ -2729,7 +2746,7 @@ class main_interface(object):
         controllore_ordini = ControlloreListaOrdinazioni()
         self.label_tot_ordinazioni.setText("TOT. ORDINAZIONI:  " + str(controllore_ordini.get_numero_ordinazioni()))
 
-    def aggiorna_bilanci(self, bilancio):
+    def aggiorna_bilancio(self, bilancio):
         self.visualizzaBilancioSettimanale(bilancio)
         self.visualizzaBilancioMensile(bilancio)
 

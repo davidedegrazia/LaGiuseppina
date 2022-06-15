@@ -15,6 +15,7 @@ class VistaVociDiBilancio(object):
         self.periodicita_dict = {
             'Nessuna': Periodicita.NESSUNA,
             'Giornaliera': Periodicita.GIORNALIERA,
+            'Settimanale': Periodicita.SETTIMANALE,
             'Mensile': Periodicita.MENSILE,
             'Annuale': Periodicita.ANNUALE
         }
@@ -463,5 +464,5 @@ class VistaVociDiBilancio(object):
             voce = voci[indice]
             self.bilancio.rimuovi_elemento(voce)
             self.caricaLista()
-        except IndexError:
-            pass
+        except IndexError as e:
+            print(e)

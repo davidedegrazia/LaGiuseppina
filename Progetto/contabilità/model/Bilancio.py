@@ -378,6 +378,7 @@ class Bilancio:
         if self.is_present_by_id(voce.get_id()):
             self.voci_di_bilancio.remove(voce)
             self.__modified = True
+            self.rimuoviDaJson(voce)
         else:
             raise ValueError('L\'elemento non è presente all\'interno del bilancio')
 
@@ -468,6 +469,35 @@ class Bilancio:
             voci.append(nuovo)
         with open(pth_voci, 'w') as file:
             json.dump(voci, file, indent=4)
+
+    def rimuoviDaJson(self, voce: VoceDiBilancio):
+        with open(pth_voci) as f:
+            data = json.load(f)
+            cercato = {
+                "component": {
+                     "nome": voce.component.get_nome(),
+                     "valore": voce.get_valore()
+                },
+                "entrata": str(voce.is_entrata()),
+                "periodicita": voce.get_periodicita().value,
+                "arg_periodicita": voce.arg_periodicita,
+                "iterazioni": voce.get_iterazioni(),
+                "data": voce.get_data().date().strftime('%Y/%m/%d')
+            }
+            if len(data) > 0:
+                for i in range(len(data)):
+                    if data[i] == cercato:
+                        del data[i]
+                        break
+                # try:
+                #     index = next(i for i in range(len(data)-1) if data[i] == cercato)
+                #     del data[index]
+                # except Exception as e:
+                #     print(e)
+            else:
+                raise ValueError('Voce non trovata!')
+        with open(pth_voci, 'w') as file:
+                    json.dump(data, file, indent=4)
 
 if __name__ == '__main__':
     # __ProvaInit()
