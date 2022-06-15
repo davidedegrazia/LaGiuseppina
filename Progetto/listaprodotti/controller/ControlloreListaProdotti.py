@@ -58,11 +58,11 @@ class ControlloreListaProdotti(ComponentBilancio,ControlloreListaProdottiSalvati
                 self.aggiungi_elemento(Prodotto(prodotto['nome'], prodotto['categoria'], prodotto['tipo_unita'],
                                                 prodotto['prezzo_su_unita']))
             if not file_is_present:
-                error_string = 'Non è stato creato nesssun file al path: ' + path
+                error_string = 'Non è stato creato nessun file al path: ' + path
                 if exists(self.path_json):
-                    error_string + '\n File ' + self.path_json + ' crato con successo!'
+                    error_string + '\n File ' + self.path_json + ' creato con successo!'
                 elif exists(self.path_pickle):
-                    error_string + '\n File ' + self.path_pickle + ' crato con successo!'
+                    error_string + '\n File ' + self.path_pickle + ' creato con successo!'
                 raise FileNotFoundError(error_string)
         self.valore = self.model.get_valore()
         self.nome = nome
