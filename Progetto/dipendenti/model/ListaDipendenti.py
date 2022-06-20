@@ -18,7 +18,7 @@ class ListaDipendenti:
             with open('../data/lista_dipendenti_salvata.pickle', 'rb') as f:
                 self.lista_dipendenti = pickle.load(f)
         else:
-            with open('dipendenti/data/lista_dipendenti_iniziali.json') as f:
+            with open('../data/lista_dipendenti_iniziali.json') as f:
                 lista_dipendenti_iniziali = json.load(f)
             for dipendente_iniziale in lista_dipendenti_iniziali:
                 self.aggiungi_dipendente(Dipendente(dipendente_iniziale["nome"], dipendente_iniziale["ore"],
@@ -41,7 +41,7 @@ class ListaDipendenti:
         return self.lista_dipendenti
 
     def get_numero_dipendenti(self):
-        with open('dipendenti/data/lista_dipendenti_iniziali.json') as file:
+        with open('../data/lista_dipendenti_iniziali.json') as file:
             lista = json.load(file)
         return len(lista)
 
@@ -49,8 +49,15 @@ class ListaDipendenti:
         with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
 
-
+def test():
+    lista = ListaDipendenti()
+    print(lista.get_lista_dipendenti())
+    print(lista.get_numero_dipendenti())
+    print(lista.get_dipendente_by_index(0))
+    dipendente0 = lista.get_dipendente_by_index(0)
+    print(dipendente0.nome)
+    print(dipendente0.ore)
+    print(dipendente0.compenso_a_ore)
 
 if __name__ == "__main__":
-    lista = ListaDipendenti()
-    print(lista.get_numero_dipendenti())
+    test()

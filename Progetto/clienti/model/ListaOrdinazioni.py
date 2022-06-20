@@ -5,8 +5,8 @@ from pathlib import Path
 
 from Progetto.clienti.model.Ordine import Ordine
 
-PATH_JSON = Path('clienti/data/lista_ordinazioni.json')
-PATH_PICKLE = Path('clienti/data/lista_ordinazioni.pickle')
+PATH_JSON = Path('../data/lista_ordinazioni.json')
+PATH_PICKLE = Path('../data/lista_ordinazioni.pickle')
 
 
 class ListaOrdinazioni():
@@ -78,10 +78,9 @@ class ListaOrdinazioni():
        return self.lista_ordinazioni
 
     def get_numero_ordinazioni(self):
-        with open('clienti/data/lista_ordinazioni.json') as file:
+        with open('../data/lista_ordinazioni.json') as file:
             lista_ordini = json.load(file)
-        return len(lista_ordini
-                   )
+        return len(lista_ordini)
     def save_data(self):
         with open(PATH_JSON, 'wb') as handle:
             pickle.dump(self.lista_ordinazioni, handle, pickle.HIGHEST_PROTOCOL)
@@ -100,5 +99,13 @@ class ListaOrdinazioni():
         pass
 
 
+def test():
+    lista = ListaOrdinazioni()
+    print(lista.get_lista_ordinazioni())
+    print(lista.get_numero_ordinazioni())
+    print(lista.get_ordine_by_index(0))
 
+
+if __name__ == "__main__":
+    test()
 

@@ -4,14 +4,14 @@
         "categoria": "Frutta",
         "tipo_unita": "al chilo",
         "prezzo_su_unita": 2.53,
-        "quantita": 42
+        "quantita": 50
     },
     {
         "nome": "Pere",
         "categoria": "Frutta",
         "tipo_unita": "al chilo",
         "prezzo_su_unita": 3.73,
-        "quantita": 12
+        "quantita": 10
     },
     {
         "nome": "Vino",

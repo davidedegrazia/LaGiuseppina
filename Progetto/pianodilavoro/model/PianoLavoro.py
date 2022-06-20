@@ -10,12 +10,12 @@ class PianoLavoro:
     def __init__(self):
         super(PianoLavoro, self).__init__()
         self.piano_lavoro = []
-        #self.margine_scadenza
+
         if os.path.isfile('pianodilavoro/data/lista_task.pickle'):
             with open('pianodilavoro/data/lista_task.pickle', 'rb') as f:
                 self.piano_lavoro = pickle.load(f)
         else:
-            with open('pianodilavoro/data/lista_task.json') as f:
+            with open('../data/lista_task.json') as f:
                 piano_lavoro_iniziale = json.load(f)
             for task_iniziale in piano_lavoro_iniziale:
                 self.aggiungi_task(Task(task_iniziale["nome_task"], task_iniziale["descrizione"],
@@ -79,3 +79,15 @@ class PianoLavoro:
         with open('pianodilavoro/data/lista_task.pickle', 'wb') as handle:
             pickle.dump(self.piano_lavoro, handle, pickle.HIGHEST_PROTOCOL)
 
+def test():
+    lista = PianoLavoro()
+    print(lista.get_lista_task())
+    print(lista.get_count_task_da_completare())
+    print(lista.get_count_task_completate())
+    task0 = lista.get_task_by_index(0)
+    print(task0.nome_task)
+    print(task0.descrizione)
+    print(task0.completata)
+
+if __name__ == "__main__":
+    test()

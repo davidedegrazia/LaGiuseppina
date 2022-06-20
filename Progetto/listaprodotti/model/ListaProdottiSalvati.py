@@ -6,8 +6,8 @@ from pathlib import Path
 from Progetto.listaprodotti.model.Prodotto import Prodotto
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
 
-PATH_PRODOTTI_PICKLE = Path('listaprodotti/data/ListaProdottiSalvati.pickle')
-PATH_PRODOTTI_JSON = Path('listaprodotti/data/ListaProdottiSalvati.json')
+PATH_PRODOTTI_PICKLE = Path('../data/ListaProdottiSalvati.pickle')
+PATH_PRODOTTI_JSON = Path('../data/ListaProdottiSalvati.json')
 
 
 # Classe che modella la lista_prodotti_salvati dei prodotti presenti nel programma
@@ -68,7 +68,7 @@ class ListaProdottiSalvati:
         return False
 
     def get_elemento_by_index(self, index: int) -> ProdottoConQuantità:
-        return self.lista_prodotti_salvati()[index]
+        return self.lista_prodotti_salvati[index]
 
     def get_index_by_name(self, name: str) -> int:
         with open(PATH_PRODOTTI_JSON, "r") as file:
@@ -180,7 +180,7 @@ class ListaProdottiSalvati:
         return lista_altro
 
     def get_count_lista_frutta(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open('../data/ListaProdottiSalvati.json') as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "frutta":
@@ -188,7 +188,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_frutta
 
     def get_count_lista_verdura(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open('../data/ListaProdottiSalvati.json') as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "verdura":
@@ -196,7 +196,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_verdura
 
     def get_count_lista_erbe_aromatiche(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open('../data/ListaProdottiSalvati.json') as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "erbe aromatiche":
@@ -204,9 +204,25 @@ class ListaProdottiSalvati:
         return self.count_prodotti_erbe_aromatiche
 
     def get_count_lista_altro(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open('../data/ListaProdottiSalvati.json') as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "altro":
                     self.count_prodotti_altro = self.count_prodotti_altro + 1
         return self.count_prodotti_altro
+
+
+def test():
+    lista = ListaProdottiSalvati()
+    print(lista.getLista())
+    print(lista.get_count_lista_frutta())
+    print(lista.get_count_lista_verdura())
+    print(lista.get_count_lista_erbe_aromatiche())
+    print(lista.get_count_lista_altro())
+    prodotto0 = lista.get_elemento_by_index(0)
+    print(prodotto0.nome)
+    print(prodotto0.categoria)
+    print(prodotto0.quantita)
+
+if __name__ == "__main__":
+    test()
