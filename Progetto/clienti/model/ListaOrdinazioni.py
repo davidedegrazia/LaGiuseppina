@@ -99,7 +99,7 @@ class ListaOrdinazioni():
         pass
 
 
-def test():
+def testprova():
     lista = ListaOrdinazioni()
     print(lista.get_lista_ordinazioni())
     print(lista.get_numero_ordinazioni())
@@ -107,5 +107,5 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    testprova()
 

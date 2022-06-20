@@ -49,7 +49,7 @@ class ListaDipendenti:
         with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
 
-def test():
+def testprova():
     lista = ListaDipendenti()
     print(lista.get_lista_dipendenti())
     print(lista.get_numero_dipendenti())
@@ -60,4 +60,4 @@ def test():
     print(dipendente0.compenso_a_ore)
 
 if __name__ == "__main__":
-    test()
+    testprova()

@@ -212,7 +212,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_altro
 
 
-def test():
+def testprova():
     lista = ListaProdottiSalvati()
     print(lista.getLista())
     print(lista.get_count_lista_frutta())
@@ -225,4 +225,4 @@ def test():
     print(prodotto0.quantita)
 
 if __name__ == "__main__":
-    test()
+    testprova()

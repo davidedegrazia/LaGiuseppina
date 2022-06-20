@@ -79,7 +79,7 @@ class PianoLavoro:
         with open('pianodilavoro/data/lista_task.pickle', 'wb') as handle:
             pickle.dump(self.piano_lavoro, handle, pickle.HIGHEST_PROTOCOL)
 
-def test():
+def testprova():
     lista = PianoLavoro()
     print(lista.get_lista_task())
     print(lista.get_count_task_da_completare())
@@ -90,4 +90,4 @@ def test():
     print(task0.completata)
 
 if __name__ == "__main__":
-    test()
+    testprova()
