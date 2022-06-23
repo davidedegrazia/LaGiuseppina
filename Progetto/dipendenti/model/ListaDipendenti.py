@@ -52,3 +52,15 @@ class ListaDipendenti:
         with open(PATH_JSON, 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
 
+def testprova():
+    lista = ListaDipendenti()
+    print(lista.get_lista_dipendenti())
+    print(lista.get_numero_dipendenti())
+    print(lista.get_dipendente_by_index(0))
+    dipendente0 = lista.get_dipendente_by_index(0)
+    print(dipendente0.nome)
+    print(dipendente0.ore)
+    print(dipendente0.compenso_a_ore)
+
+if __name__ == "__main__":
+    testprova()
