@@ -1,9 +1,12 @@
 import json
 import os
 import pickle
+from pathlib import Path
 
 from Progetto.pianodilavoro.model.Task import Task
 
+PATH_JSON = Path('pianodilavoro/data/lista_task.json')
+PATH_PICKLE = Path('pianodilavoro/data/lista_task.pickle')
 
 class PianoLavoro:
 
@@ -11,11 +14,11 @@ class PianoLavoro:
         super(PianoLavoro, self).__init__()
         self.piano_lavoro = []
 
-        if os.path.isfile('pianodilavoro/data/lista_task.pickle'):
-            with open('pianodilavoro/data/lista_task.pickle', 'rb') as f:
+        if os.path.isfile(PATH_PICKLE):
+            with open(PATH_PICKLE, 'rb') as f:
                 self.piano_lavoro = pickle.load(f)
         else:
-            with open('../data/lista_task.json') as f:
+            with open(PATH_JSON) as f:
                 piano_lavoro_iniziale = json.load(f)
             for task_iniziale in piano_lavoro_iniziale:
                 self.aggiungi_task(Task(task_iniziale["nome_task"], task_iniziale["descrizione"],
@@ -76,7 +79,7 @@ class PianoLavoro:
         self.piano_lavoro.remove(task)
 
     def save_data(self):
-        with open('pianodilavoro/data/lista_task.pickle', 'wb') as handle:
+        with open(PATH_PICKLE, 'wb') as handle:
             pickle.dump(self.piano_lavoro, handle, pickle.HIGHEST_PROTOCOL)
 
 def testprova():

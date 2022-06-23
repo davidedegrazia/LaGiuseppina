@@ -6,8 +6,8 @@ from pathlib import Path
 from Progetto.listaprodotti.model.Prodotto import Prodotto
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
 
-PATH_PRODOTTI_PICKLE = Path('../data/ListaProdottiSalvati.pickle')
-PATH_PRODOTTI_JSON = Path('../data/ListaProdottiSalvati.json')
+PATH_PRODOTTI_PICKLE = Path('listaprodotti/data/ListaProdottiSalvati.pickle')
+PATH_PRODOTTI_JSON = Path('listaprodotti/data/ListaProdottiSalvati.json')
 
 
 # Classe che modella la lista_prodotti_salvati dei prodotti presenti nel programma
@@ -90,7 +90,7 @@ class ListaProdottiSalvati:
                 return elemento.get_prezzo_su_unita()
 
     def valore_totale(self):
-        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+        with open(PATH_PRODOTTI_JSON, "r") as file:
             data = json.load(file)
         valore = 0
         for elemento in data:
@@ -98,7 +98,7 @@ class ListaProdottiSalvati:
         return round(valore, 2)
 
     def get_prezzo_by_index(self, index: int):
-        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+        with open(PATH_PRODOTTI_JSON, "r") as file:
             data = json.load(file)
         return data[index]['prezzo_su_unita']
 
@@ -109,10 +109,10 @@ class ListaProdottiSalvati:
         self.save_data()
 
     def modifica_quantita_by_index(self, index: int, quantita: int):
-        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+        with open(PATH_PRODOTTI_JSON, "r") as file:
             data = json.load(file)
             data[index]['quantita'] = int(quantita)
-        with open("listaprodotti/data/ListaProdottiSalvati.json", "w") as file:
+        with open(PATH_PRODOTTI_JSON, "w") as file:
             json.dump(data, file, indent=4)
 
     def rimuovi_elemento_by_name(self, nome: str):
@@ -121,7 +121,7 @@ class ListaProdottiSalvati:
                 self.lista_prodotti_salvati.remove(elemento)
 
     def modifica_elemento_by_name(self, nome: str, nuovo_prodotto: Prodotto):
-        with open("listaprodotti/data/ListaProdottiSalvati.json", "r") as file:
+        with open(PATH_PRODOTTI_JSON, "r") as file:
             data = json.load(file)
         i = 0
         for elemento in data:
@@ -133,7 +133,7 @@ class ListaProdottiSalvati:
                     "tipo_unita": nuovo_prodotto.get_tipo_unita(),
                     "prezzo_su_unita": nuovo_prodotto.get_prezzo_su_unita()
                 }
-                with open("listaprodotti/data/ListaProdottiSalvati.json", "w") as file:
+                with open(PATH_PRODOTTI_JSON, "w") as file:
                     data = json.load(file)
                 data[i] = prodotto_modificato
                 json.dump(data, file, indent=4)
@@ -144,7 +144,7 @@ class ListaProdottiSalvati:
         return self.lista_prodotti_salvati
 
     def get_lista_frutta(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
         lista_frutta = []
         for elemento in lista:
@@ -153,7 +153,7 @@ class ListaProdottiSalvati:
         return lista_frutta
 
     def get_lista_verdura(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
         lista_verdura = []
         for elemento in lista:
@@ -162,7 +162,7 @@ class ListaProdottiSalvati:
         return lista_verdura
 
     def get_lista_erbe_aromatiche(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
         lista_erbearomatiche = []
         for elemento in lista:
@@ -171,7 +171,7 @@ class ListaProdottiSalvati:
         return lista_erbearomatiche
 
     def get_lista_altro(self):
-        with open('listaprodotti/data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
         lista_altro = []
         for elemento in lista:
@@ -180,7 +180,7 @@ class ListaProdottiSalvati:
         return lista_altro
 
     def get_count_lista_frutta(self):
-        with open('../data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "frutta":
@@ -188,7 +188,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_frutta
 
     def get_count_lista_verdura(self):
-        with open('../data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "verdura":
@@ -196,7 +196,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_verdura
 
     def get_count_lista_erbe_aromatiche(self):
-        with open('../data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "erbe aromatiche":
@@ -204,7 +204,7 @@ class ListaProdottiSalvati:
         return self.count_prodotti_erbe_aromatiche
 
     def get_count_lista_altro(self):
-        with open('../data/ListaProdottiSalvati.json') as f:
+        with open(PATH_PRODOTTI_JSON) as f:
             lista = json.load(f)
             for elemento in lista:
                 if elemento["categoria"].lower() == "altro":

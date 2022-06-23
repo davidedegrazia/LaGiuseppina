@@ -1,9 +1,12 @@
 import json
 import pickle
 import os.path
+from pathlib import Path
 
 from Progetto.dipendenti.model.Dipendente import Dipendente
 
+PATH_JSON = Path('dipendenti/data/lista_dipendenti_iniziali.json')
+PATH_PICKLE = Path('dipendenti/data/lista_dipendenti_salvata.pickle')
 
 class ListaDipendenti:
     @staticmethod
@@ -15,10 +18,10 @@ class ListaDipendenti:
         super(ListaDipendenti, self).__init__()
         self.lista_dipendenti = []
         if os.path.isfile('../data'):
-            with open('../data/lista_dipendenti_salvata.pickle', 'rb') as f:
+            with open(PATH_PICKLE, 'rb') as f:
                 self.lista_dipendenti = pickle.load(f)
         else:
-            with open('../data/lista_dipendenti_iniziali.json') as f:
+            with open(PATH_JSON) as f:
                 lista_dipendenti_iniziali = json.load(f)
             for dipendente_iniziale in lista_dipendenti_iniziali:
                 self.aggiungi_dipendente(Dipendente(dipendente_iniziale["nome"], dipendente_iniziale["ore"],
@@ -41,23 +44,11 @@ class ListaDipendenti:
         return self.lista_dipendenti
 
     def get_numero_dipendenti(self):
-        with open('../data/lista_dipendenti_iniziali.json') as file:
+        with open(PATH_JSON) as file:
             lista = json.load(file)
         return len(lista)
 
     def save_data(self):
-        with open('dipendenti/data/lista_dipendenti_salvata.pickle', 'wb') as handle:
+        with open(PATH_JSON, 'wb') as handle:
             pickle.dump(self.lista_dipendenti, handle, pickle.HIGHEST_PROTOCOL)
 
-def testprova():
-    lista = ListaDipendenti()
-    print(lista.get_lista_dipendenti())
-    print(lista.get_numero_dipendenti())
-    print(lista.get_dipendente_by_index(0))
-    dipendente0 = lista.get_dipendente_by_index(0)
-    print(dipendente0.nome)
-    print(dipendente0.ore)
-    print(dipendente0.compenso_a_ore)
-
-if __name__ == "__main__":
-    testprova()

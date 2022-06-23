@@ -5,8 +5,8 @@ from pathlib import Path
 
 from Progetto.clienti.model.Ordine import Ordine
 
-PATH_JSON = Path('../data/lista_ordinazioni.json')
-PATH_PICKLE = Path('../data/lista_ordinazioni.pickle')
+PATH_JSON = Path('clienti/data/lista_ordinazioni.json')
+PATH_PICKLE = Path('clienti/data/lista_ordinazioni.pickle')
 
 
 class ListaOrdinazioni():
@@ -49,7 +49,7 @@ class ListaOrdinazioni():
 
             data.append(new_ordine)
 
-        with open('clienti/data/lista_ordinazioni.json', 'w') as file:
+        with open(PATH_JSON, 'w') as file:
             json.dump(data, file, indent=4)
 
 
@@ -78,7 +78,7 @@ class ListaOrdinazioni():
        return self.lista_ordinazioni
 
     def get_numero_ordinazioni(self):
-        with open('../data/lista_ordinazioni.json') as file:
+        with open(PATH_JSON) as file:
             lista_ordini = json.load(file)
         return len(lista_ordini)
     def save_data(self):
