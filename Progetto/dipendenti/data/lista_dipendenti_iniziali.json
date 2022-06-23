@@ -1,34 +1,50 @@
 [
     {
-        "nome": "Buuuuu",
+        "nome": "Mario Rossi",
         "ore": 12,
         "compenso_a_ore": 5,
-        "tipo_contratto": "dgfgg",
-        "email": "dgdggdf",
-        "telefono": "33434224"
+        "tipo_contratto": "part-time",
+        "email": "mariorossi@gmail.com",
+        "telefono": "3343422433"
     },
     {
-        "nome": "3333",
-        "ore": 2,
-        "compenso_a_ore": 2,
-        "tipo_contratto": "3lrrlr",
-        "email": "rrrr",
-        "telefono": "gt,kopeqtg"
+        "nome": "Paolo Bianchi",
+        "ore": 42,
+        "compenso_a_ore": 12,
+        "tipo_contratto": "full-time",
+        "email": "paolobianchi@gmail.com",
+        "telefono": "3454344543"
     },
     {
-        "nome": "rrr",
-        "ore": 6,
-        "compenso_a_ore": 66,
-        "tipo_contratto": "cazz",
-        "email": "tttt",
-        "telefono": "6069406"
+        "nome": "Ciro Esposito",
+        "ore": 42,
+        "compenso_a_ore": 20,
+        "tipo_contratto": "full-time",
+        "email": "ciroesposito@libero.it",
+        "telefono": "3425243142"
     },
     {
-        "nome": "sdd",
-        "ore": 3,
-        "compenso_a_ore": 2,
-        "tipo_contratto": "ddvv",
-        "email": "ddd",
-        "telefono": "www"
+        "nome": "Pasquale Fini",
+        "ore": 15,
+        "compenso_a_ore": 12,
+        "tipo_contratto": "part-time",
+        "email": "pasquale@gmail.com",
+        "telefono": "3454344543"
+    },
+    {
+        "nome": "Giulio Angelini",
+        "ore": 8,
+        "compenso_a_ore": 10,
+        "tipo_contratto": "apprendista",
+        "email": "giulio@gmail.com",
+        "telefono": "3454344543"
+    },
+    {
+        "nome": "Maria Bini",
+        "ore": 42,
+        "compenso_a_ore": 12,
+        "tipo_contratto": "full-time",
+        "email": "maria@icloud.com",
+        "telefono": "3454344543"
     }
 ]

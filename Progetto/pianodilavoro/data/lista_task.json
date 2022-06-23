@@ -1,29 +1,71 @@
 [
     {
-        "nome_task": "ahaja",
-        "descrizione": "ssss",
+        "nome_task": "Piantare la cicoria",
+        "descrizione": "piantarla bene",
         "assegnatari": [
-            "ururur"
+            "Mario Rossi",
+            "Pasquale Fini"
         ],
-        "giorni_rimanenti_alla_scadenza": 235,
+        "giorni_rimanenti_alla_scadenza": 4,
+        "completata": "True"
+    },
+    {
+        "nome_task": "Coltivare la lenticchia",
+        "descrizione": "coltivarla bene",
+        "assegnatari": [
+            "Ciro Esposito",
+            "Pasquale Fini",
+            "Maria Bini"
+        ],
+        "giorni_rimanenti_alla_scadenza": 6,
         "completata": "False"
     },
     {
-        "nome_task": "As",
-        "descrizione": "fgt",
+        "nome_task": "Arare la terra",
+        "descrizione": "Prendere trattore blu",
         "assegnatari": [
-            "ttttt"
+            "Mario Rossi"
         ],
-        "giorni_rimanenti_alla_scadenza": 230,
+        "giorni_rimanenti_alla_scadenza": 2,
         "completata": "False"
     },
     {
-        "nome_task": "ellrrr",
-        "descrizione": "eeepp3",
+        "nome_task": "Cogliere i pomodori",
+        "descrizione": "Prendere solo quelli maturi",
         "assegnatari": [
-            "Buuuuu"
+            "Paolo Bianchi",
+            "Ciro Esposito"
         ],
-        "giorni_rimanenti_alla_scadenza": -29,
+        "giorni_rimanenti_alla_scadenza": 4,
+        "completata": "False"
+    },
+    {
+        "nome_task": "Annaffiare gli ulivi",
+        "descrizione": "utilizzare acqua del pozzo",
+        "assegnatari": [
+            "Pasquale Fini",
+            "Giulio Angelini"
+        ],
+        "giorni_rimanenti_alla_scadenza": 6,
+        "completata": "True"
+    },
+    {
+        "nome_task": "Mettere benzina",
+        "descrizione": "utilizzarne poca",
+        "assegnatari": [
+            "Pasquale Fini"
+        ],
+        "giorni_rimanenti_alla_scadenza": 2,
+        "completata": "True"
+    },
+    {
+        "nome_task": "Prendere le uova",
+        "descrizione": "ringraziare le galline",
+        "assegnatari": [
+            "Mario Rossi",
+            "Paolo Bianchi"
+        ],
+        "giorni_rimanenti_alla_scadenza": 5,
         "completata": "False"
     }
 ]
