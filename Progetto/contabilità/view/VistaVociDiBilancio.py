@@ -432,7 +432,7 @@ class VistaVociDiBilancio(object):
         if voce.is_entrata():
             entrata_str = 'Sì'
         else:
-            entrata_str = 'False'
+            entrata_str = 'No'
         self.label_entrata_voce.setText('Entrata?: ' + entrata_str)
         self.label_periodicita_voce.setText('Periodicità: ' + str(voce.get_periodicita()))
         if voce.is_eterno():

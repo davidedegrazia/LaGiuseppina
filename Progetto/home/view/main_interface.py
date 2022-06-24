@@ -2728,7 +2728,7 @@ class main_interface(object):
                 row_bilancio += 1
             ricavo_str = centToEuroString(bilancio_mens.get_ricavo())
             costi_str = centToEuroString(bilancio_mens.get_costi())
-            utile_str = centToEuroString(bilancio_mens.get_utile())
+            utile_str = centToEuroString(bilancio_mens.get_ricavo() - bilancio_mens.get_costi())
             self.label_mese_ricavi_costi_utile.setText('Ricavi: {ricavi}    Costi: {costi}    Utile: {utile}'.format(ricavi = ricavo_str, costi  = costi_str, utile = utile_str))
 
         # STATISTICHE
