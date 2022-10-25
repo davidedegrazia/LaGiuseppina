@@ -5,7 +5,7 @@ from pathlib import Path
 
 from Progetto.pianodilavoro.model.Task import Task
 
-PATH_JSON = Path('pianodilavoro/data/lista_task.json')
+PATH_JSON = Path(r"C:\Users\Utente\Desktop\progettogiuseppina\Progetto\pianodilavoro\data\lista_task.json")
 PATH_PICKLE = Path('pianodilavoro/data/lista_task.pickle')
 
 class PianoLavoro:
@@ -32,9 +32,7 @@ class PianoLavoro:
         return self.piano_lavoro
 
     def rimuovi_task_by_index(self, index):
-        for task in self.piano_lavoro:
-            if task.index == index:
-                self.piano_lavoro.remove(task)
+        self.piano_lavoro.remove(self.piano_lavoro[index])
 
     def get_task_by_index(self, index):
         return self.piano_lavoro[index]

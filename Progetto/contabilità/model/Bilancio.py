@@ -6,7 +6,7 @@ from Progetto.contabilità.model.VoceDiBilancio import VoceDiBilancio, Component
 
 pth_voci = 'contabilità/data/voci_di_bilancio.json'
 
-
+"""
 def __ProvaBilancioSettimanale():
     oggi = datetime.today()
     v1 = VoceDiBilancio(ComponenteGenerica(5000, 'Pepe'), False, Periodicita.SETTIMANALE, arg_periodicita=1,
@@ -82,6 +82,7 @@ def __ProvaBilancioMensile():
         print(u[0])
     print(b1.get_utile().__str__() + ' == ' + b1.get_ricavo().__str__() + '-' + b1.get_costi().__str__() + '(=' + (
             b1.get_ricavo() - b1.get_costi()).__str__() + ')')
+    """
 
 
 class BilancioSettimanale:

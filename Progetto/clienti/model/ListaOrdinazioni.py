@@ -5,7 +5,7 @@ from pathlib import Path
 
 from Progetto.clienti.model.Ordine import Ordine
 
-PATH_JSON = Path('clienti/data/lista_ordinazioni.json')
+PATH_JSON = Path(r"C:\Users\Utente\Desktop\progettogiuseppina\Progetto\clienti\data\lista_ordinazioni.json")
 PATH_PICKLE = Path('clienti/data/lista_ordinazioni.pickle')
 
 

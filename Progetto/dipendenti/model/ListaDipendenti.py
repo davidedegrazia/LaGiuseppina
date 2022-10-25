@@ -5,7 +5,7 @@ from pathlib import Path
 
 from Progetto.dipendenti.model.Dipendente import Dipendente
 
-PATH_JSON = Path('dipendenti/data/lista_dipendenti_iniziali.json')
+PATH_JSON = Path(r"C:\Users\Utente\Desktop\progettogiuseppina\Progetto\dipendenti\data\lista_dipendenti_iniziali.json")
 PATH_PICKLE = Path('dipendenti/data/lista_dipendenti_salvata.pickle')
 
 class ListaDipendenti:
@@ -21,7 +21,7 @@ class ListaDipendenti:
             with open(PATH_PICKLE, 'rb') as f:
                 self.lista_dipendenti = pickle.load(f)
         else:
-            with open(PATH_JSON) as f:
+            with open(r"C:\Users\Utente\Desktop\progettogiuseppina\Progetto\dipendenti\data\lista_dipendenti_iniziali.json") as f:
                 lista_dipendenti_iniziali = json.load(f)
             for dipendente_iniziale in lista_dipendenti_iniziali:
                 self.aggiungi_dipendente(Dipendente(dipendente_iniziale["nome"], dipendente_iniziale["ore"],
@@ -32,10 +32,14 @@ class ListaDipendenti:
     def aggiungi_dipendente(self, dipendente):
         self.lista_dipendenti.append(dipendente)
 
+    def get_num_dipendenti(self):
+        i = 0
+        for dip in self.lista_dipendenti:
+            i += 1
+        return i
+
     def rimuovi_dipendente_by_index(self, index):
-        for dipendente in self.lista_dipendenti:
-            if dipendente.index == index:
-                self.lista_dipendenti.remove(dipendente)
+        self.lista_dipendenti.remove(self.lista_dipendenti[index])
 
     def get_dipendente_by_index(self, index):
         return self.lista_dipendenti[index]

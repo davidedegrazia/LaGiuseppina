@@ -7,7 +7,7 @@ from Progetto.listaprodotti.model.Prodotto import Prodotto
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
 
 PATH_PRODOTTI_PICKLE = Path('listaprodotti/data/ListaProdottiSalvati.pickle')
-PATH_PRODOTTI_JSON = Path('listaprodotti/data/ListaProdottiSalvati.json')
+PATH_PRODOTTI_JSON = Path(r"C:\Users\Utente\Desktop\progettogiuseppina\Progetto\listaprodotti\data\ListaProdottiSalvati.json")
 
 
 # Classe che modella la lista_prodotti_salvati dei prodotti presenti nel programma
@@ -41,6 +41,12 @@ class ListaProdottiSalvati:
                 raise ValueError('L\'elemento è già presente all\'interno della lista_prodotti_salvati')
 
         self.lista_prodotti_salvati.append(prodotto)
+
+    def get_num_frutta(self):
+        for elemento in self.lista_prodotti_salvati:
+            if elemento.categoria == "frutta":
+                    self.count_prodotti_frutta = self.count_prodotti_frutta + 1
+        return self.count_prodotti_frutta
 
     def save_data(self):
         with open(PATH_PRODOTTI_JSON, 'wb') as handle:

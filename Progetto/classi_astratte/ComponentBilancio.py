@@ -1,3 +1,5 @@
+
+
 from abc import abstractmethod
 
 
@@ -22,6 +24,7 @@ class ComponentBilancio:
     @abstractmethod
     def is_aggiunto_a_bilancio(self):
         pass
+
 
     def get_valore_euro(self):
         valore = self.get_valore()

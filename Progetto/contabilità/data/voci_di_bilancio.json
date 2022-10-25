@@ -1,79 +1,46 @@
 [
     {
         "component": {
-            "nome": "Ammortamento 1",
-            "valore": 9000
-        },
-        "entrata": "False",
-        "periodicita": 3,
-        "arg_periodicita": 1,
-        "iterazioni": 18,
-        "data": "2022/06/24"
-    },
-    {
-        "component": {
-            "nome": "Ordini del giorno",
-            "valore": 6000
-        },
-        "entrata": "True",
-        "periodicita": 0,
-        "arg_periodicita": 0,
-        "iterazioni": 0,
-        "data": "2022/06/23"
-    },
-    {
-        "component": {
-            "nome": "Permesso vendita",
-            "valore": 2300
-        },
-        "entrata": "False",
-        "periodicita": 2,
-        "arg_periodicita": 1,
-        "iterazioni": 99,
-        "data": "2022/05/21"
-    },
-    {
-        "component": {
-            "nome": "Carburante consegne",
-            "valore": 3000
-        },
-        "entrata": "False",
-        "periodicita": 0,
-        "arg_periodicita": 0,
-        "iterazioni": 0,
-        "data": "2022/05/24"
-    },
-    {
-        "component": {
-            "nome": "Vendita al dettaglio",
-            "valore": 5000
-        },
-        "entrata": "True",
-        "periodicita": 0,
-        "arg_periodicita": 0,
-        "iterazioni": 0,
-        "data": "2022/06/21"
-    },
-    {
-        "component": {
-            "nome": "Uova Luigi",
+            "nome": "cdkpkfr",
             "valore": 400
         },
         "entrata": "True",
-        "periodicita": 2,
-        "arg_periodicita": 1,
-        "iterazioni": 30,
+        "periodicita": 0,
+        "arg_periodicita": 0,
+        "iterazioni": 0,
         "data": "2022/06/16"
     },
     {
         "component": {
-            "nome": "Ordine Lucreazia",
-            "valore": 1500
+            "nome": "kpwkp\u00f2\u00e0rw",
+            "valore": 300
+        },
+        "entrata": "False",
+        "periodicita": 2,
+        "arg_periodicita": 1,
+        "iterazioni": 5,
+        "data": "2022/06/01"
+    },
+    {
+        "component": {
+            "nome": "kpwkp\u00f2\u00e0rw",
+            "valore": 700
         },
         "entrata": "True",
-        "periodicita": 0,
-        "arg_periodicita": 0,
-        "iterazioni": 0,
-        "data": "2022/06/25"
+        "periodicita": 4,
+        "arg_periodicita": 1,
+        "iterazioni": 5,
+        "data": "2022/06/15"
+    },
+    {
+        "component": {
+            "nome": "kpwkp\u00f2\u00e0rwaaa",
+            "valore": 3300
+        },
+        "entrata": "False",
+        "periodicita": 3,
+        "arg_periodicita": 1,
+        "iterazioni": 12,
+        "data": "2022/06/16"
     }
 ]

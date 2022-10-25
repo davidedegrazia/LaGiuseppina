@@ -1,8 +1,8 @@
 from datetime import datetime
 
-import parse
+
 from PyQt5 import QtCore, QtGui, QtWidgets
-from  parse import compile
+
 
 import Progetto.contabilità.utils
 from Progetto.contabilità.model.Bilancio import Bilancio

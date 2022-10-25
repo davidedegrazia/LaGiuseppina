@@ -1,4 +1,6 @@
 import uuid
+import os.path
+import pickle
 
 class Dipendente():
 
@@ -11,7 +13,7 @@ class Dipendente():
         self.tipo_contratto = tipo_contratto
         self.email = email
         self.telefono = telefono
-        self.id = uuid.uuid4()
+
 
     def calcola_stipendio(self):
         compenso_ore_lavorate = self.compenso_a_ore * self.ore
