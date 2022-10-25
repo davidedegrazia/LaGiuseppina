@@ -7,7 +7,7 @@ from Progetto.listaprodotti.controller.ControlloreListaProdottiSalvati import Co
 from Progetto.listaprodotti.model.ListaProdottiConQuantita import ListaProdottiConQuantita
 from Progetto.listaprodotti.model.Prodotto import Prodotto, CategoriaProdotti, UnitaDiMisura
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
-from Progetto.classi_astratte.ComponentBilancio import ComponentBilancio
+from Progetto.Component.ComponentBilancio import ComponentBilancio
 
 
 def prova_init():

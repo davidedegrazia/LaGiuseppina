@@ -20,7 +20,6 @@ class Testing_Dipendenti(unittest.TestCase):
         self.assertEqual(self.lista.lista_dipendenti[-1].ore, 8)
         self.assertEqual(self.lista.lista_dipendenti[-1].compenso_a_ore, 10)
 
-
     def test_get_numero_dipendenti(self):
         self.lista.aggiungi_dipendente(self.dip)
         self.lista.aggiungi_dipendente(self.dip2)

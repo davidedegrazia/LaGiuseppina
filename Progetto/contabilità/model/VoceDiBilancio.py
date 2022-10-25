@@ -5,7 +5,7 @@ from sys import maxsize
 
 from dateutil import rrule
 
-from Progetto.classi_astratte.ComponentBilancio import ComponentBilancio
+from Progetto.Component.ComponentBilancio import ComponentBilancio
 from Progetto.listaprodotti.model.ProdottoConQuantità import ProdottoConQuantità
 
 GIORNI_IN_ANNO = 365  # Numero minimo di giorni in un anno
